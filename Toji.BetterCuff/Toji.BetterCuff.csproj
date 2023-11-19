@@ -32,7 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Extensions.cs" />
-    <Compile Include="Handlers\EventHandlers.cs" />
+    <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
