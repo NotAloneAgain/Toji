@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Toji.BetterCuff.Handlers
 {
-    internal sealed class EventHandlers
+    internal sealed class PlayerHandlers
     {
         public void OnHurting(HurtingEventArgs ev)
         {
