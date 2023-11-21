@@ -48,6 +48,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exiled\Extensions\EffectExtensions.cs" />
     <Compile Include="Global\Swap.cs" />
     <Compile Include="PluginAPI\API\Extensions\ItemExtensions.cs" />
     <Compile Include="PluginAPI\API\Extensions\TranslationExtensions.cs" />
