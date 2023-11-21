@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Malfunctions", "Toji.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Redux914", "Toji.Redux914\Toji.Redux914.csproj", "{2902440D-61AF-404D-9EA0-4A1E414859AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Map", "Toji.Map\Toji.Map.csproj", "{5298C645-C8C9-4BFA-B8B4-1B81F932B95E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.BetterMap", "Toji.Map\Toji.BetterMap.csproj", "{5298C645-C8C9-4BFA-B8B4-1B81F932B95E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.RemoteKeycard", "Toji.RemoteKeycard\Toji.RemoteKeycard.csproj", "{446F46D0-8247-41A7-9F5E-8566EFEC4F03}"
 EndProject
@@ -42,6 +42,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Classes", "Toji.Classes\Toji.Classes.csproj", "{1276B6C8-DB3D-4F19-B40A-4E4DFA63BCD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Shit", "Toji.Shit\Toji.Shit.csproj", "{30F692A7-9F8C-4DE8-B8D3-01DFE4E470F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.ExtendedRadioBattery", "Toji.ExtendedRadioBattery\Toji.ExtendedRadioBattery.csproj", "{DC7A3474-2743-4A1E-A987-F4CDE7255FFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.AutoFF", "Toji.AutoFF\Toji.AutoFF.csproj", "{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +133,14 @@ Global
 		{30F692A7-9F8C-4DE8-B8D3-01DFE4E470F9}.Debug|x64.Build.0 = Debug|x64
 		{30F692A7-9F8C-4DE8-B8D3-01DFE4E470F9}.Release|x64.ActiveCfg = Release|x64
 		{30F692A7-9F8C-4DE8-B8D3-01DFE4E470F9}.Release|x64.Build.0 = Release|x64
+		{DC7A3474-2743-4A1E-A987-F4CDE7255FFE}.Debug|x64.ActiveCfg = Debug|x64
+		{DC7A3474-2743-4A1E-A987-F4CDE7255FFE}.Debug|x64.Build.0 = Debug|x64
+		{DC7A3474-2743-4A1E-A987-F4CDE7255FFE}.Release|x64.ActiveCfg = Release|x64
+		{DC7A3474-2743-4A1E-A987-F4CDE7255FFE}.Release|x64.Build.0 = Release|x64
+		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Debug|x64.ActiveCfg = Debug|x64
+		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Debug|x64.Build.0 = Debug|x64
+		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Release|x64.ActiveCfg = Release|x64
+		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

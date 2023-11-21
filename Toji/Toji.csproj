@@ -48,7 +48,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exiled\Extensions\DamageExtensions.cs" />
     <Compile Include="Exiled\Extensions\EffectExtensions.cs" />
+    <Compile Include="Exiled\Extensions\FlagsExtensions.cs" />
+    <Compile Include="Exiled\Extensions\PlayerExtensions.cs" />
     <Compile Include="Global\Swap.cs" />
     <Compile Include="PluginAPI\API\Extensions\ItemExtensions.cs" />
     <Compile Include="PluginAPI\API\Extensions\TranslationExtensions.cs" />

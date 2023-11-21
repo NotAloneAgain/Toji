@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>Toji.MoreRealistic</AssemblyName>
-    <RootNamespace>Toji.MoreRealistic</RootNamespace>
-    <ProjectGuid>{B1AE826C-AAD1-4752-BF73-9611A9CB9B60}</ProjectGuid>
+    <AssemblyName>Toji.ExtendedRadioBattery</AssemblyName>
+    <RootNamespace>Toji.ExtendedRadioBattery</RootNamespace>
+    <ProjectGuid>{DC7A3474-2743-4A1E-A987-F4CDE7255FFE}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Toji\Toji.csproj">
-      <Project>{EE5A9879-DB40-4EC2-B4BE-FB1CD502CCC2}</Project>
+      <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
       <Name>Toji</Name>
     </ProjectReference>
   </ItemGroup>

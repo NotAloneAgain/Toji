@@ -1,12 +1,11 @@
 ﻿using Exiled.Events.Handlers;
-using HarmonyLib;
 using System;
-using Toji.RemoteKeycard.Configs;
+using Toji.ExiledAPI.Configs;
 using Toji.RemoteKeycard.Handlers;
 
 namespace Toji.RemoteKeycard
 {
-    public sealed class Plugin : Exiled.API.Features.Plugin<Config>
+    public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
         private PlayerHandlers _handlers;
 
@@ -31,11 +30,11 @@ namespace Toji.RemoteKeycard
 
         public override void OnDisabled()
         {
-            _handlers = null;
-
             Player.InteractingDoor -= _handlers.OnInteractingDoor;
             Player.InteractingLocker -= _handlers.OnInteractingLocker;
             Player.UnlockingGenerator -= _handlers.OnUnlockingGenerator;
+
+            _handlers = null;
 
             base.OnDisabled();
         }

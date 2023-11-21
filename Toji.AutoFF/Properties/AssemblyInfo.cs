@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0")]
 [assembly: AssemblyVersion("1.0.0")]
 
-[assembly: AssemblyProduct("Toji.BetterMap")]
-[assembly: AssemblyTitle("Toji.BetterMap")]
+[assembly: AssemblyProduct("Toji.AutoFF")]
+[assembly: AssemblyTitle("Toji.AutoFF")]
 
 [assembly: AssemblyCompany("swear.to.god")]
 [assembly: AssemblyTrademark("swear.to.god")]
@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCulture("en-US")]
 
-[assembly: Guid("5298c645-c8c9-4bfa-b8b4-1b81f932b95e")]
+[assembly: Guid("cc5222d8-d3a7-4900-a32d-bb0fe6c86dc8")]
 
 [assembly: ComVisible(false)]
 

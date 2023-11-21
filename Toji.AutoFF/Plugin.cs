@@ -1,17 +1,17 @@
 ﻿using Exiled.Events.Handlers;
 using System;
-using Toji.Cleanups.Handlers;
+using Toji.AutoFF.Handlers;
 using Toji.ExiledAPI.Configs;
 
-namespace Toji.Cleanups
+namespace Toji.AutoFF
 {
     public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
         private RoundHandlers _handlers;
 
-        public override string Name => "Toji.Cleanups";
+        public override string Name => "Toji.AutoFF";
 
-        public override string Prefix => "Toji.Cleanups";
+        public override string Prefix => "Toji.AutoFF";
 
         public override string Author => "NotAloneAgain";
 
@@ -23,12 +23,16 @@ namespace Toji.Cleanups
 
             Server.RestartingRound += _handlers.OnRestartingRound;
             Server.RoundStarted += _handlers.OnRoundStarted;
+            Server.EndingRound += _handlers.OnEndingRound;
+            Server.RoundEnded += _handlers.OnRoundEnded;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
+            Server.RoundEnded -= _handlers.OnRoundEnded;
+            Server.EndingRound -= _handlers.OnEndingRound;
             Server.RoundStarted -= _handlers.OnRoundStarted;
             Server.RestartingRound -= _handlers.OnRestartingRound;
 

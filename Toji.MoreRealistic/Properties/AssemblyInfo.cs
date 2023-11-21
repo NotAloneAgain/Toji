@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyMetadata("RepositoryURL", "https://github.com/NotAloneAgain/Toji.MoreRealistic")]
+[assembly: AssemblyMetadata("RepositoryURL", "https://github.com/NotAloneAgain/Toji")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("DEBUG")]

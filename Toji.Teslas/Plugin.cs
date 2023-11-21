@@ -1,11 +1,11 @@
 ﻿using Exiled.Events.Handlers;
 using System;
-using Toji.Teslas.Configs;
+using Toji.ExiledAPI.Configs;
 using Toji.Teslas.Handlers;
 
 namespace Toji.Teslas
 {
-    public sealed class Plugin : Exiled.API.Features.Plugin<Config>
+    public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
         private MapHandlers _map;
         private PlayerHandlers _player;

@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>Toji.MoreRealistic</AssemblyName>
-    <RootNamespace>Toji.MoreRealistic</RootNamespace>
-    <ProjectGuid>{B1AE826C-AAD1-4752-BF73-9611A9CB9B60}</ProjectGuid>
+    <AssemblyName>Toji.AutoFF</AssemblyName>
+    <RootNamespace>Toji.AutoFF</RootNamespace>
+    <ProjectGuid>{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,16 +27,18 @@
     <Reference Include="UnityEngine.CoreModule" HintPath="$(UNITY_REFERENCES)\UnityEngine.CoreModule.dll" />
     <Reference Include="Exiled.Events" HintPath="$(EXILED_REFERENCES)\Exiled.Events.dll" />
     <Reference Include="Exiled.API" HintPath="$(EXILED_REFERENCES)\Exiled.API.dll" />
+    <Reference Include="Mirror" HintPath="$(SL_REFERENCES)\Mirror.dll" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers\PlayerHandlers.cs" />
+    <Compile Include="API\Enums\EndRoundAction.cs" />
+    <Compile Include="Handlers\RoundHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Toji\Toji.csproj">
-      <Project>{EE5A9879-DB40-4EC2-B4BE-FB1CD502CCC2}</Project>
+      <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
       <Name>Toji</Name>
     </ProjectReference>
   </ItemGroup>

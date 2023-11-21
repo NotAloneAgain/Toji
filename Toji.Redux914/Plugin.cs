@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using System;
+﻿using System;
 using Toji.Redux914.Configs;
 using Toji.Redux914.Handlers;
 

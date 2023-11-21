@@ -1,17 +1,17 @@
 ﻿using Exiled.Events.Handlers;
 using System;
-using Toji.Cleanups.Handlers;
 using Toji.ExiledAPI.Configs;
+using Toji.ExtendedRadioBattery.Handlers;
 
-namespace Toji.Cleanups
+namespace Toji.ExtendedRadioBattery
 {
     public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
-        private RoundHandlers _handlers;
+        private PlayerHandlers _handlers;
 
-        public override string Name => "Toji.Cleanups";
+        public override string Name => "Toji.ExtendedRadioBattery";
 
-        public override string Prefix => "Toji.Cleanups";
+        public override string Prefix => "Toji.ExtendedRadioBattery";
 
         public override string Author => "NotAloneAgain";
 
@@ -21,16 +21,14 @@ namespace Toji.Cleanups
         {
             _handlers = new();
 
-            Server.RestartingRound += _handlers.OnRestartingRound;
-            Server.RoundStarted += _handlers.OnRoundStarted;
+            Player.UsingRadioBattery += _handlers.OnUsingRadioBattery;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Server.RoundStarted -= _handlers.OnRoundStarted;
-            Server.RestartingRound -= _handlers.OnRestartingRound;
+            Player.UsingRadioBattery -= _handlers.OnUsingRadioBattery;
 
             _handlers = null;
 

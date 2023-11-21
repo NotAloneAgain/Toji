@@ -1,13 +1,13 @@
-﻿using HarmonyLib;
+﻿using Exiled.Events.Handlers;
 using System;
-using Toji.MoreRealistic.Configs;
+using Toji.ExiledAPI.Configs;
 using Toji.MoreRealistic.Handlers;
 
 namespace Toji.MoreRealistic
 {
-    public sealed class Plugin : Exiled.API.Features.Plugin<Config>
+    public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
-        private EventHandlers _handlers;
+        private PlayerHandlers _handlers;
 
         public override string Name => "Toji.MoreRealistic";
 
@@ -21,11 +21,19 @@ namespace Toji.MoreRealistic
         {
             _handlers = new();
 
+            Player.Hurting += _handlers.OnHurting;
+            Player.Dying += _handlers.OnDying;
+            Player.Shot += _handlers.OnShot;
+
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
+            Player.Shot -= _handlers.OnShot;
+            Player.Dying -= _handlers.OnDying;
+            Player.Hurting -= _handlers.OnHurting;
+
             _handlers = null;
 
             base.OnDisabled();
