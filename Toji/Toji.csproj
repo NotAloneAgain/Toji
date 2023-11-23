@@ -52,6 +52,7 @@
     <Compile Include="Exiled\Extensions\EffectExtensions.cs" />
     <Compile Include="Exiled\Extensions\FlagsExtensions.cs" />
     <Compile Include="Exiled\Extensions\PlayerExtensions.cs" />
+    <Compile Include="Global\Range.cs" />
     <Compile Include="Global\Swap.cs" />
     <Compile Include="PluginAPI\API\Extensions\ItemExtensions.cs" />
     <Compile Include="PluginAPI\API\Extensions\TranslationExtensions.cs" />

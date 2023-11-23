@@ -48,6 +48,14 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Features\BaseMalfunction.cs" />
+    <Compile Include="API\Features\DoorMalfunction.cs" />
+    <Compile Include="API\Features\LiftMalfunction.cs" />
+    <Compile Include="API\Features\ObjectMalfunction.cs" />
+    <Compile Include="API\Features\RoomMalfunction.cs" />
+    <Compile Include="API\Interfaces\IBroadcastMalfunction.cs" />
+    <Compile Include="API\Interfaces\ICassieMalfunction.cs" />
+    <Compile Include="API\Interfaces\IHintMalfunction.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Handlers\EventHandlers.cs" />
     <Compile Include="Plugin.cs" />

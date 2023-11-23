@@ -48,11 +48,25 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Features\BaseSubclass.cs" />
+    <Compile Include="API\Features\GroupSubclass.cs" />
+    <Compile Include="API\Features\SingleSubclass.cs" />
+    <Compile Include="API\Interfaces\IGroup.cs" />
+    <Compile Include="API\Interfaces\ILimitableGroup.cs" />
+    <Compile Include="API\Interfaces\IMonthSubclass.cs" />
+    <Compile Include="API\Interfaces\ISeasonSubclass.cs" />
+    <Compile Include="API\Interfaces\ISingle.cs" />
+    <Compile Include="API\Interfaces\ISpecialSubclass.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Handlers\EventHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Toji\Toji.csproj">
+      <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
+      <Name>Toji</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

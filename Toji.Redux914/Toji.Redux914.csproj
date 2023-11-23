@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\Config.cs" />
-    <Compile Include="Handlers\EventHandlers.cs" />
+    <Compile Include="Handlers\Scp914Handlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

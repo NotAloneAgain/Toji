@@ -36,7 +36,7 @@ namespace Toji.BetterRoles.Handlers
 
             Team team = RoleExtensions.GetTeam(ev.NewRole);
 
-            if (team is not Team.FoundationForces or Team.ChaosInsurgency || ev.NewRole != RoleTypeId.NtfPrivate && team == Team.FoundationForces || !SelectGrenade(out var item))
+            if (team is not Team.FoundationForces and not Team.ChaosInsurgency || ev.NewRole != RoleTypeId.NtfPrivate && team == Team.FoundationForces || !SelectGrenade(out var item))
             {
                 return;
             }

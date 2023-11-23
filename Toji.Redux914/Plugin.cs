@@ -6,7 +6,7 @@ namespace Toji.Redux914
 {
     public sealed class Plugin : Exiled.API.Features.Plugin<Config>
     {
-        private EventHandlers _handlers;
+        private Scp914Handlers _handlers;
 
         public override string Name => "Toji.Redux914";
 
