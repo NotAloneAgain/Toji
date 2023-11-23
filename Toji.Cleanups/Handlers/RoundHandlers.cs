@@ -16,5 +16,21 @@ namespace Toji.Cleanups.Handlers
         {
             Timing.KillCoroutines(_coroutines.ToArray());
         }
+
+        private IEnumerator<float> _CleanupItems()
+        {
+            while (true)
+            {
+                yield return Timing.WaitForSeconds(1);
+            }
+        }
+
+        private IEnumerator<float> _CleanupRagdolls()
+        {
+            while (true)
+            {
+                yield return Timing.WaitForSeconds(1);
+            }
+        }
     }
 }

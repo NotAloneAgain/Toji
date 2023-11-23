@@ -21,6 +21,9 @@ namespace Toji.BetterCuff
         {
             _handlers = new();
 
+            Player.PickingUpItem += _handlers.OnPickingUpItem;
+            Player.Handcuffing += _handlers.OnHandcuffing;
+            Player.Escaping += _handlers.OnEscaping;
             Player.Hurting += _handlers.OnHurting;
             Player.Dying += _handlers.OnDying;
 
@@ -31,6 +34,9 @@ namespace Toji.BetterCuff
         {
             Player.Dying -= _handlers.OnDying;
             Player.Hurting -= _handlers.OnHurting;
+            Player.Escaping -= _handlers.OnEscaping;
+            Player.Handcuffing -= _handlers.OnHandcuffing;
+            Player.PickingUpItem -= _handlers.OnPickingUpItem;
 
             _handlers = null;
 

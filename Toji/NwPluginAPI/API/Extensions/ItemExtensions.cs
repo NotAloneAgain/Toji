@@ -1,7 +1,7 @@
 ﻿using InventorySystem;
 using InventorySystem.Items;
 
-namespace Toji.PluginAPI.API.Extensions
+namespace Toji.NwPluginAPI.API.Extensions
 {
     public static class ItemExtensions
     {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Exiled.API.Features;
+using Toji.Classes.API.Interfaces;
 
 namespace Toji.Classes.API.Features
 {
-    internal class SingleSubclass
+    public abstract class SingleSubclass : BaseSubclass, ISingle
     {
+        public Player Player { get; set; }
     }
 }

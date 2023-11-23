@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using System;
@@ -62,6 +63,36 @@ namespace Toji.BetterCuff.Handlers
 
             cuffer.SendConsoleMessage(text, "red");
             cuffer.ShowHint($"<line-height=95%><size=95%><voffset=-18em><color=#EE204D><b>{text}</b></color></voffset></size>", 5);
+        }
+
+        public void OnPickingUpItem(PickingUpItemEventArgs ev)
+        {
+            if (!ev.IsAllowed || !ev.Pickup.Type.IsWeapon() || ev.Player.Role.Type != RoleTypeId.ClassD)
+            {
+                return;
+            }
+
+            ev.Player.TryAddFriendlyFire(RoleTypeId.ClassD, 1);
+        }
+
+        public void OnEscaping(EscapingEventArgs ev)
+        {
+            if (!ev.IsAllowed || !ev.Player.FriendlyFireMultiplier.TryGetValue(RoleTypeId.ClassD, out _))
+            {
+                return;
+            }
+
+            ev.Player.FriendlyFireMultiplier.Remove(RoleTypeId.ClassD);
+        }
+
+        public void OnHandcuffing(HandcuffingEventArgs ev)
+        {
+            if (!ev.IsAllowed || !ev.Target.FriendlyFireMultiplier.TryGetValue(RoleTypeId.ClassD, out _))
+            {
+                return;
+            }
+
+            ev.Player.FriendlyFireMultiplier.Remove(RoleTypeId.ClassD);
         }
 
         private bool HasEnemyInRoom(Player player, Faction faction) => player.CurrentRoom.Players.Any(ply => !ply.IsCuffed && ply.GetFaction() == faction);

@@ -1,7 +1,7 @@
 ﻿using PlayerRoles;
 using System.Collections.Generic;
 
-namespace Toji.PluginAPI.API.Extensions
+namespace Toji.NwPluginAPI.API.Extensions
 {
     public static class TranslationExtensions
     {

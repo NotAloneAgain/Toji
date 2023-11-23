@@ -1,9 +1,6 @@
 ﻿using CommandSystem;
 using CommandSystem.Commands.RemoteAdmin.Inventory;
 using HarmonyLib;
-using InventorySystem;
-using InventorySystem.Configs;
-using PlayerRoles;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;

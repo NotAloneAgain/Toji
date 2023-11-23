@@ -48,20 +48,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exiled\Extensions\DamageExtensions.cs" />
-    <Compile Include="Exiled\Extensions\EffectExtensions.cs" />
-    <Compile Include="Exiled\Extensions\FlagsExtensions.cs" />
-    <Compile Include="Exiled\Extensions\PlayerExtensions.cs" />
+    <Compile Include="ExiledAPI\Extensions\DamageExtensions.cs" />
+    <Compile Include="ExiledAPI\Extensions\EffectExtensions.cs" />
+    <Compile Include="ExiledAPI\Extensions\FlagsExtensions.cs" />
+    <Compile Include="ExiledAPI\Extensions\PlayerExtensions.cs" />
     <Compile Include="Global\Range.cs" />
     <Compile Include="Global\Swap.cs" />
-    <Compile Include="PluginAPI\API\Extensions\ItemExtensions.cs" />
-    <Compile Include="PluginAPI\API\Extensions\TranslationExtensions.cs" />
-    <Compile Include="Exiled\Configs\DefaultConfig.cs" />
+    <Compile Include="NwPluginAPI\API\Extensions\ItemExtensions.cs" />
+    <Compile Include="NwPluginAPI\API\Extensions\TranslationExtensions.cs" />
+    <Compile Include="ExiledAPI\Configs\DefaultConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PluginAPI\API\Enums\" />
-    <Folder Include="PluginAPI\API\Features\" />
+    <Folder Include="NwPluginAPI\API\Enums\" />
+    <Folder Include="NwPluginAPI\API\Features\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

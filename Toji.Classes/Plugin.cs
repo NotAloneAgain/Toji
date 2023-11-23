@@ -2,6 +2,7 @@
 using System;
 using Toji.Classes.Configs;
 using Toji.Classes.Handlers;
+using Toji.Global;
 
 namespace Toji.Classes
 {

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Exiled.API.Features;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Toji.Classes.API.Interfaces;
 
 namespace Toji.Classes.API.Features
 {
-    internal class GroupSubclass
+    public abstract class GroupSubclass : BaseSubclass, IGroup
     {
+        public GroupSubclass() => Players = new(100);
+
+        public HashSet<Player> Players { get; }
     }
 }

@@ -6,8 +6,8 @@ using PluginAPI.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Toji.NwPluginAPI.API.Extensions;
 using Toji.Patches.API.Extensions;
-using Toji.PluginAPI.API.Extensions;
 using Utils;
 
 namespace Toji.Patches.Generic.Admins.Items
