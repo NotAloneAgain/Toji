@@ -50,16 +50,20 @@
   <ItemGroup>
     <Compile Include="API\Extensions\PlayerExtensions.cs" />
     <Compile Include="API\Extensions\SubclassExtensions.cs" />
+    <Compile Include="API\Extensions\NwPlayerExtensions.cs" />
     <Compile Include="API\Extensions\TimingExtensions.cs" />
     <Compile Include="API\Features\BaseSubclass.cs" />
     <Compile Include="API\Features\GroupSubclass.cs" />
+    <Compile Include="API\Features\Inventory\RandomSlot.cs" />
     <Compile Include="API\Features\Inventory\Slot.cs" />
+    <Compile Include="API\Features\Inventory\StaticSlot.cs" />
     <Compile Include="API\Features\SingleSubclass.cs" />
     <Compile Include="API\Interfaces\IBroadcastSubclass.cs" />
     <Compile Include="API\Interfaces\ICassieSubclass.cs" />
     <Compile Include="API\Interfaces\ICommandsSubclass.cs" />
     <Compile Include="API\Interfaces\ICustomDamageSubclass.cs" />
     <Compile Include="API\Interfaces\ICustomHealthSubclass.cs" />
+    <Compile Include="API\Interfaces\ICustomHintSubclass.cs" />
     <Compile Include="API\Interfaces\ICustomHurtSubclass.cs" />
     <Compile Include="API\Interfaces\ICustomSoundSubclass.cs" />
     <Compile Include="API\Interfaces\ICustomTeslaSubclass.cs" />
@@ -79,16 +83,33 @@
     <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subclasses\ClassD\Group\Killer.cs" />
+    <Compile Include="Subclasses\ClassD\DGroupSubclass.cs" />
+    <Compile Include="Subclasses\ClassD\DSingleSubclass.cs" />
+    <Compile Include="Subclasses\Guards\GuardGroupSubclass.cs" />
+    <Compile Include="Subclasses\Guards\GuardSingleSubclass.cs" />
+    <Compile Include="Subclasses\Scientists\ScientistGroupSubclass.cs" />
+    <Compile Include="Subclasses\Scientists\ScientistSingleSubclass.cs" />
+    <Compile Include="Subclasses\Zombies\ZombieGroupSubclass.cs" />
+    <Compile Include="Subclasses\Zombies\ZombieSingleSubclass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Toji.Patches\Toji.Patches.csproj">
-      <Project>{b8acd89b-8e1d-4678-8d58-b423ee767d58}</Project>
-      <Name>Toji.Patches</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Toji\Toji.csproj">
       <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
       <Name>Toji</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Subclasses\ClassD\Single\" />
+    <Folder Include="Subclasses\Guards\Group\" />
+    <Folder Include="Subclasses\Guards\Single\" />
+    <Folder Include="Subclasses\Scientists\Group\" />
+    <Folder Include="Subclasses\Scientists\Single\" />
+    <Folder Include="Subclasses\Zombies\Group\" />
+    <Folder Include="Subclasses\Zombies\Single\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

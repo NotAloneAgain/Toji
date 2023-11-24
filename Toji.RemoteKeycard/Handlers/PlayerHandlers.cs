@@ -15,7 +15,7 @@ namespace Toji.RemoteKeycard.Handlers
     {
         public void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            if (ev.Player.IsHost || ev.Player.IsNPC || ev.IsAllowed && ev.Player.IsHuman || !ev.Door.IsKeycardDoor || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving || ev.Player.HasEffect<AmnesiaItems>())
+            if (!ev.IsValid() || ev.IsAllowed && ev.Player.IsHuman || !ev.Door.IsKeycardDoor || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving || ev.Player.HasEffect<AmnesiaItems>())
             {
                 return;
             }
@@ -37,7 +37,7 @@ namespace Toji.RemoteKeycard.Handlers
 
         public void OnInteractingLocker(InteractingLockerEventArgs ev)
         {
-            if (ev.Player.HasEffect<AmnesiaItems>() || ev.IsAllowed || ev.Player.IsHost || ev.Player.IsNPC)
+            if (ev.Player.HasEffect<AmnesiaItems>() || ev.IsAllowed || !ev.IsValid())
             {
                 return;
             }
@@ -51,7 +51,7 @@ namespace Toji.RemoteKeycard.Handlers
 
         public void OnUnlockingGenerator(UnlockingGeneratorEventArgs ev)
         {
-            if (ev.Player.IsHost || ev.Player.IsNPC)
+            if (!ev.IsValid())
             {
                 return;
             }

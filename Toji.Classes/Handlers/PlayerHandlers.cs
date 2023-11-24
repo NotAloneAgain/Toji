@@ -82,14 +82,25 @@ namespace Toji.Classes.Handlers
             {
                 customHurt.OnHurt(ev);
 
-                ev.Amount *= customHurt.HurtMultiplayer;
+                if (customHurt.HurtMultiplayer != 1)
+                {
+                    ev.Amount *= customHurt.HurtMultiplayer;
+                }
             }
 
             if (ev.IsNotSelfDamage() && ev.Attacker.TryGetSubclass(out var attackerSubclass) && attackerSubclass is ICustomDamageSubclass customDamage)
             {
                 customDamage.OnDamage(ev);
 
-                ev.Amount *= customDamage.DamageMultiplayer;
+                if (customDamage.Damage != -2)
+                {
+                    ev.Amount = customDamage.Damage;
+                }
+
+                if (customDamage.DamageMultiplayer != 1)
+                {
+                    ev.Amount *= customDamage.DamageMultiplayer;
+                }
             }
         }
     }

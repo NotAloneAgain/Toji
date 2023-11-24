@@ -2,8 +2,5 @@
 {
     public interface IHintSubclass
     {
-        string HintText { get; }
-
-        float HintDuration { get; }
     }
 }

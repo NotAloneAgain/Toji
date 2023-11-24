@@ -7,7 +7,7 @@ namespace Toji.ExiledAPI.Extensions
 {
     public static class PlayerExtensions
     {
-        public static bool HasEffect<TEffect>(this Player player) where TEffect : StatusEffectBase => player != null && player.TryGetEffect(out TEffect effect) && effect.IsEnabled;
+        public static bool HasEffect<TEffect>(this Player player) where TEffect : StatusEffectBase => player != null && player.IsEffectActive<TEffect>();
 
         public static void DropAllWithoutKeycard(this Player player)
         {

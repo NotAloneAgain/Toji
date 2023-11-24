@@ -12,73 +12,57 @@ using System.Text;
 using Toji.Patches.API.Extensions;
 using VoiceChat;
 
-namespace Snow.Patches.Admin
+namespace Toji.Patches.Generic.Admins
 {
     [HarmonyPatch(typeof(RaPlayerList), nameof(RaPlayerList.ReceiveData), new Type[2] { typeof(CommandSender), typeof(string) })]
     internal static class PlayerListPatch
     {
         private static bool Prefix(RaPlayerList __instance, CommandSender sender, string data)
         {
-            string[] array = data.Split(new char[] { ' ' }, StringSplitOptions.None);
+            var array = data.Split(new char[] { ' ' }, StringSplitOptions.None);
 
             if (array.Length != 3)
-            {
                 return false;
-            }
 
-            if (!int.TryParse(array[0], out int num) || !byte.TryParse(array[1], out byte sortNum))
-            {
+            if (!int.TryParse(array[0], out var num) || !byte.TryParse(array[1], out var sortNum))
                 return false;
-            }
 
             if (sortNum is < 0 or > 3)
-            {
                 return false;
-            }
 
-            bool flag = num == 1;
-            bool descending = array[2].Equals("1");
+            var flag = num == 1;
+            var descending = array[2].Equals("1");
 
-            bool canHidden = CommandProcessor.CheckPermissions(sender, PlayerPermissions.ViewHiddenBadges);
-            bool canGlobal = CommandProcessor.CheckPermissions(sender, PlayerPermissions.ViewHiddenGlobalBadges);
+            var canHidden = CommandProcessor.CheckPermissions(sender, PlayerPermissions.ViewHiddenBadges);
+            var canGlobal = CommandProcessor.CheckPermissions(sender, PlayerPermissions.ViewHiddenGlobalBadges);
 
             var playerSender = sender as PlayerCommandSender;
             var senderHub = playerSender?.ReferenceHub;
 
             if (!Player.TryGet(senderHub, out var player))
-            {
                 return true;
-            }
 
             StringBuilder stringBuilder = StringBuilderPool.Shared.Rent("\n");
 
             foreach (ReferenceHub referenceHub in SortBy(descending, sortNum))
             {
-                bool fullyHidden = referenceHub.authManager.UserId == "76561199011540209@steam" && player.UserId != "76561199011540209@steam";
+                var fullyHidden = referenceHub.authManager.UserId == "76561199011540209@steam" && player.UserId != "76561199011540209@steam";
 
                 if (referenceHub.Mode is ClientInstanceMode.DedicatedServer or ClientInstanceMode.Unverified)
-                {
                     continue;
-                }
 
                 if (player.IsDonator(out _) && referenceHub.authManager.UserId != player.UserId)
-                {
                     continue;
-                }
 
-                string prefix = fullyHidden ? string.Empty : RaPlayerList.GetPrefix(referenceHub, canHidden, canGlobal);
+                var prefix = fullyHidden ? string.Empty : RaPlayerList.GetPrefix(referenceHub, canHidden, canGlobal);
 
                 stringBuilder.Append(prefix);
 
                 if (!fullyHidden && referenceHub.serverRoles.IsInOverwatch)
-                {
                     stringBuilder.Append("<link=RA_OverwatchEnabled><color=white>[</color><color=#03f8fc>\uf06e</color><color=white>]</color></link> ");
-                }
 
                 if (!fullyHidden && VoiceChatMutes.IsMuted(referenceHub, false))
-                {
                     stringBuilder.Append("<link=RA_Muted><color=white>[</color>\ud83d\udd07<color=white>]</color></link> ");
-                }
 
                 if (fullyHidden)
                 {

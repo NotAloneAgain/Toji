@@ -41,7 +41,7 @@ namespace Toji.Classes.API.Features
                 return false;
             }
 
-            Unsubscribe();
+            LazyUnsubscribe();
 
             return true;
         }

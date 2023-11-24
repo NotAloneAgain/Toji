@@ -27,7 +27,7 @@ namespace Toji.MoreRealistic.Handlers
                 return;
             }
 
-            if (Random.Range(0, 101) == 100)
+            if (Random.Range(0, 100) == 100)
             {
                 ev.Player.CurrentItem.As<Firearm>().Ammo = 0;
 
@@ -36,7 +36,7 @@ namespace Toji.MoreRealistic.Handlers
         }
         public void OnHurting(HurtingEventArgs ev)
         {
-            if (!ev.IsAllowed || ev.Attacker == null || ev.Attacker.IsNPC || ev.Attacker.IsHost || ev.Player.IsHost || ev.Player.IsNPC || ev.Player.UserId == ev.Attacker.UserId || ev.Player.LeadingTeam == ev.Attacker.LeadingTeam || ev.DamageHandler.Type is DamageType.Explosion or DamageType.Scp018)
+            if (!ev.IsAllowed || !ev.IsNotSelfDamage() || ev.Player.LeadingTeam == ev.Attacker.LeadingTeam || ev.DamageHandler.Type is DamageType.Explosion or DamageType.Scp018)
             {
                 return;
             }
@@ -73,7 +73,7 @@ namespace Toji.MoreRealistic.Handlers
             {
                 ev.Player.Stamina -= 0.03f;
 
-                if (Random.Range(0, 101) >= 98)
+                if (Random.Range(0, 100) >= 98)
                 {
                     ev.Player.DropHeldItem();
                 }
@@ -90,12 +90,12 @@ namespace Toji.MoreRealistic.Handlers
          }
         public void OnDying(DyingEventArgs ev)
         {
-            if (!ev.Player.IsHuman || !ev.IsAllowed || ev.Player.IsHost || ev.Player.IsNPC)
+            if (!ev.IsAllowed || !ev.IsValid())
             {
                 return;
             }
 
-            if (ev.DamageHandler.Type != DamageType.Poison && (ev.Attacker == null || ev.Attacker.Role.Type != RoleTypeId.Scp0492) || Random.Range(0, 101) < 88)
+            if (ev.DamageHandler.Type != DamageType.Poison && (ev.Attacker == null || ev.Attacker.Role.Type != RoleTypeId.Scp0492) || Random.Range(0, 100) < 88)
             {
                 return;
             }

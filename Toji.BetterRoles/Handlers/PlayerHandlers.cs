@@ -41,7 +41,7 @@ namespace Toji.BetterRoles.Handlers
                 return;
             }
 
-            ev.Player.AddItem(item);
+            ev.Items.Add(item);
         }
 
         public void OnEnteringPocketDimension(EnteringPocketDimensionEventArgs ev)
@@ -54,20 +54,21 @@ namespace Toji.BetterRoles.Handlers
             if (Warhead.IsDetonated)
             {
                 ev.IsAllowed = false;
+
                 ev.Player.Kill(DamageType.Scp106);
             }
         }
 
         private bool SelectGrenade(out ItemType item)
         {
-            if (Random.Range(0, 101) < 46)
+            if (Random.Range(0, 100) < 46)
             {
                 item = ItemType.None;
 
                 return false;
             }
 
-            item = Random.Range(0, 101) switch
+            item = Random.Range(0, 100) switch
             {
                 >= 49 => ItemType.GrenadeHE,
                 _ => ItemType.GrenadeFlash

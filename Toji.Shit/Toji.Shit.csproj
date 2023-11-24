@@ -53,6 +53,87 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Toji.AutoFF\Toji.AutoFF.csproj">
+      <Project>{cc5222d8-d3a7-4900-a32d-bb0fe6c86dc8}</Project>
+      <Name>Toji.AutoFF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.BetterCuff\Toji.BetterCuff.csproj">
+      <Project>{ae3f19f0-d4fa-4530-aef5-146f862de33c}</Project>
+      <Name>Toji.BetterCuff</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.BetterRoles\Toji.BetterRoles.csproj">
+      <Project>{66d6662e-a30f-41fa-8a4b-f26c633e8331}</Project>
+      <Name>Toji.BetterRoles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.BetterWarhead\Toji.BetterWarhead.csproj">
+      <Project>{9908652d-259c-4f3f-92c4-fb117120044a}</Project>
+      <Name>Toji.BetterWarhead</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Classes\Toji.Classes.csproj">
+      <Project>{1276b6c8-db3d-4f19-b40a-4e4dfa63bcd0}</Project>
+      <Name>Toji.Classes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Cleanups\Toji.Cleanups.csproj">
+      <Project>{24305dac-a65b-4bb3-95e0-322fc3eb7f58}</Project>
+      <Name>Toji.Cleanups</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Commands\Toji.Commands.csproj">
+      <Project>{a70237f6-9d6e-4d2b-9805-3b0853792054}</Project>
+      <Name>Toji.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.ExtendedRadioBattery\Toji.ExtendedRadioBattery.csproj">
+      <Project>{dc7a3474-2743-4a1e-a987-f4cde7255ffe}</Project>
+      <Name>Toji.ExtendedRadioBattery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.InfinityAmmo\Toji.InfinityAmmo.csproj">
+      <Project>{7c6d37e1-5c66-4aef-b670-033d67b036b0}</Project>
+      <Name>Toji.InfinityAmmo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Malfunctions\Toji.Malfunctions.csproj">
+      <Project>{963e170c-d043-4b2a-adb5-c97cf67b41e8}</Project>
+      <Name>Toji.Malfunctions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Map\Toji.BetterMap.csproj">
+      <Project>{5298c645-c8c9-4bfa-b8b4-1b81f932b95e}</Project>
+      <Name>Toji.BetterMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.MoreRealistic\Toji.MoreRealistic.csproj">
+      <Project>{b1ae826c-aad1-4752-bf73-9611a9cb9b60}</Project>
+      <Name>Toji.MoreRealistic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.MySQL\Toji.MySQL.csproj">
+      <Project>{656a302e-734c-44e7-af13-a68095a97d6c}</Project>
+      <Name>Toji.MySQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Patches\Toji.Patches.csproj">
+      <Project>{b8acd89b-8e1d-4678-8d58-b423ee767d58}</Project>
+      <Name>Toji.Patches</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Redux914\Toji.Redux914.csproj">
+      <Project>{2902440d-61af-404d-9ea0-4a1e414859ab}</Project>
+      <Name>Toji.Redux914</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.RemoteKeycard\Toji.RemoteKeycard.csproj">
+      <Project>{446f46d0-8247-41a7-9f5e-8566efec4f03}</Project>
+      <Name>Toji.RemoteKeycard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.ScpSwap\Toji.ScpSwap.csproj">
+      <Project>{252881df-8ce0-4270-8649-ab3ee35e2767}</Project>
+      <Name>Toji.ScpSwap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Statistics\Toji.Statistics.csproj">
+      <Project>{ba0107c6-9556-4470-9dec-5ee8308a9631}</Project>
+      <Name>Toji.Statistics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Sync\Toji.Sync.csproj">
+      <Project>{700e868a-5db8-45dd-aaa3-61c263f771a2}</Project>
+      <Name>Toji.Sync</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.Teslas\Toji.Teslas.csproj">
+      <Project>{ab2e7fc2-35fc-4079-8aec-169e306022de}</Project>
+      <Name>Toji.Teslas</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

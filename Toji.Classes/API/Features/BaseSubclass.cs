@@ -1,4 +1,7 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
+using Exiled.API.Features.Roles;
+using Hints;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,7 +14,7 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features
 {
-    public abstract class BaseSubclass
+    public abstract class BaseSubclass : System.IDisposable
     {
         private static readonly Dictionary<RoleTypeId, List<BaseSubclass>> _roleToSubclasses;
         private static readonly List<BaseSubclass> _subclasses;
@@ -37,13 +40,13 @@ namespace Toji.Classes.API.Features
             _roleToSubclasses[Role].Add(this);
         }
 
-        public static IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>> RoleToSubclasses => (IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>>)_roleToSubclasses.ToDictionary(pair => pair.Key, pair => pair.Value.AsReadOnly());
+        public static IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>> RoleToSubclasses => _roleToSubclasses.ToDictionary(pair => pair.Key, pair => (IReadOnlyCollection<BaseSubclass>)pair.Value.AsReadOnly());
 
         public static IReadOnlyCollection<BaseSubclass> ReadOnlyCollection => _subclasses.AsReadOnly();
 
-        public static BaseSubclass Get(Player player) => ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
+        public static BaseSubclass Get(Player player) => player == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
 
-        public static TSubclass Get<TSubclass>(in Player player) where TSubclass : BaseSubclass => Get(player) as TSubclass;
+        public static TSubclass Get<TSubclass>(in Player player) where TSubclass : BaseSubclass => player == null ? null : Get(player) as TSubclass;
 
         public static IEnumerable<BaseSubclass> Get(RoleTypeId role) => RoleToSubclasses.ContainsKey(role) ? RoleToSubclasses[role] : null;
 
@@ -118,7 +121,7 @@ namespace Toji.Classes.API.Features
             {
                 foreach (var slot in inventory.Slots)
                 {
-                    var item = slot.GetRandomItem();
+                    var item = slot.GetItem();
 
                     if (item == ItemType.None)
                     {
@@ -157,14 +160,19 @@ namespace Toji.Classes.API.Features
                 Map.Broadcast(10, broadcast.WarningText);
             }
 
-            if (this is IHintSubclass hint)
+            if (this is IHintSubclass)
             {
-                player.ShowHint(hint.HintText, hint.HintDuration);
+                ICustomHintSubclass customHint = this as ICustomHintSubclass;
+
+                string color = string.IsNullOrEmpty(customHint?.HintColor) ? Role.GetColor().ToHex() : customHint.HintColor;
+                string text = string.IsNullOrEmpty(customHint?.HintText) ? $"<line-height=95%><size=95%><voffset=-18em><color={color}>Ты - {Name}!\n{Desc}.</color></size></voffset>" : customHint.HintText;
+
+                player.ShowHint(text, 10);
             }
 
             if (!_subscribed)
             {
-                Subscribe();
+                LazySubscribe();
             }
 
             return true;
@@ -207,15 +215,32 @@ namespace Toji.Classes.API.Features
             return true;
         }
 
-        public virtual void Subscribe()
+        public void Dispose()
         {
+            foreach (var player in Player.List.Where(ply => Has(ply)))
+            {
+                Revoke(player);
+            }
 
+            if (_subscribed)
+            {
+                LazyUnsubscribe();
+            }
+
+            Unsubscribe();
+
+            _roleToSubclasses[Role].Remove(this);
+
+            _subclasses.Remove(this);
         }
 
-        public virtual void Unsubscribe()
-        {
+        public virtual void Subscribe() { }
 
-        }
+        public virtual void LazySubscribe() { }
+
+        public virtual void Unsubscribe() { }
+
+        public virtual void LazyUnsubscribe() { }
 
         internal protected void OnEscaped(in Player player) => UpdatePlayer(player, false);
 
@@ -235,7 +260,7 @@ namespace Toji.Classes.API.Features
 
         private string BuildConsoleMessage()
         {
-            StringBuilder builder = new($"Ты получил подкласс!\n\t\tНазвание: {Name}!\n\t\tОписание: {Desc}.");
+            StringBuilder builder = new($"Ты получил подкласс:\n\t\tНазвание: {Name}.\n\t\tОписание: {Desc}.");
 
             if (IsGroup)
             {
@@ -292,8 +317,6 @@ namespace Toji.Classes.API.Features
                 }
             }
 
-            builder.Append("\n\t\t");
-
             return builder.ToString();
         }
 
@@ -309,7 +332,7 @@ namespace Toji.Classes.API.Features
 
         private bool CheckRandom()
         {
-            if (this is IRandomSubclass random && Random.Range(0, 101) < random.Chance)
+            if (this is IRandomSubclass random && Random.Range(0, 100) < random.Chance)
             {
                 return false;
             }

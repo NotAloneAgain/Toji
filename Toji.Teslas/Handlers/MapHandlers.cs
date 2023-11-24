@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.API.Features.Spawn;
 using Exiled.API.Interfaces;
 using Exiled.Events.EventArgs.Scp079;
@@ -44,7 +45,12 @@ namespace Toji.Teslas.Handlers
 
                 while (count - offset > 2)
                 {
-                    var tesla = TeslaGateController.Singleton.TeslaGates[Random.Range(0, TeslaGateController.Singleton.TeslaGates.Count)];
+                    var tesla = TeslaGateController.Singleton.TeslaGates.GetRandomValue();
+
+                    if (tesla == null)
+                    {
+                        break;
+                    }
 
                     var pos = tesla.Position;
                     var rot = tesla.Room.transform.rotation;

@@ -32,7 +32,7 @@ namespace Toji.Classes.API.Features
 
             Player = null;
 
-            Unsubscribe();
+            LazyUnsubscribe();
 
             return true;
         }

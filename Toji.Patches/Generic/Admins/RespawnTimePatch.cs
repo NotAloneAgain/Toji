@@ -7,7 +7,7 @@ using Toji.Patches.API.Extensions;
 
 #pragma warning disable IDE0060
 
-namespace Snow.Patches.Admin
+namespace Toji.Patches.Generic.Admins
 {
     [HarmonyPatch(typeof(RaClientDataRequest), nameof(RaClientDataRequest.ReceiveData), new Type[2] { typeof(CommandSender), typeof(string) })]
     internal static class RespawnTimePatch
@@ -15,14 +15,10 @@ namespace Snow.Patches.Admin
         private static bool Prefix(RaClientDataRequest __instance, CommandSender sender, string data)
         {
             if (__instance is not RaTeamStatus)
-            {
                 return true;
-            }
 
             if (!Player.TryGet((sender as PlayerCommandSender).ReferenceHub, out var player))
-            {
                 return true;
-            }
 
             if (player.IsDonator(out _))
             {
