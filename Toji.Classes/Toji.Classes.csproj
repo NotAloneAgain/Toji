@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="API\Extensions\PlayerExtensions.cs" />
     <Compile Include="API\Extensions\SubclassExtensions.cs" />
+    <Compile Include="API\Extensions\TimingExtensions.cs" />
     <Compile Include="API\Features\BaseSubclass.cs" />
     <Compile Include="API\Features\GroupSubclass.cs" />
     <Compile Include="API\Features\Inventory\Slot.cs" />
@@ -57,9 +58,14 @@
     <Compile Include="API\Interfaces\IBroadcastSubclass.cs" />
     <Compile Include="API\Interfaces\ICassieSubclass.cs" />
     <Compile Include="API\Interfaces\ICommandsSubclass.cs" />
+    <Compile Include="API\Interfaces\ICustomDamageSubclass.cs" />
     <Compile Include="API\Interfaces\ICustomHealthSubclass.cs" />
+    <Compile Include="API\Interfaces\ICustomHurtSubclass.cs" />
+    <Compile Include="API\Interfaces\ICustomSoundSubclass.cs" />
+    <Compile Include="API\Interfaces\ICustomTeslaSubclass.cs" />
     <Compile Include="API\Interfaces\IHasInventory.cs" />
     <Compile Include="API\Interfaces\IHintSubclass.cs" />
+    <Compile Include="API\Interfaces\ILifesSubclass.cs" />
     <Compile Include="API\Interfaces\ILimitedSubclass.cs" />
     <Compile Include="API\Interfaces\IGroup.cs" />
     <Compile Include="API\Interfaces\ILimitableGroup.cs" />
@@ -70,7 +76,7 @@
     <Compile Include="API\Interfaces\ISingle.cs" />
     <Compile Include="API\Interfaces\ISizeSubclass.cs" />
     <Compile Include="Configs\Config.cs" />
-    <Compile Include="Handlers\EventHandlers.cs" />
+    <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

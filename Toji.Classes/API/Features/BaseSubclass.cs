@@ -13,34 +13,68 @@ namespace Toji.Classes.API.Features
 {
     public abstract class BaseSubclass
     {
+        private static readonly Dictionary<RoleTypeId, List<BaseSubclass>> _roleToSubclasses;
         private static readonly List<BaseSubclass> _subclasses;
         private bool _subscribed;
 
         static BaseSubclass()
         {
             _subclasses = new List<BaseSubclass>(100);
+            _roleToSubclasses = new Dictionary<RoleTypeId, List<BaseSubclass>>(50);
         }
 
-        public static IReadOnlyDictionary<RoleTypeId, BaseSubclass> RoleToSubclasses => ReadOnlyCollection.ToDictionary(key => key.Role, value => value);
+        public BaseSubclass()
+        {
+            _subclasses.Add(this);
+
+            if (!_roleToSubclasses.ContainsKey(Role))
+            {
+                _roleToSubclasses.Add(Role, new List<BaseSubclass> { this });
+
+                return;
+            }
+
+            _roleToSubclasses[Role].Add(this);
+        }
+
+        public static IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>> RoleToSubclasses => (IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>>)_roleToSubclasses.ToDictionary(pair => pair.Key, pair => pair.Value.AsReadOnly());
 
         public static IReadOnlyCollection<BaseSubclass> ReadOnlyCollection => _subclasses.AsReadOnly();
 
         public static BaseSubclass Get(Player player) => ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
 
-        public static TSubclass Get<TSubclass>(Player player) where TSubclass : BaseSubclass => Get(player) as TSubclass;
+        public static TSubclass Get<TSubclass>(in Player player) where TSubclass : BaseSubclass => Get(player) as TSubclass;
 
-        public static bool TryGet(Player player, out BaseSubclass subclass)
+        public static IEnumerable<BaseSubclass> Get(RoleTypeId role) => RoleToSubclasses.ContainsKey(role) ? RoleToSubclasses[role] : null;
+
+        public static IEnumerable<TSubclass> Get<TSubclass>(RoleTypeId role) where TSubclass : BaseSubclass => Get(role).Select(sub => sub as TSubclass);
+
+        public static bool TryGet(in Player player, out BaseSubclass subclass)
         {
             subclass = Get(player);
 
             return subclass != null;
         }
 
-        public static bool TryGet<TSubclass>(Player player, out TSubclass subclass) where TSubclass : BaseSubclass
+        public static bool TryGet<TSubclass>(in Player player, out TSubclass subclass) where TSubclass : BaseSubclass
         {
             subclass = Get<TSubclass>(player);
 
             return subclass != null;
+        }
+
+        public static bool TryGet(RoleTypeId role, out IEnumerable<BaseSubclass> subclasses)
+        {
+            subclasses = Get(role);
+
+            return subclasses != null && subclasses.Any();
+        }
+
+        public static bool TryGet<TSubclass>(RoleTypeId role, out IEnumerable<TSubclass> subclasses) where TSubclass : BaseSubclass
+        {
+            subclasses = Get<TSubclass>(role);
+
+            return subclasses != null && subclasses.Any();
         }
 
         public static bool HasAny(Player player) => ReadOnlyCollection.Any(subclass => subclass.Has(player));
@@ -57,37 +91,19 @@ namespace Toji.Classes.API.Features
 
         public bool IsSingle => this.IsSingleSubclass();
 
-        public virtual bool Has(Player player)
+        public virtual bool Has(in Player player) => player == null;
+
+        public virtual bool Can(in Player player) => player != null && CheckLimited(player) && CheckRandom() && CheckDate();
+
+        public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
-            if (player == null)
-            {
-                return false;
-            }
+            System.Delegate action = Assign;
 
-            if (this is IGroup group)
-            {
-                return group.Players.Contains(player);
-            }
-
-            if (this is ISingle single)
-            {
-                return single.Player.UserId == player.UserId;
-            }
-
-            return false;
+            return action.CallDelayedWithResult<bool>(delay, player);
         }
 
-        public virtual bool Can(Player player) => player != null && CheckType() && CheckLimited(player) && CheckRandom() && CheckDate();
-
-        public virtual void Assign(Player player)
+        public virtual void UpdatePlayer(in Player player, bool updateInv = true)
         {
-            if (TryGet(player, out var subclass))
-            {
-                return;
-            }
-
-            player.SendConsoleMessage(BuildConsoleMessage(), "yellow");
-
             if (ShowInfo)
             {
                 CreateInfo(player);
@@ -98,7 +114,7 @@ namespace Toji.Classes.API.Features
                 player.Scale = size.Size;
             }
 
-            if (this is IHasInventory inventory)
+            if (updateInv && this is IHasInventory inventory)
             {
                 foreach (var slot in inventory.Slots)
                 {
@@ -118,6 +134,18 @@ namespace Toji.Classes.API.Features
                 player.MaxHealth = health.Health;
                 player.Health = health.Health;
             }
+        }
+
+        public virtual bool Assign(in Player player)
+        {
+            if (TryGet(player, out _))
+            {
+                return false;
+            }
+
+            player.SendConsoleMessage(BuildConsoleMessage(), "yellow");
+
+            UpdatePlayer(player);
 
             if (this is ICassieSubclass cassie)
             {
@@ -138,13 +166,15 @@ namespace Toji.Classes.API.Features
             {
                 Subscribe();
             }
+
+            return true;
         }
 
-        public virtual void Revoke(Player player)
+        public virtual bool Revoke(in Player player)
         {
             if (!Has(player))
             {
-                return;
+                return false;
             }
 
             if (ShowInfo)
@@ -167,26 +197,14 @@ namespace Toji.Classes.API.Features
                 Map.Broadcast(10, broadcast.DeathText);
             }
 
-            if (_subscribed)
+            if (!_subscribed)
             {
-                if (this is ISingle single)
-                {
-                    single.Player = null;
-                }
-                else if (this is IGroup group)
-                {
-                    group.Players.Remove(player);
-
-                    if (group.Players.Count != 0)
-                    {
-                        return;
-                    }
-                }
-
-                _subscribed = false;
-
-                Unsubscribe();
+                return false;
             }
+
+            _subscribed = false;
+
+            return true;
         }
 
         public virtual void Subscribe()
@@ -199,19 +217,21 @@ namespace Toji.Classes.API.Features
 
         }
 
-        protected void CreateInfo(Player ply)
+        internal protected void OnEscaped(in Player player) => UpdatePlayer(player, false);
+
+        protected void CreateInfo(in Player ply)
         {
             ply.CustomInfo = $"{ply.CustomName}{(string.IsNullOrEmpty(ply.CustomInfo) ? string.Empty : $"\n{ply.CustomInfo}")}\n{GetRoleInfo(ply)}";
             ply.InfoArea &= ~(PlayerInfoArea.Role | PlayerInfoArea.Nickname);
         }
 
-        protected void DestroyInfo(Player ply)
+        protected void DestroyInfo(in Player ply)
         {
             ply.CustomInfo = ply.CustomInfo.Replace(ply.CustomName, string.Empty).Replace("\n", string.Empty).Replace(GetRoleInfo(ply), string.Empty);
             ply.InfoArea |= PlayerInfoArea.Role | PlayerInfoArea.Nickname;
         }
 
-        protected string GetRoleInfo(Player ply) => ply.IsScp ? $"{ply.Role.Type.Translate()} - {Name}" : Name;
+        protected string GetRoleInfo(in Player ply) => ply.IsScp ? $"{ply.Role.Type.Translate()} - {Name}" : Name;
 
         private string BuildConsoleMessage()
         {
@@ -277,27 +297,7 @@ namespace Toji.Classes.API.Features
             return builder.ToString();
         }
 
-        private bool CheckType()
-        {
-            if (IsGroup)
-            {
-                if (this is ILimitableGroup group)
-                {
-                    return group.Players.Count < group.Max;
-                }
-
-                return true;
-            }
-
-            if (this is ISingle single)
-            {
-                return single.Player == null;
-            }
-
-            return false;
-        }
-
-        private bool CheckLimited(Player player)
+        private bool CheckLimited(in Player player)
         {
             if (this is ILimitedSubclass limit && !limit.Groups.Contains(player.GroupName) && !limit.Users.Contains(player.UserId))
             {

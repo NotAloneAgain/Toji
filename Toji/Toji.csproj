@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ExiledAPI\Extensions\DamageExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\EffectExtensions.cs" />
+    <Compile Include="ExiledAPI\Extensions\EventExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\FlagsExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\PlayerExtensions.cs" />
     <Compile Include="Global\Range.cs" />
