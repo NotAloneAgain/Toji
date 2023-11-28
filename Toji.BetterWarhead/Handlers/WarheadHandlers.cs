@@ -4,11 +4,12 @@ using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using Exiled.API.Features.Pickups;
 using Exiled.Events.EventArgs.Warhead;
-using PlayerRoles;
+using MEC;
 using System.Collections.Generic;
 using Toji.BetterWarhead.API;
 using Toji.BetterWarhead.API.Features;
 using Toji.BetterWarhead.API.Features.Events;
+using Toji.Classes.API.Extensions;
 using UnityEngine;
 
 namespace Toji.BetterWarhead.Handlers
@@ -34,9 +35,11 @@ namespace Toji.BetterWarhead.Handlers
                 return;
             }
 
+            var surface = Door.Get(DoorType.SurfaceGate);
+
             Door.Get(DoorType.EscapePrimary).LockdownDoor();
             Door.Get(DoorType.EscapeSecondary).LockdownDoor();
-            Door.Get(DoorType.SurfaceGate).LockdownDoor();
+            surface.LockdownDoor();
             Door.Get(DoorType.NukeSurface).LockdownDoor();
 
             Map.TurnOffAllLights(3, ZoneType.Surface);
@@ -60,7 +63,7 @@ namespace Toji.BetterWarhead.Handlers
 
                 if (player.IsGodModeEnabled && !player.RemoteAdminAccess)
                 {
-                    player.Teleport(RoleTypeId.NtfSergeant.GetRandomSpawnLocation().Position + Vector3.up);
+                    player.Teleport(surface.Position + Vector3.up);
 
                     continue;
                 }
@@ -81,7 +84,14 @@ namespace Toji.BetterWarhead.Handlers
                 ragdoll.Destroy();
             }
 
-            _events.GetRandomValue().Start();
+            var selectedEvent = _events.GetRandomValue();
+
+            if (Random.Range(0, 100) < selectedEvent.Chance)
+            {
+                return;
+            }
+
+            Timing.CallDelayed(Random.Range(5, 20), selectedEvent.Start);
         }
 
         public void OnStarting(StartingEventArgs ev)

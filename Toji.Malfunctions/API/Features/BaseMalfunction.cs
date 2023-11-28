@@ -10,8 +10,18 @@ namespace Toji.Malfunctions.API.Features
 {
     public abstract class BaseMalfunction
     {
-        public virtual void Activate()
+        public abstract string Name { get; }
+
+        public abstract int Chance { get; }
+
+        public abstract int Duration { get; }
+
+        public bool IsActive { get; protected set; }
+
+        public virtual void Activate(int duration)
         {
+            IsActive = true;
+
             if (this is ICassieMalfunction cassie)
             {
                 Cassie.MessageTranslated(cassie.WarningText, cassie.WarningSubtitles);
@@ -27,6 +37,8 @@ namespace Toji.Malfunctions.API.Features
 
         public virtual void Deactivate()
         {
+            IsActive = false;
+
             Unsubscribe();
         }
 

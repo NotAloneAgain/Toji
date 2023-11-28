@@ -79,6 +79,8 @@ namespace Toji.Teslas.Handlers
                     }
 
                     tesla.Delete();
+
+                    offset++;
                 }
             }
         }

@@ -1,6 +1,6 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
-using System;
 using Toji.Malfunctions.API.Interfaces;
 
 namespace Toji.Malfunctions.API.Features
@@ -18,6 +18,8 @@ namespace Toji.Malfunctions.API.Features
         }
 
         public abstract void OnFailedUse(InteractingElevatorEventArgs ev);
+
+        protected override Lift SelectObject() => Lift.List.GetRandomValue();
 
         private void OnInteractingElevator(InteractingElevatorEventArgs ev)
         {

@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.EventArgs.Player;
+using Toji.ExiledAPI.Extensions;
 
 namespace Toji.InfinityAmmo.Handlers
 {
@@ -6,7 +7,10 @@ namespace Toji.InfinityAmmo.Handlers
     {
         public void OnReloadingWeapon(ReloadingWeaponEventArgs ev)
         {
-            if (ev.Player == null || ev.Firearm == null || ev.Player.IsHost || ev.Player.IsNPC)
+            if (ev.IsValid() && ev.Firearm == null)
+            {
+                return;;
+            }
 
             ev.Player.ClearAmmo();
 

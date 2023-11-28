@@ -2,12 +2,8 @@
 
 namespace Toji.Classes.API.Interfaces
 {
-    public interface ICustomDamageSubclass
+    public interface IDamageController
     {
-        float Damage { get; }
-
-        float DamageMultiplayer { get; }
-
         void OnDamage(HurtingEventArgs ev);
     }
 }

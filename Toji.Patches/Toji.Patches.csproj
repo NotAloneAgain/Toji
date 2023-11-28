@@ -53,6 +53,7 @@
     <Compile Include="Generic\Admins\Items\RemoveItemPatch.cs" />
     <Compile Include="Generic\Admins\PlayerListPatch.cs" />
     <Compile Include="Generic\Admins\RespawnTimePatch.cs" />
+    <Compile Include="Generic\Network\NetworkErrorPatch.cs" />
     <Compile Include="Generic\Overcons\ActivateTeslaPatch.cs" />
     <Compile Include="Generic\Players\DisarmingRulesPatch.cs" />
     <Compile Include="Generic\Players\InfinityAmmoPatch.cs" />

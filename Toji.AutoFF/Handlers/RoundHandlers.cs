@@ -13,6 +13,8 @@ namespace Toji.AutoFF.Handlers
 {
     internal sealed class RoundHandlers
     {
+        private EndRoundAction _roundAction;
+
         public void OnRoundStarted()
         {
             Server.FriendlyFire = false;
@@ -32,16 +34,21 @@ namespace Toji.AutoFF.Handlers
 
             var array = System.Enum.GetValues(typeof(EndRoundAction)).ToArray<EndRoundAction>();
 
-            var action = array[Random.Range(0, array.Length)];
+            _roundAction = array[Random.Range(0, array.Length)];
 
-            if (action.ToString().Contains("Force") && Player.List.Count > 35)
+            OpenDoors();
+        }
+
+        public void OnRoundEnded(RoundEndedEventArgs ev)
+        {
+            Server.FriendlyFire = true;
+
+            if (_roundAction.ToString().Contains("Force") && Player.List.Count > 35)
             {
                 return;
             }
 
-            OpenDoors();
-
-            switch (action)
+            switch (_roundAction)
             {
                 case EndRoundAction.ForceAllToScps:
                     {
@@ -127,7 +134,9 @@ namespace Toji.AutoFF.Handlers
                     {
                         foreach (var player in Player.List)
                         {
-                            player.Role.Set(RoleTypeId.Tutorial);
+                            player.Role.Set(RoleTypeId.Tutorial, RoleSpawnFlags.AssignInventory);
+
+                            player.RandomTeleport(typeof(Door));
 
                             player.EnableEffect(EffectType.MovementBoost, 255, 255);
                         }
@@ -135,11 +144,6 @@ namespace Toji.AutoFF.Handlers
                         break;
                     }
             }
-        }
-
-        public void OnRoundEnded(RoundEndedEventArgs ev)
-        {
-            Server.FriendlyFire = true;
         }
 
         private void OpenDoors()

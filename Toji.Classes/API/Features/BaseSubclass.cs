@@ -1,14 +1,18 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Roles;
+using Exiled.Events.EventArgs.Map;
 using Hints;
 using PlayerRoles;
+using PluginAPI.Commands;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Characteristics;
 using Toji.NwPluginAPI.API.Extensions;
 using UnityEngine;
 
@@ -82,21 +86,23 @@ namespace Toji.Classes.API.Features
 
         public static bool HasAny(Player player) => ReadOnlyCollection.Any(subclass => subclass.Has(player));
 
+        public bool IsGroup => this.IsGroupSubclass();
+
+        public bool IsSingle => this.IsSingleSubclass();
+
         public abstract string Name { get; }
 
         public abstract string Desc { get; }
 
         public abstract RoleTypeId Role { get; }
 
+        public virtual List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(0);
+
         public virtual bool ShowInfo { get; } = true;
-
-        public bool IsGroup => this.IsGroupSubclass();
-
-        public bool IsSingle => this.IsSingleSubclass();
 
         public virtual bool Has(in Player player) => player == null;
 
-        public virtual bool Can(in Player player) => player != null && CheckLimited(player) && CheckRandom() && CheckDate();
+        public virtual bool Can(in Player player) => player != null && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
 
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
@@ -105,37 +111,19 @@ namespace Toji.Classes.API.Features
             return action.CallDelayedWithResult<bool>(delay, player);
         }
 
-        public virtual void UpdatePlayer(in Player player, bool updateInv = true)
+        public virtual void UpdatePlayer(in Player player)
         {
             if (ShowInfo)
             {
                 CreateInfo(player);
             }
 
-            if (this is ISizeSubclass size)
+            if (Characteristics.Any())
             {
-                player.Scale = size.Size;
-            }
-
-            if (updateInv && this is IHasInventory inventory)
-            {
-                foreach (var slot in inventory.Slots)
+                foreach (var characteristic in Characteristics)
                 {
-                    var item = slot.GetItem();
-
-                    if (item == ItemType.None)
-                    {
-                        continue;
-                    }
-
-                    player.AddItem(item);
+                    characteristic.OnEnabled(player);
                 }
-            }
-
-            if (this is ICustomHealthSubclass health)
-            {
-                player.MaxHealth = health.Health;
-                player.Health = health.Health;
             }
         }
 
@@ -146,7 +134,7 @@ namespace Toji.Classes.API.Features
                 return false;
             }
 
-            player.SendConsoleMessage(BuildConsoleMessage(), "yellow");
+            player.SendConsoleMessage(BuildConsoleMessage(player), "yellow");
 
             UpdatePlayer(player);
 
@@ -190,9 +178,12 @@ namespace Toji.Classes.API.Features
                 DestroyInfo(player);
             }
 
-            if (this is ISizeSubclass)
+            if (Characteristics.Any())
             {
-                player.Scale = Vector3.one;
+                foreach (var characteristic in Characteristics)
+                {
+                    characteristic.OnEnabled(player);
+                }
             }
 
             if (this is ICassieSubclass cassie)
@@ -242,7 +233,7 @@ namespace Toji.Classes.API.Features
 
         public virtual void LazyUnsubscribe() { }
 
-        internal protected void OnEscaped(in Player player) => UpdatePlayer(player, false);
+        internal protected void OnEscaped(in Player player) => UpdatePlayer(player);
 
         protected void CreateInfo(in Player ply)
         {
@@ -258,7 +249,7 @@ namespace Toji.Classes.API.Features
 
         protected string GetRoleInfo(in Player ply) => ply.IsScp ? $"{ply.Role.Type.Translate()} - {Name}" : Name;
 
-        private string BuildConsoleMessage()
+        private string BuildConsoleMessage(in Player player)
         {
             StringBuilder builder = new($"Ты получил подкласс:\n\t\tНазвание: {Name}.\n\t\tОписание: {Desc}.");
 
@@ -280,7 +271,7 @@ namespace Toji.Classes.API.Features
 
             if (this is IRandomSubclass random)
             {
-                builder.Append($"\n\t\tШанс: {random.Chance}.");
+                builder.Append($"\n\t\tШанс: {random.Chance}%.");
             }
 
             if (this is ILimitedSubclass)
@@ -307,6 +298,16 @@ namespace Toji.Classes.API.Features
                 builder.Append($"\n\t\tДоступный только с {min}я по {max}.");
             }
 
+            if (Characteristics.Any())
+            {
+                builder.Append("\n\t\tХарактеристики:");
+
+                foreach (var characteristic in Characteristics)
+                {
+                    builder.Append($"\n\t\t\t{characteristic.Name}: {characteristic.GetDesc(player)}.");
+                }
+            }
+
             if (this is ICommandsSubclass commands)
             {
                 builder.Append("\n\t\tКоманды:");
@@ -325,6 +326,26 @@ namespace Toji.Classes.API.Features
             if (this is ILimitedSubclass limit && !limit.Groups.Contains(player.GroupName) && !limit.Users.Contains(player.UserId))
             {
                 return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckNeeds()
+        {
+            if (this is INeedRole needRole && Player.List.All(ply => ply.Role.Type != needRole.NeedRole))
+            {
+                return false;
+            }
+
+            if (this is INeedSubclass needSubclass)
+            {
+                var subclass = ReadOnlyCollection.FirstOrDefault(sub => sub.GetType() == needSubclass.Needed);
+
+                if (subclass != null && Player.List.All(ply => !subclass.Has(ply)))
+                {
+                    return false;
+                }
             }
 
             return true;

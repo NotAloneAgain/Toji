@@ -10,11 +10,11 @@ namespace Toji.Malfunctions.API.Features
     {
         public TObject Object { get; private set; }
 
-        public override void Activate()
+        public override void Activate(int duration)
         {
-            SelectObject();
+            Object = SelectObject();
 
-            base.Activate();
+            base.Activate(duration);
         }
 
         public override void Deactivate()
@@ -24,6 +24,6 @@ namespace Toji.Malfunctions.API.Features
             Object = null;
         }
 
-        public abstract void SelectObject();
+        protected abstract TObject SelectObject();
     }
 }

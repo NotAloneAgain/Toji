@@ -4,6 +4,7 @@ using PlayerRoles;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Characteristics;
 using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Handlers
@@ -27,7 +28,7 @@ namespace Toji.Classes.Handlers
                     return;
                 }
 
-                if (ev.NewRole == RoleTypeId.Spectator && (subclass is not ILifesSubclass lifes || !lifes.KeepAfterDeath))
+                if (ev.NewRole == RoleTypeId.Spectator && subclass.Characteristics.Find(x => x is RespawnCharacteristics) is RespawnCharacteristics respawn && respawn.Value)
                 {
                     return;
                 }
@@ -62,13 +63,13 @@ namespace Toji.Classes.Handlers
 
         public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (!ev.Player.TryGetSubclass(out var subclass) || subclass is not ICustomTeslaSubclass customTesla)
+            if (!ev.Player.TryGetSubclass(out var subclass) || subclass.Characteristics.Find(x => x is TeslaCharacteristics) is not TeslaCharacteristics tesla)
             {
                 return;
             }
 
-            ev.IsTriggerable = customTesla.TriggeringTesla;
-            ev.IsAllowed = customTesla.TriggeringTesla;
+            ev.IsTriggerable = !tesla.Value;
+            ev.IsAllowed = !tesla.Value;
         }
 
         public void OnHurting(HurtingEventArgs ev)
@@ -78,28 +79,34 @@ namespace Toji.Classes.Handlers
                 return;
             }
 
-            if (ev.Player.TryGetSubclass(out var subclass) && subclass is ICustomHurtSubclass customHurt)
+            if (ev.Player.TryGetSubclass(out var subclass))
             {
-                customHurt.OnHurt(ev);
-
-                if (customHurt.HurtMultiplayer != 1)
+                if (subclass is IHurtController controller)
                 {
-                    ev.Amount *= customHurt.HurtMultiplayer;
+                    controller.OnHurt(ev);
+                }
+
+                if (subclass.Characteristics.Find(x => x is HurtMultiplayerCharacteristic) is HurtMultiplayerCharacteristic multiplayer && multiplayer.Value != 1)
+                {
+                    ev.Amount *= multiplayer.Value;
                 }
             }
 
-            if (ev.IsNotSelfDamage() && ev.Attacker.TryGetSubclass(out var attackerSubclass) && attackerSubclass is ICustomDamageSubclass customDamage)
+            if (ev.IsNotSelfDamage() && ev.Attacker.TryGetSubclass(out var attackerSubclass))
             {
-                customDamage.OnDamage(ev);
-
-                if (customDamage.Damage != -2)
+                if (attackerSubclass is IDamageController controller)
                 {
-                    ev.Amount = customDamage.Damage;
+                    controller.OnDamage(ev);
                 }
 
-                if (customDamage.DamageMultiplayer != 1)
+                if (attackerSubclass.Characteristics.Find(x => x is DamageCharacteristic) is DamageCharacteristic damage)
                 {
-                    ev.Amount *= customDamage.DamageMultiplayer;
+                    ev.Amount = damage.Value;
+                }
+
+                if (attackerSubclass.Characteristics.Find(x => x is DamageMultiplayerCharacteristic) is DamageMultiplayerCharacteristic multiplayer && multiplayer.Value != 1)
+                {
+                    ev.Amount *= multiplayer.Value;
                 }
             }
         }

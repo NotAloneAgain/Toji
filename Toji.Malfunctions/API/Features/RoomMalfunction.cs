@@ -1,13 +1,10 @@
-﻿using Exiled.API.Features;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 
 namespace Toji.Malfunctions.API.Features
 {
     public abstract class RoomMalfunction : ObjectMalfunction<Room>
     {
+        protected override Room SelectObject() => Room.List.GetRandomValue();
     }
 }

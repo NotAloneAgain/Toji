@@ -9,6 +9,7 @@ using RelativePositioning;
 using System;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Characteristics;
 using Toji.NwPluginAPI.API.Extensions;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ namespace Toji.Patches.Generic.Scp939
                     return false;
                 }
 
-                if (player.TryGetSubclass(out var subclass) && subclass is ICustomSoundSubclass customSound && !customSound.CanSound)
+                if (player.TryGetSubclass(out var subclass) && subclass.Characteristics.Find(x => x is SoundCharacteristics) is SoundCharacteristics sound && sound.Value)
                 {
                     return false;
                 }

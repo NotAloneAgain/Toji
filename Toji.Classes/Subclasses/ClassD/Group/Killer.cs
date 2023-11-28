@@ -1,47 +1,46 @@
 ﻿using Exiled.API.Enums;
 using Exiled.Events.EventArgs.Map;
-using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
 using System.Collections.Generic;
+using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Characteristics;
 
 namespace Toji.Classes.Subclasses.ClassD.Group
 {
-    public class Killer : DGroupSubclass, ICustomDamageSubclass, IHasInventory, IHintSubclass, ILimitableGroup, IRandomSubclass
+    public class Killer : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
         private RoomType _room;
 
         public override string Name => "Убийца";
 
-        public override string Desc => "Всегда готов кого-либо убить и знаешь много методов для этого";
+        public override string Desc => "Всегда готов отнять жизнь и знаешь лучшие методики";
 
-        public int Chance => 90;
+        public int Chance => 18;
 
         public int Max => 3;
 
-        public float Damage => -2;
-
-        public float DamageMultiplayer => 1.1f;
-
-        public HashSet<Slot> Slots { get; } = new HashSet<Slot>()
+        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>()
         {
-            new RandomSlot(new Dictionary<ItemType, int>(2)
+            new InventoryCharacteristic(new List<Slot>()
             {
-                { ItemType.GunCOM15, 50 },
-                { ItemType.Medkit, 100 }
-            }),
-            new RandomSlot(new Dictionary<ItemType, int>(2)
-            {
-                { ItemType.Adrenaline, 50 },
-                { ItemType.Painkillers, 100 }
-            }),
-            new StaticSlot(ItemType.Painkillers),
+                new RandomSlot(new Dictionary<ItemType, int>(2)
+                {
+                    { ItemType.GunCOM15, 44 },
+                    { ItemType.Medkit, 100 }
+                }),
+                new RandomSlot(new Dictionary<ItemType, int>(2)
+                {
+                    { ItemType.Adrenaline, 48 },
+                    { ItemType.Painkillers, 100 }
+                }),
+            })
         };
 
         public override bool Assign(in Exiled.API.Features.Player player)
         {
-            if (!base.Assign(player))
+            if (!base.Assign(player) || player.HasItem(ItemType.GunCOM15))
             {
                 return false;
             }
@@ -64,8 +63,6 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
             base.Unsubscribe();
         }
-
-        public void OnDamage(HurtingEventArgs ev) { }
 
         public void OnSpawningItem(SpawningItemEventArgs ev)
         {

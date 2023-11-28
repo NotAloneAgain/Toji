@@ -19,7 +19,7 @@ namespace Toji.BetterWarhead.API.Features.Events
 
         public override int Chance => 20;
 
-        public override string Text => "Произошел выброс радиации из взорванного комплекса. Немедленно отойти от лифтов и укрыться!";
+        public override string Text => "Произошел выброс радиации из взорванного комплекса. Немедленно укрыться!";
 
         private protected override void Activate()
         {
@@ -30,7 +30,7 @@ namespace Toji.BetterWarhead.API.Features.Events
         {
             DateTime startTime = DateTime.Now;
 
-            while ((DateTime.Now - startTime).TotalSeconds > 60 || !Round.InProgress)
+            while ((DateTime.Now - startTime).TotalSeconds <= 60 || !Round.InProgress)
             {
                 foreach (var player in Player.List)
                 {

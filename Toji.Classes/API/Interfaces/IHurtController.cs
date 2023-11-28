@@ -2,10 +2,8 @@
 
 namespace Toji.Classes.API.Interfaces
 {
-    public interface ICustomHurtSubclass
+    public interface IHurtController
     {
-        float HurtMultiplayer { get; }
-
         void OnHurt(HurtingEventArgs ev);
     }
 }
