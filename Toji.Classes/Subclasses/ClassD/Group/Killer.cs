@@ -23,6 +23,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>()
         {
+            new DamageMultiplayerCharacteristic(1.1f),
             new InventoryCharacteristic(new List<Slot>()
             {
                 new RandomSlot(new Dictionary<ItemType, int>(2)
@@ -40,9 +41,16 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override bool Assign(in Exiled.API.Features.Player player)
         {
-            if (!base.Assign(player) || player.HasItem(ItemType.GunCOM15))
+            if (!base.Assign(player))
             {
                 return false;
+            }
+
+            if (player.HasItem(ItemType.GunCOM15))
+            {
+                player.SendConsoleMessage("Ваш пистолет находиться в ваших руках.", "green");
+
+                return true;
             }
 
             player.SendConsoleMessage(Translate(_room), "yellow");
@@ -78,11 +86,11 @@ namespace Toji.Classes.Subclasses.ClassD.Group
         {
             return type switch
             {
-                RoomType.LczCafe => "Младший сотрудник СБ забыл свой пистолет в PC-00",
-                RoomType.Lcz173 => "Крыса внутри СБ оставила пистолет в PT-00",
-                RoomType.LczToilets => "Твои сообщники успешно спрятали пистолет в WC-00",
-                RoomType.LczGlassBox => "Один из инженеров забыл свой пистолет в GR-00",
-                RoomType.Lcz330 => "Один из инженеров забыл свой пистолет в TC-00",
+                RoomType.LczCafe => "Младший сотрудник СБ забыл свой пистолет в PC-15.",
+                RoomType.Lcz173 => "Крыса внутри СБ оставила пистолет в PT-00.",
+                RoomType.LczToilets => "Твои сообщники успешно спрятали пистолет в WC-00.",
+                RoomType.LczGlassBox => "Один из инженеров забыл свой пистолет в GR-18.",
+                RoomType.Lcz330 => "Один из инженеров забыл свой пистолет в TC-01.",
                 _ => "неизвестно..."
             };
         }

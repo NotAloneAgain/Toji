@@ -10,8 +10,6 @@ namespace Toji.Classes.Characteristics
 {
     public class InventoryCharacteristic : Characteristic<List<Slot>>
     {
-        private Dictionary<RoleTypeId, int> _defaultValues;
-
         public InventoryCharacteristic(List<Slot> value) : base(value) { }
 
         public override string Name => "Свой инвентарь";
