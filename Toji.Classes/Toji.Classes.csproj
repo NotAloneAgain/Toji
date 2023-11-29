@@ -52,6 +52,8 @@
     <Compile Include="API\Extensions\SubclassExtensions.cs" />
     <Compile Include="API\Extensions\NwPlayerExtensions.cs" />
     <Compile Include="API\Extensions\TimingExtensions.cs" />
+    <Compile Include="API\Features\ActiveAbility.cs" />
+    <Compile Include="API\Features\BaseAbility.cs" />
     <Compile Include="API\Features\BaseCharacteristic.cs" />
     <Compile Include="API\Features\Characteristic.cs" />
     <Compile Include="API\Features\BaseSubclass.cs" />
@@ -59,7 +61,9 @@
     <Compile Include="API\Features\Inventory\RandomSlot.cs" />
     <Compile Include="API\Features\Inventory\Slot.cs" />
     <Compile Include="API\Features\Inventory\StaticSlot.cs" />
+    <Compile Include="API\Features\PassiveAbility.cs" />
     <Compile Include="API\Features\SingleSubclass.cs" />
+    <Compile Include="API\Features\TickAbility.cs" />
     <Compile Include="API\Interfaces\IBroadcastSubclass.cs" />
     <Compile Include="API\Interfaces\ICassieSubclass.cs" />
     <Compile Include="API\Interfaces\ICommandsSubclass.cs" />
@@ -77,6 +81,7 @@
     <Compile Include="API\Interfaces\IRandomSubclass.cs" />
     <Compile Include="API\Interfaces\ISeasonSubclass.cs" />
     <Compile Include="API\Interfaces\ISingle.cs" />
+    <Compile Include="API\Interfaces\ISubscribable.cs" />
     <Compile Include="Characteristics\DamageCharacteristic.cs" />
     <Compile Include="Characteristics\InventoryCharacteristic.cs" />
     <Compile Include="Characteristics\HurtMultiplayerCharacteristic.cs" />

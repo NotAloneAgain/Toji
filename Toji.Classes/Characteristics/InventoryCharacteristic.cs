@@ -31,8 +31,6 @@ namespace Toji.Classes.Characteristics
             }
         }
 
-        protected override string GetAdvancedDescription(Player player) => GetDefaultDescription();
-
-        protected override string GetDefaultDescription() => "Вы имеете свой уникальный инвентарь";
+        public override string GetDesc(Player player = null) => "Вы имеете свой уникальный инвентарь";
     }
 }

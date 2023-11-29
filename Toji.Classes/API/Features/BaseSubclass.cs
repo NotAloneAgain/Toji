@@ -96,6 +96,8 @@ namespace Toji.Classes.API.Features
 
         public abstract RoleTypeId Role { get; }
 
+        public virtual List<BaseAbility> Abilities { get; } = new List<BaseAbility>(0);
+
         public virtual List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(0);
 
         public virtual bool ShowInfo { get; } = true;
@@ -116,6 +118,14 @@ namespace Toji.Classes.API.Features
             if (ShowInfo)
             {
                 CreateInfo(player);
+            }
+
+            if (Abilities.Any())
+            {
+                foreach (var ability in Abilities)
+                {
+                    ability.OnEnabled(player);
+                }
             }
 
             if (Characteristics.Any())
@@ -178,11 +188,19 @@ namespace Toji.Classes.API.Features
                 DestroyInfo(player);
             }
 
+            if (Abilities.Any())
+            {
+                foreach (var ability in Abilities)
+                {
+                    ability.OnEnabled(player);
+                }
+            }
+
             if (Characteristics.Any())
             {
                 foreach (var characteristic in Characteristics)
                 {
-                    characteristic.OnEnabled(player);
+                    characteristic.OnDisabled(player);
                 }
             }
 
@@ -218,18 +236,17 @@ namespace Toji.Classes.API.Features
                 LazyUnsubscribe();
             }
 
-            Unsubscribe();
+            if (this is ISubscribable sub)
+            {
+                sub.Unsubscribe();
+            }
 
             _roleToSubclasses[Role].Remove(this);
 
             _subclasses.Remove(this);
         }
 
-        public virtual void Subscribe() { }
-
         public virtual void LazySubscribe() { }
-
-        public virtual void Unsubscribe() { }
 
         public virtual void LazyUnsubscribe() { }
 
@@ -296,6 +313,16 @@ namespace Toji.Classes.API.Features
                 min = min.Substring(0, min.Length - 1);
 
                 builder.Append($"\n\t\tДоступный только с {min}я по {max}.");
+            }
+
+            if (Abilities.Any())
+            {
+                builder.Append("\n\t\tСпособности:");
+
+                foreach (var ability in Abilities)
+                {
+                    builder.Append($"\n\t\t\t{ability.Name}: {ability.Desc}.");
+                }
             }
 
             if (Characteristics.Any())

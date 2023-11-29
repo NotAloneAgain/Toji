@@ -9,8 +9,6 @@ namespace Toji.Classes.Characteristics
 
         public override string Name => "Измененный урон";
 
-        protected override string GetAdvancedDescription(Player player) => GetDefaultDescription();
-
-        protected override string GetDefaultDescription() => $"{Value} урона от атаки.";
+        public override string GetDesc(Player player = null) => $"{Value} урона от атаки.";
     }
 }

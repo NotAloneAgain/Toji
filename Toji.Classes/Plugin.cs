@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.Handlers;
 using System;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Interfaces;
 using Toji.Classes.Configs;
 using Toji.Classes.Handlers;
 
@@ -63,7 +64,10 @@ namespace Toji.Classes
 
                 BaseSubclass subclass = Activator.CreateInstance(type) as BaseSubclass;
 
-                subclass.Subscribe();
+                if (subclass is ISubscribable sub)
+                {
+                    sub.Subscribe();
+                }
             }
         }
 

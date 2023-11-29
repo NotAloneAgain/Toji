@@ -9,7 +9,7 @@ using Toji.Classes.Characteristics;
 
 namespace Toji.Classes.Subclasses.ClassD.Group
 {
-    public class Killer : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
+    public class Killer : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass, ISubscribable
     {
         private RoomType _room;
 
@@ -48,7 +48,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
             if (player.HasItem(ItemType.GunCOM15))
             {
-                player.SendConsoleMessage("Ваш пистолет находиться в ваших руках.", "green");
+                player.SendConsoleMessage("Ваш пистолет находится в ваших руках.", "green");
 
                 return true;
             }
@@ -58,19 +58,9 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             return true;
         }
 
-        public override void Subscribe()
-        {
-            base.Subscribe();
+        public void Subscribe() => Map.SpawningItem += OnSpawningItem;
 
-            Map.SpawningItem += OnSpawningItem;
-        }
-
-        public override void Unsubscribe()
-        {
-            Map.SpawningItem -= OnSpawningItem;
-
-            base.Unsubscribe();
-        }
+        public void Unsubscribe() => Map.SpawningItem -= OnSpawningItem;
 
         public void OnSpawningItem(SpawningItemEventArgs ev)
         {

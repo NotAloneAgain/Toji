@@ -10,9 +10,7 @@ namespace Toji.Classes.Characteristics
 
         public override string Name => "Модификатор урона";
 
-        protected override string GetAdvancedDescription(Player player) => GetDefaultDescription();
-
-        protected override string GetDefaultDescription()
+        public override string GetDesc(Player player = null)
         {
             var value = Value - 1;
 

@@ -10,8 +10,6 @@ namespace Toji.Classes.Characteristics
 
         public override string Name => "Сохранение подкласса";
 
-        protected override string GetAdvancedDescription(Player player) => GetDefaultDescription();
-
-        protected override string GetDefaultDescription() => Value ? "Ваш подкласс остается с вами даже после смерти и возрождения" : "Вы не будете сохранять подкласс после смерти (возможно, нерф).";
+        public override string GetDesc(Player player = null) => Value ? "Ваш подкласс остается с вами даже после смерти и возрождения" : "Вы не будете сохранять подкласс после смерти (возможно, нерф).";
     }
 }

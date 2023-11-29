@@ -59,13 +59,11 @@ namespace Toji.Classes.Characteristics
             base.OnDisabled(player);
         }
 
-        protected override string GetAdvancedDescription(Player player)
+        public override string GetDesc(Player player = null)
         {
             var defaultValue = _defaultValues[player.Role];
 
             return Value > defaultValue ? "Ваше количество здоровья больше стандартного" : "Ваше количество здоровья меньше стандартного";
         }
-
-        protected override string GetDefaultDescription() => Value > 100 ? "Ваше количество здоровья больше стандартного" : "Ваше количество здоровья меньше стандартного";
     }
 }

@@ -9,8 +9,6 @@ namespace Toji.Classes.Characteristics
 
         public override string Name => "Скрытность";
 
-        protected override string GetAdvancedDescription(Player player) => GetDefaultDescription();
-
-        protected override string GetDefaultDescription() => Value ? "Вы совершаете действия крайне тихо, SCP-939 не слышит ваших шагов и открытий дверей" : "Вы не будете скрытным (возможно, нерф).";
+        public override string GetDesc(Player player = null) => Value ? "Вы совершаете действия крайне тихо, SCP-939 не слышит ваших шагов и открытий дверей" : "Вы не будете скрытным (возможно, нерф).";
     }
 }

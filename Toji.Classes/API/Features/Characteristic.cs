@@ -1,4 +1,6 @@
-﻿namespace Toji.Classes.API.Features
+﻿using Exiled.API.Features;
+
+namespace Toji.Classes.API.Features
 {
     public abstract class Characteristic<TValue> : BaseCharacteristic
     {

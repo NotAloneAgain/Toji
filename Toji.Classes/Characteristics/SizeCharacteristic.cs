@@ -24,8 +24,6 @@ namespace Toji.Classes.Characteristics
             base.OnDisabled(player);
         }
 
-        protected override string GetAdvancedDescription(Player player) => GetDefaultDescription();
-
-        protected override string GetDefaultDescription() => Value.y * Value.x * Value.z > 1 ? "Ваш рост больше стандартного" : "Ваш рост меньше стандартного";
+        public override string GetDesc(Player player = null) => Value.y * Value.x * Value.z > 1 ? "Ваш рост больше стандартного" : "Ваш рост меньше стандартного";
     }
 }
