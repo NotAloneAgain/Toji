@@ -1,7 +1,7 @@
 ﻿using PlayerRoles;
 using Toji.Classes.API.Features;
 
-namespace Toji.Classes.Subclasses.ClassD
+namespace Toji.Classes.Subclasses.Scientists
 {
     public abstract class ScientistGroupSubclass : GroupSubclass
     {

@@ -57,20 +57,11 @@
     <Compile Include="Generic\Overcons\ActivateTeslaPatch.cs" />
     <Compile Include="Generic\Players\DisarmingRulesPatch.cs" />
     <Compile Include="Generic\Players\InfinityAmmoPatch.cs" />
-    <Compile Include="Generic\Scp049\AttackPatch.cs" />
-    <Compile Include="Generic\Scp939\DoorSoundPatch.cs" />
-    <Compile Include="Generic\Scp939\FootstepSoundPatch.cs" />
-    <Compile Include="Generic\Scp939\FootstepSoundProcessPatch.cs" />
-    <Compile Include="Generic\Scp939\WeaponSoundPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Toji.Classes\Toji.Classes.csproj">
-      <Project>{1276b6c8-db3d-4f19-b40a-4e4dfa63bcd0}</Project>
-      <Name>Toji.Classes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Toji.Teslas\Toji.Teslas.csproj">
       <Project>{ab2e7fc2-35fc-4079-8aec-169e306022de}</Project>
       <Name>Toji.Teslas</Name>

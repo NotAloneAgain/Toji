@@ -1,19 +1,13 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Roles;
-using Exiled.Events.EventArgs.Map;
-using Hints;
 using PlayerRoles;
-using PluginAPI.Commands;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
-using Toji.Classes.Characteristics;
-using Toji.NwPluginAPI.API.Extensions;
+using Toji.Global;
 using UnityEngine;
 
 namespace Toji.Classes.API.Features
@@ -21,12 +15,12 @@ namespace Toji.Classes.API.Features
     public abstract class BaseSubclass : System.IDisposable
     {
         private static readonly Dictionary<RoleTypeId, List<BaseSubclass>> _roleToSubclasses;
-        private static readonly List<BaseSubclass> _subclasses;
+        private static readonly SortedSet<BaseSubclass> _subclasses;
         private bool _subscribed;
 
         static BaseSubclass()
         {
-            _subclasses = new List<BaseSubclass>(100);
+            _subclasses = new SortedSet<BaseSubclass>(new PriorityComparer());
             _roleToSubclasses = new Dictionary<RoleTypeId, List<BaseSubclass>>(50);
         }
 
@@ -46,11 +40,15 @@ namespace Toji.Classes.API.Features
 
         public static IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>> RoleToSubclasses => _roleToSubclasses.ToDictionary(pair => pair.Key, pair => (IReadOnlyCollection<BaseSubclass>)pair.Value.AsReadOnly());
 
-        public static IReadOnlyCollection<BaseSubclass> ReadOnlyCollection => _subclasses.AsReadOnly();
+        public static IReadOnlyCollection<BaseSubclass> ReadOnlyCollection => _subclasses;
 
         public static BaseSubclass Get(Player player) => player == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
 
+        public static BaseSubclass Get(string str) => string.IsNullOrEmpty(str) ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Name.Equals(str, System.StringComparison.OrdinalIgnoreCase));
+
         public static TSubclass Get<TSubclass>(in Player player) where TSubclass : BaseSubclass => player == null ? null : Get(player) as TSubclass;
+
+        public static TSubclass Get<TSubclass>(in string str) where TSubclass : BaseSubclass => string.IsNullOrEmpty(str) ? null : Get(str) as TSubclass;
 
         public static IEnumerable<BaseSubclass> Get(RoleTypeId role) => RoleToSubclasses.ContainsKey(role) ? RoleToSubclasses[role] : null;
 
@@ -66,6 +64,20 @@ namespace Toji.Classes.API.Features
         public static bool TryGet<TSubclass>(in Player player, out TSubclass subclass) where TSubclass : BaseSubclass
         {
             subclass = Get<TSubclass>(player);
+
+            return subclass != null;
+        }
+
+        public static bool TryGet(in string str, out BaseSubclass subclass)
+        {
+            subclass = Get(str);
+
+            return subclass != null;
+        }
+
+        public static bool TryGet<TSubclass>(in string str, out TSubclass subclass) where TSubclass : BaseSubclass
+        {
+            subclass = Get<TSubclass>(str);
 
             return subclass != null;
         }
@@ -166,6 +178,11 @@ namespace Toji.Classes.API.Features
                 string text = string.IsNullOrEmpty(customHint?.HintText) ? $"<line-height=95%><size=95%><voffset=-18em><color={color}>Ты - {Name}!\n{Desc}.</color></size></voffset>" : customHint.HintText;
 
                 player.ShowHint(text, 10);
+            }
+
+            if (this is ISpawnpointSubclass spawnpoint)
+            {
+                player.Position = spawnpoint.Spawnpoint.Position;
             }
 
             if (!_subscribed)
@@ -315,16 +332,6 @@ namespace Toji.Classes.API.Features
                 builder.Append($"\n\t\tДоступный только с {min}я по {max}.");
             }
 
-            if (Abilities.Any())
-            {
-                builder.Append("\n\t\tСпособности:");
-
-                foreach (var ability in Abilities)
-                {
-                    builder.Append($"\n\t\t\t{ability.Name}: {ability.Desc}.");
-                }
-            }
-
             if (Characteristics.Any())
             {
                 builder.Append("\n\t\tХарактеристики:");
@@ -332,6 +339,16 @@ namespace Toji.Classes.API.Features
                 foreach (var characteristic in Characteristics)
                 {
                     builder.Append($"\n\t\t\t{characteristic.Name}: {characteristic.GetDesc(player)}.");
+                }
+            }
+
+            if (Abilities.Any())
+            {
+                builder.Append("\n\t\tСпособности:");
+
+                foreach (var ability in Abilities)
+                {
+                    builder.Append($"\n\t\t\t{ability.Type} | {ability.Name}: {ability.Desc}.");
                 }
             }
 

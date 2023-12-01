@@ -1,0 +1,22 @@
+﻿using System.Collections.Generic;
+
+namespace Toji.Commands.API.Features
+{
+    public class CommandPermission
+    {
+        public CommandPermission() { }
+
+        public CommandPermission(bool isLimited, HashSet<string> groups, HashSet<string> users)
+        {
+            IsLimited = isLimited;
+            Groups = groups;
+            Users = users;
+        }
+
+        public bool IsLimited { get; set; } = false;
+
+        public HashSet<string> Groups { get; set; } = new HashSet<string>();
+
+        public HashSet<string> Users { get; set; } = new HashSet<string>();
+    }
+}

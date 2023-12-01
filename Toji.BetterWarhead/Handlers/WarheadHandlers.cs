@@ -86,7 +86,7 @@ namespace Toji.BetterWarhead.Handlers
 
             var selectedEvent = _events.GetRandomValue();
 
-            if (Random.Range(0, 100) < selectedEvent.Chance)
+            if (Random.Range(0, 100) <= selectedEvent.Chance)
             {
                 return;
             }

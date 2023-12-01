@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Features;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Toji.Classes.API.Features.Abilities;
 using Toji.Classes.API.Interfaces;
 
 namespace Toji.Classes.API.Features
@@ -19,6 +20,8 @@ namespace Toji.Classes.API.Features
         public abstract string Name { get; }
 
         public abstract string Desc { get; }
+
+        public virtual string Type => this is PassiveAbility ? "Пассивная" : this is ActiveAbility ? "Активная" : "Неизвестно";
 
         public virtual void OnEnabled(Player player)
         {

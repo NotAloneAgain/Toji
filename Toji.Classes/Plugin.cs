@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.Handlers;
+using HarmonyLib;
 using System;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
@@ -9,6 +10,9 @@ namespace Toji.Classes
 {
     public sealed class Plugin : Exiled.API.Features.Plugin<Config>
     {
+        private const string HarmonyId = "zenin";
+
+        private Harmony _harmony;
         private PlayerHandlers _handlers;
 
         public override string Name => "Toji.Classes";
@@ -21,6 +25,8 @@ namespace Toji.Classes
 
         public override void OnEnabled()
         {
+            _harmony = new(HarmonyId);
+
             _handlers = new();
 
             Player.TriggeringTesla += _handlers.OnTriggeringTesla;
@@ -29,11 +35,15 @@ namespace Toji.Classes
 
             CreateSubclasses();
 
+            _harmony.PatchAll();
+
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
+            _harmony.UnpatchAll(HarmonyId);
+
             DestroySubclasses();
 
             Player.Hurting -= _handlers.OnHurting;
@@ -41,6 +51,8 @@ namespace Toji.Classes
             Player.TriggeringTesla -= _handlers.OnTriggeringTesla;
 
             _handlers = null;
+
+            _harmony = null;
 
             base.OnDisabled();
         }

@@ -48,22 +48,33 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Enums\LoadPriority.cs" />
     <Compile Include="API\Extensions\PlayerExtensions.cs" />
+    <Compile Include="API\Extensions\SpawnpointExtensions.cs" />
     <Compile Include="API\Extensions\SubclassExtensions.cs" />
-    <Compile Include="API\Extensions\NwPlayerExtensions.cs" />
     <Compile Include="API\Extensions\TimingExtensions.cs" />
-    <Compile Include="API\Features\ActiveAbility.cs" />
+    <Compile Include="API\Features\Abilities\AbilityUse.cs" />
+    <Compile Include="API\Features\Abilities\ActiveAbility.cs" />
     <Compile Include="API\Features\BaseAbility.cs" />
     <Compile Include="API\Features\BaseCharacteristic.cs" />
     <Compile Include="API\Features\Characteristic.cs" />
     <Compile Include="API\Features\BaseSubclass.cs" />
+    <Compile Include="API\Features\Abilities\CooldownAbility.cs" />
     <Compile Include="API\Features\GroupSubclass.cs" />
     <Compile Include="API\Features\Inventory\RandomSlot.cs" />
     <Compile Include="API\Features\Inventory\Slot.cs" />
     <Compile Include="API\Features\Inventory\StaticSlot.cs" />
-    <Compile Include="API\Features\PassiveAbility.cs" />
+    <Compile Include="API\Features\Abilities\PassiveAbility.cs" />
+    <Compile Include="API\Features\PriorityComparer.cs" />
     <Compile Include="API\Features\SingleSubclass.cs" />
-    <Compile Include="API\Features\TickAbility.cs" />
+    <Compile Include="API\Features\Spawnpoints\BaseSpawnpoint.cs" />
+    <Compile Include="API\Features\Spawnpoints\DoorSpawnpoint.cs" />
+    <Compile Include="API\Features\Spawnpoints\RandomRoomSpawnpoint.cs" />
+    <Compile Include="API\Features\Spawnpoints\RandomSpawnpoint.cs" />
+    <Compile Include="API\Features\Spawnpoints\RoleSpawnpoint.cs" />
+    <Compile Include="API\Features\Spawnpoints\RoomSpawnpoint.cs" />
+    <Compile Include="API\Features\Spawnpoints\StaticSpawnpoint.cs" />
+    <Compile Include="API\Features\Abilities\TickAbility.cs" />
     <Compile Include="API\Interfaces\IBroadcastSubclass.cs" />
     <Compile Include="API\Interfaces\ICassieSubclass.cs" />
     <Compile Include="API\Interfaces\ICommandsSubclass.cs" />
@@ -78,32 +89,53 @@
     <Compile Include="API\Interfaces\IMultipleSubclass.cs" />
     <Compile Include="API\Interfaces\INeedRole.cs" />
     <Compile Include="API\Interfaces\INeedSubclass.cs" />
+    <Compile Include="API\Interfaces\IPrioritySubclass.cs" />
     <Compile Include="API\Interfaces\IRandomSubclass.cs" />
     <Compile Include="API\Interfaces\ISeasonSubclass.cs" />
     <Compile Include="API\Interfaces\ISingle.cs" />
+    <Compile Include="API\Interfaces\ISpawnpointSubclass.cs" />
     <Compile Include="API\Interfaces\ISubscribable.cs" />
-    <Compile Include="Characteristics\DamageCharacteristic.cs" />
-    <Compile Include="Characteristics\InventoryCharacteristic.cs" />
-    <Compile Include="Characteristics\HurtMultiplayerCharacteristic.cs" />
-    <Compile Include="Characteristics\DamageMultiplayerCharacteristic.cs" />
-    <Compile Include="Characteristics\TeslaCharacteristics.cs" />
-    <Compile Include="Characteristics\SoundCharacteristics.cs" />
-    <Compile Include="Characteristics\RespawnCharacteristics.cs" />
-    <Compile Include="Characteristics\SizeCharacteristic.cs" />
-    <Compile Include="Characteristics\HealthCharacteristic.cs" />
+    <Compile Include="Subclasses\Abilities\Active\StealAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Enums\HealAuraTargets.cs" />
+    <Compile Include="Subclasses\Abilities\Extensions.cs" />
+    <Compile Include="Subclasses\Abilities\Ticks\HealAura.cs" />
+    <Compile Include="Subclasses\Characteristics\DamageCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\InventoryCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\HurtMultiplayerCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\DamageMultiplayerCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\AttackCooldownCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\SpawnpointCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\TeslaCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\SoundCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\RespawnCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\SizeCharacteristic.cs" />
+    <Compile Include="Subclasses\Characteristics\HealthCharacteristic.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Handlers\PlayerHandlers.cs" />
+    <Compile Include="Patches\Scp0492\ZombieAttackPatch.cs" />
+    <Compile Include="Patches\Scp049\DoctorAttackPatch.cs" />
+    <Compile Include="Patches\Scp939\DoorSoundPatch.cs" />
+    <Compile Include="Patches\Scp939\FootstepSoundPatch.cs" />
+    <Compile Include="Patches\Scp939\FootstepSoundProcessPatch.cs" />
+    <Compile Include="Patches\Scp939\WeaponSoundPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subclasses\ClassD\Group\Dwarf.cs" />
+    <Compile Include="Subclasses\ClassD\Group\GigaChad.cs" />
+    <Compile Include="Subclasses\ClassD\Group\Janitor.cs" />
     <Compile Include="Subclasses\ClassD\Group\Killer.cs" />
     <Compile Include="Subclasses\ClassD\DGroupSubclass.cs" />
     <Compile Include="Subclasses\ClassD\DSingleSubclass.cs" />
+    <Compile Include="Subclasses\ClassD\Group\Thief.cs" />
+    <Compile Include="Subclasses\ClassD\Group\Pickpocket.cs" />
     <Compile Include="Subclasses\Guards\GuardGroupSubclass.cs" />
     <Compile Include="Subclasses\Guards\GuardSingleSubclass.cs" />
     <Compile Include="Subclasses\Scientists\ScientistGroupSubclass.cs" />
     <Compile Include="Subclasses\Scientists\ScientistSingleSubclass.cs" />
-    <Compile Include="Subclasses\Zombies\ZombieGroupSubclass.cs" />
-    <Compile Include="Subclasses\Zombies\ZombieSingleSubclass.cs" />
+    <Compile Include="Subclasses\Scp049\DoctorGroupSubclass.cs" />
+    <Compile Include="Subclasses\Scp049\DoctorSingleSubclass.cs" />
+    <Compile Include="Subclasses\Scp0492\ZombieGroupSubclass.cs" />
+    <Compile Include="Subclasses\Scp0492\ZombieSingleSubclass.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -115,13 +147,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Subclasses\Abilities\Passive\" />
     <Folder Include="Subclasses\ClassD\Single\" />
     <Folder Include="Subclasses\Guards\Group\" />
     <Folder Include="Subclasses\Guards\Single\" />
     <Folder Include="Subclasses\Scientists\Group\" />
     <Folder Include="Subclasses\Scientists\Single\" />
-    <Folder Include="Subclasses\Zombies\Group\" />
-    <Folder Include="Subclasses\Zombies\Single\" />
+    <Folder Include="Subclasses\Scp0492\Group\" />
+    <Folder Include="Subclasses\Scp0492\Single\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

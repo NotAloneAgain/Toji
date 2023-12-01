@@ -4,7 +4,7 @@ using PlayerRoles;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
-using Toji.Classes.Characteristics;
+using Toji.Classes.Subclasses.Characteristics;
 using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Handlers
@@ -28,7 +28,7 @@ namespace Toji.Classes.Handlers
                     return;
                 }
 
-                if (ev.NewRole == RoleTypeId.Spectator && subclass.Characteristics.Find(x => x is RespawnCharacteristics) is RespawnCharacteristics respawn && respawn.Value)
+                if (ev.NewRole == RoleTypeId.Spectator && subclass.Characteristics.Find(x => x is RespawnCharacteristic) is RespawnCharacteristic respawn && respawn.Value)
                 {
                     return;
                 }
@@ -63,7 +63,7 @@ namespace Toji.Classes.Handlers
 
         public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (!ev.Player.TryGetSubclass(out var subclass) || subclass.Characteristics.Find(x => x is TeslaCharacteristics) is not TeslaCharacteristics tesla)
+            if (!ev.Player.TryGetSubclass(out var subclass) || subclass.Characteristics.Find(x => x is TeslaCharacteristic) is not TeslaCharacteristic tesla)
             {
                 return;
             }

@@ -57,7 +57,7 @@
     <Compile Include="Global\Swap.cs" />
     <Compile Include="NwPluginAPI\API\Extensions\ItemExtensions.cs" />
     <Compile Include="NwPluginAPI\API\Extensions\PlayerExtensions.cs" />
-    <Compile Include="NwPluginAPI\API\Extensions\TranslationExtensions.cs" />
+    <Compile Include="Global\TranslationExtensions.cs" />
     <Compile Include="ExiledAPI\Configs\DefaultConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

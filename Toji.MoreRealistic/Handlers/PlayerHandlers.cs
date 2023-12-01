@@ -77,17 +77,15 @@ namespace Toji.MoreRealistic.Handlers
                 {
                     ev.Player.DropHeldItem();
                 }
-
-                return;
             }
             else if (ev.DamageHandler.Type == DamageType.Scp939)
             {
                 ev.Player.EnableEffect(EffectType.Bleeding, 6, true);
 
-                return;
+                ev.Amount = Mathf.Clamp(ev.Player.MaxHealth * 0.4f, 20, 60);
             }
-
          }
+
         public void OnDying(DyingEventArgs ev)
         {
             if (!ev.IsAllowed || !ev.IsValid())

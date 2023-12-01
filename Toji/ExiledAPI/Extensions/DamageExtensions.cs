@@ -15,6 +15,5 @@ namespace Toji.ExiledAPI.Extensions
                 _ => false
             };
         }
-
     }
 }
