@@ -116,7 +116,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Has(in Player player) => player == null;
 
-        public virtual bool Can(in Player player) => player != null && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
+        public virtual bool Can(in Player player) => player != null && !HasAny(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
 
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {

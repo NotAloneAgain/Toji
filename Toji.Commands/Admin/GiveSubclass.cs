@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Features;
 using System.Collections.Generic;
 using System.Linq;
+using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Commands.API.Enums;
@@ -39,6 +40,7 @@ namespace Marine.Commands.Commands
             {
                 list.Add(player);
             }
+
             response = string.Empty;
 
             if (!BaseSubclass.TryGet((string)arguments[1], out var subclass))
@@ -64,6 +66,11 @@ namespace Marine.Commands.Commands
 
             foreach (Player ply in list)
             {
+                if (ply.TryGetSubclass(out var sub))
+                {
+                    sub.Revoke(ply);
+                }
+
                 subclass.Assign(ply);
             }
 
