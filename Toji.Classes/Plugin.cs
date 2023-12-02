@@ -1,5 +1,7 @@
-﻿using Exiled.Events.Handlers;
+﻿using Exiled.API.Enums;
+using Exiled.Events.Handlers;
 using HarmonyLib;
+using PlayerRoles.Ragdolls;
 using System;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
@@ -13,7 +15,8 @@ namespace Toji.Classes
         private const string HarmonyId = "zenin";
 
         private Harmony _harmony;
-        private PlayerHandlers _handlers;
+        private PlayerHandlers _player;
+        private RagdollHandlers _ragdoll;
 
         public override string Name => "Toji.Classes";
 
@@ -21,17 +24,24 @@ namespace Toji.Classes
 
         public override string Author => "NotAloneAgain";
 
+        public override PluginPriority Priority => PluginPriority.Higher;
+
         public override Version Version { get; } = new(1, 0, 0);
 
         public override void OnEnabled()
         {
             _harmony = new(HarmonyId);
 
-            _handlers = new();
+            _ragdoll = new();
+            _player = new();
 
-            Player.TriggeringTesla += _handlers.OnTriggeringTesla;
-            Player.ChangingRole += _handlers.OnChangingRole;
-            Player.Hurting += _handlers.OnHurting;
+            RagdollManager.OnRagdollRemoved += _ragdoll.OnRagdollRemoved;
+            Player.SpawningRagdoll += _ragdoll.OnSpawningRagdoll;
+            Player.SpawnedRagdoll += _ragdoll.OnSpawnedRagdoll;
+
+            Player.TriggeringTesla += _player.OnTriggeringTesla;
+            Player.ChangingRole += _player.OnChangingRole;
+            Player.Hurting += _player.OnHurting;
 
             CreateSubclasses();
 
@@ -46,11 +56,15 @@ namespace Toji.Classes
 
             DestroySubclasses();
 
-            Player.Hurting -= _handlers.OnHurting;
-            Player.ChangingRole -= _handlers.OnChangingRole;
-            Player.TriggeringTesla -= _handlers.OnTriggeringTesla;
+            Player.Hurting -= _player.OnHurting;
+            Player.ChangingRole -= _player.OnChangingRole;
+            Player.TriggeringTesla -= _player.OnTriggeringTesla;
 
-            _handlers = null;
+            Player.SpawnedRagdoll -= _ragdoll.OnSpawnedRagdoll;
+            Player.SpawningRagdoll -= _ragdoll.OnSpawningRagdoll;
+            RagdollManager.OnRagdollRemoved -= _ragdoll.OnRagdollRemoved;
+
+            _player = null;
 
             _harmony = null;
 

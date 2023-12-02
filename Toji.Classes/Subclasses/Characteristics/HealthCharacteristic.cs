@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Features;
 using PlayerRoles;
-using System;
 using System.Collections.Generic;
 using Toji.Classes.API.Features;
 
@@ -8,11 +7,9 @@ namespace Toji.Classes.Subclasses.Characteristics
 {
     public class HealthCharacteristic : Characteristic<float>
     {
-        private Dictionary<RoleTypeId, int> _defaultValues;
+        private static Dictionary<RoleTypeId, int> _defaultValues;
 
-        public HealthCharacteristic(float value) : base(value)
-        {
-            _defaultValues = new Dictionary<RoleTypeId, int>()
+        static HealthCharacteristic() => _defaultValues = new Dictionary<RoleTypeId, int>()
             {
                 { RoleTypeId.None, 0 },
                 { RoleTypeId.Scp173, 4000 },
@@ -39,7 +36,8 @@ namespace Toji.Classes.Subclasses.Characteristics
                 { RoleTypeId.Spectator, 100 },
                 { RoleTypeId.CustomRole, 100 },
             };
-        }
+
+        public HealthCharacteristic(float value) : base(value) { }
 
         public override string Name => "Измененное количество здоровья";
 
@@ -53,17 +51,19 @@ namespace Toji.Classes.Subclasses.Characteristics
 
         public override void OnDisabled(Player player)
         {
-            player.MaxHealth = _defaultValues[player.Role];
-            player.Health = _defaultValues[player.Role];
+            player.MaxHealth = GetDefaultValue(player.Role);
+            player.Health = GetDefaultValue(player.Role);
 
             base.OnDisabled(player);
         }
 
         public override string GetDesc(Player player = null)
         {
-            var defaultValue = _defaultValues[player.Role];
+            var defaultValue = GetDefaultValue(player.Role);
 
             return Value > defaultValue ? "Ваше количество здоровья больше стандартного" : "Ваше количество здоровья меньше стандартного";
         }
+
+        private int GetDefaultValue(RoleTypeId role = RoleTypeId.None) => _defaultValues.TryGetValue(role, out int value) ? value : 100;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using Exiled.API.Features.Pickups;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,18 +51,21 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
         public override string Name => "Воровство";
 
-        public override string Desc => $"Ты можешь попытаться {(_held ? "отобрать" : "украсть")} случайный предмет у игрока, на которого смотрите.";
+        public override string Desc => $"Ты можешь попытаться {(_held ? "отобрать" : "украсть")} случайный предмет у игрока, на которого смотришь";
 
         public override void OnEnabled(Player player)
         {
             base.OnEnabled(player);
 
-            player.SendConsoleMessage($"Вы не сможете украсть: {string.Join(", ", _banned.Select(x => x.ToString()))}", "red");
+            player.SendConsoleMessage($"Ты не сможешь {(_held ? "отобрать" : "украсть")}: {string.Join(", ", _banned.Select(x => x.ToString()))}", "red");
         }
 
         public override bool Activate(Player player, out object result)
         {
-            result = null!;
+            if (!base.Activate(player, out result))
+            {
+                return false;
+            }
 
             var target = player.GetFromView(_distance);
 
@@ -82,6 +86,8 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
+            AddUse(player, System.DateTime.Now, true, result);
+
             ItemType targetItem = items.ElementAt(Random.Range(0, items.Count()));
 
             if (Random.Range(0, 100) <= _failure)
@@ -91,12 +97,14 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            if (!base.Activate(player, out result))
+            if (player.IsInventoryFull)
             {
-                return false;
+                Pickup.CreateAndSpawn(targetItem, player.Position, player.Rotation, target);
             }
-
-            player.AddItem(targetItem);
+            else
+            {
+                player.AddItem(targetItem);
+            }
 
             target.RemoveItem(target.Items.First(item => item.Type == targetItem));
 

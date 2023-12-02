@@ -21,7 +21,7 @@ namespace Toji.Classes.API.Features
 
         public abstract string Desc { get; }
 
-        public virtual string Type => this is PassiveAbility ? "Пассивная" : this is ActiveAbility ? "Активная" : "Неизвестно";
+        public virtual string Type => this is PassiveAbility ? "Пассивная" : this is ActiveAbility ? $"Активная{(this is CooldownAbility cooldown ? $" ({cooldown.Cooldown}с)" : string.Empty)}" : "Неизвестно";
 
         public virtual void OnEnabled(Player player)
         {
@@ -42,5 +42,7 @@ namespace Toji.Classes.API.Features
 
             _owners.Remove(player);
         }
+
+        protected bool Has(in Player player) => _owners.Contains(player);
     }
 }

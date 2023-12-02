@@ -7,7 +7,7 @@ namespace Toji.Classes.API.Features
     {
         public Player Player { get; set; }
 
-        public override bool Has(in Player player) => base.Has(player) && Player.UserId == player.UserId;
+        public override bool Has(in Player player) => base.Has(player) && Player?.UserId == player.UserId;
 
         public override bool Can(in Player player) => base.Can(player) && Player == null;
 

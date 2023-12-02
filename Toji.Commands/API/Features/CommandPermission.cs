@@ -6,9 +6,13 @@ namespace Toji.Commands.API.Features
     {
         public CommandPermission() { }
 
-        public CommandPermission(bool isLimited, HashSet<string> groups, HashSet<string> users)
+        public CommandPermission(bool isLimited)
         {
             IsLimited = isLimited;
+        }
+
+        public CommandPermission(bool isLimited, HashSet<string> groups, HashSet<string> users) : this(isLimited)
+        {
             Groups = groups;
             Users = users;
         }

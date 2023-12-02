@@ -1,12 +1,15 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
+using PlayerRoles.Ragdolls;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Subclasses.Characteristics;
 using Toji.Global;
 using UnityEngine;
 
@@ -44,9 +47,13 @@ namespace Toji.Classes.API.Features
 
         public static BaseSubclass Get(Player player) => player == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
 
+        public static BaseSubclass Get(Ragdoll ragdoll) => ragdoll == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Owners.Contains(ragdoll));
+
         public static BaseSubclass Get(string str) => string.IsNullOrEmpty(str) ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Name.Equals(str, System.StringComparison.OrdinalIgnoreCase));
 
         public static TSubclass Get<TSubclass>(in Player player) where TSubclass : BaseSubclass => player == null ? null : Get(player) as TSubclass;
+
+        public static TSubclass Get<TSubclass>(Ragdoll ragdoll) where TSubclass : BaseSubclass => ragdoll == null ? null : Get(ragdoll) as TSubclass;
 
         public static TSubclass Get<TSubclass>(in string str) where TSubclass : BaseSubclass => string.IsNullOrEmpty(str) ? null : Get(str) as TSubclass;
 
@@ -61,9 +68,9 @@ namespace Toji.Classes.API.Features
             return subclass != null;
         }
 
-        public static bool TryGet<TSubclass>(in Player player, out TSubclass subclass) where TSubclass : BaseSubclass
+        public static bool TryGet(in Ragdoll ragdoll, out BaseSubclass subclass)
         {
-            subclass = Get<TSubclass>(player);
+            subclass = Get(ragdoll);
 
             return subclass != null;
         }
@@ -71,6 +78,20 @@ namespace Toji.Classes.API.Features
         public static bool TryGet(in string str, out BaseSubclass subclass)
         {
             subclass = Get(str);
+
+            return subclass != null;
+        }
+
+        public static bool TryGet<TSubclass>(in Player player, out TSubclass subclass) where TSubclass : BaseSubclass
+        {
+            subclass = Get<TSubclass>(player);
+
+            return subclass != null;
+        }
+
+        public static bool TryGet<TSubclass>(in Ragdoll ragdoll, out TSubclass subclass) where TSubclass : BaseSubclass
+        {
+            subclass = Get<TSubclass>(ragdoll);
 
             return subclass != null;
         }
@@ -102,11 +123,15 @@ namespace Toji.Classes.API.Features
 
         public bool IsSingle => this.IsSingleSubclass();
 
+        public HashSet<Ragdoll> Owners { get; } = new HashSet<Ragdoll>(100);
+
         public abstract string Name { get; }
 
         public abstract string Desc { get; }
 
         public abstract RoleTypeId Role { get; }
+
+        public virtual List<string> Tags { get; } = new List<string>(0);
 
         public virtual List<BaseAbility> Abilities { get; } = new List<BaseAbility>(0);
 
@@ -114,9 +139,9 @@ namespace Toji.Classes.API.Features
 
         public virtual bool ShowInfo { get; } = true;
 
-        public virtual bool Has(in Player player) => player == null;
+        public virtual bool Has(in Player player) => player != null && !player.IsHost && player.IsAlive;
 
-        public virtual bool Can(in Player player) => player != null && !HasAny(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
+        public virtual bool Can(in Player player) => player != null && !player.IsHost && player.IsAlive && !HasAny(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
 
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
@@ -209,7 +234,7 @@ namespace Toji.Classes.API.Features
             {
                 foreach (var ability in Abilities)
                 {
-                    ability.OnEnabled(player);
+                    ability.OnDisabled(player);
                 }
             }
 
@@ -230,13 +255,6 @@ namespace Toji.Classes.API.Features
             {
                 Map.Broadcast(10, broadcast.DeathText);
             }
-
-            if (!_subscribed)
-            {
-                return false;
-            }
-
-            _subscribed = false;
 
             return true;
         }
@@ -263,9 +281,15 @@ namespace Toji.Classes.API.Features
             _subclasses.Remove(this);
         }
 
-        public virtual void LazySubscribe() { }
+        public virtual void LazySubscribe()
+        {
+            _subscribed = true;
+        }
 
-        public virtual void LazyUnsubscribe() { }
+        public virtual void LazyUnsubscribe()
+        {
+            _subscribed = false;
+        }
 
         internal protected void OnEscaped(in Player player) => UpdatePlayer(player);
 
@@ -287,16 +311,18 @@ namespace Toji.Classes.API.Features
         {
             StringBuilder builder = new($"Ты получил подкласс:\n\t\tНазвание: {Name}.\n\t\tОписание: {Desc}.");
 
-            if (IsGroup)
+            if (Tags.Any())
             {
-                if (this is ILimitableGroup limit)
-                {
-                    builder.Append($"\n\t\tТип: Групповой с лимитом {limit.Max}.");
-                }
-                else
-                {
-                    builder.Append("\n\t\tТип: Групповой, безлимитный.");
-                }
+                builder.Append($"\n\t\tТеги: {string.Join(", ", Tags)}.");
+            }
+
+            if (this is ILimitableGroup limit)
+            {
+                builder.Append($"\n\t\tТип: Групповой с лимитом {limit.Max}.");
+            }
+            else if (IsGroup)
+            {
+                builder.Append("\n\t\tТип: Групповой, безлимитный.");
             }
             else if (IsSingle)
             {
@@ -397,7 +423,7 @@ namespace Toji.Classes.API.Features
 
         private bool CheckRandom()
         {
-            if (this is IRandomSubclass random && Random.Range(0, 100) < random.Chance)
+            if (this is IRandomSubclass random && Random.Range(0, 100) > random.Chance)
             {
                 return false;
             }

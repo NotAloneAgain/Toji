@@ -21,7 +21,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public int Max => 3;
 
-        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>()
+        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
             new DamageMultiplayerCharacteristic(1.1f),
             new InventoryCharacteristic(new List<Slot>()

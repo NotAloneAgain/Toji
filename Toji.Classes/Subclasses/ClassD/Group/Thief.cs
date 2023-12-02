@@ -24,27 +24,16 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             {
                 new RandomSlot(new Dictionary<ItemType, int>(2)
                 {
-                    { ItemType.SCP500, 1 },
-                    { ItemType.KeycardJanitor, 5 },
-                    { ItemType.Medkit, 10 },
-                    { ItemType.Painkillers, 30 },
-                    { ItemType.Coin, 80 }
+                    { ItemType.KeycardJanitor, 50 },
+                    { ItemType.Coin, 100 }
                 }),
+                new StaticSlot(ItemType.Medkit),
                 new RandomSlot(new Dictionary<ItemType, int>(2)
                 {
-                    { ItemType.Painkillers, 20 },
-                    { ItemType.Coin, 60 }
-                }),
-                new RandomSlot(new Dictionary<ItemType, int>(2)
-                {
-                    { ItemType.Painkillers, 10 },
-                    { ItemType.Coin, 40 }
-                }),
-                new RandomSlot(new Dictionary<ItemType, int>(2)
-                {
-                    { ItemType.ArmorLight, 3 },
-                    { ItemType.Painkillers, 5 },
-                    { ItemType.Coin, 20 }
+                    { ItemType.ArmorLight, 25 },
+                    { ItemType.Medkit, 25 },
+                    { ItemType.Radio, 35 },
+                    { ItemType.Painkillers, 100 }
                 }),
             })
         };

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Exiled.API.Enums;
+using System.Collections.Generic;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
@@ -13,8 +14,14 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override string Desc => "Ты более высокий и крепкий чем другие, до этого ты использовался грузчиком";
 
-        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
+            new KnockAbility(110, 5, new HashSet<DoorType>()
+            {
+                DoorType.LczArmory,
+                DoorType.HczArmory,
+                DoorType.HID,
+            }),
             new StealAbility(50, true, 20, 100, 3.76f, ItemType.Jailbird, ItemType.GunFRMG0, ItemType.GunLogicer, ItemType.ParticleDisruptor, ItemType.MicroHID, ItemType.ArmorCombat, ItemType.ArmorHeavy, ItemType.ArmorLight)
         };
 

@@ -6,27 +6,24 @@ using Toji.Classes.API.Features.Abilities;
 using Toji.Commands.API;
 using Toji.Commands.API.Enums;
 using Toji.Commands.API.Features;
-using Toji.Global;
 
 namespace Toji.Commands.Global
 {
     public sealed class Ability : CommandBase
     {
-        public override string Command { get; set; } = "force";
+        public override string Command { get; set; } = "ability";
 
-        public override string Description { get; set; } = "Команда для смены своего SCP-Объекта.";
+        public override string Description { get; set; } = "Команда для использования способности.";
 
         public override Dictionary<int, string> Syntax { get; set; } = new Dictionary<int, string>()
         {
+            { 0, string.Empty },
             { 1, "[Номер]" }
         };
 
         public override List<CommandType> Types { get; set; } = new List<CommandType>(1) { CommandType.PlayerConsole };
 
-        public override CommandPermission Permission { get; set; } = new()
-        {
-            IsLimited = true,
-        };
+        public override CommandPermission Permission { get; set; } = new(false);
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
@@ -39,8 +36,7 @@ namespace Toji.Commands.Global
                 return true;
             }
 
-
-            if (!byte.TryParse(input[0], out var number))
+            if (!int.TryParse(input[0], out var number))
             {
                 return false;
             }
@@ -75,16 +71,23 @@ namespace Toji.Commands.Global
                 return CommandResultType.Fail;
             }
 
-            int number = (byte)arguments[0];
+            int number = (int)arguments[0];
 
-            if (activeAbilities.Count() < number)
+            if (activeAbilities.Count() < number || number < 0)
             {
                 response = $"У твоего подкласса нет способности под цифрой {number}!";
 
                 return CommandResultType.Fail;
             }
 
-            var ability = activeAbilities.ElementAt(number);
+            var ability = activeAbilities.ElementAtOrDefault(number);
+
+            if (ability == null)
+            {
+                response = $"У твоего подкласса нет способности под цифрой {number}!";
+
+                return CommandResultType.Fail;
+            }
 
             var success = ability.Activate(player, out var result);
 
@@ -94,6 +97,10 @@ namespace Toji.Commands.Global
                 {
                     response = $"Способность на перезарядке ещё {value.GetSecondsString()}.";
                 }
+                else if (result is string str)
+                {
+                    response = str;
+                }
                 else
                 {
                     response = "Способность не удалось активировать.";
@@ -102,12 +109,9 @@ namespace Toji.Commands.Global
                 return CommandResultType.Fail;
             }
 
-            return CommandResultType.Success;
-        }
+            response = "Активация способности выполнена!";
 
-        public override bool CheckPermissions(Player player)
-        {
-            return base.CheckPermissions(player) || player.IsScp && Swap.AllowedScps.Contains(player.Role);
+            return CommandResultType.Success;
         }
     }
 }

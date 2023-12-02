@@ -32,7 +32,9 @@ namespace Toji.Commands.Roles
             response = string.Empty;
 
             if (arguments == null || !arguments.Any())
+            {
                 return CommandResultType.Fail;
+            }
 
             RoleTypeId oldRole = player.Role.Type;
             var role = (RoleTypeId)arguments[0];

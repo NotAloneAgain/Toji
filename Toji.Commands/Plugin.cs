@@ -26,7 +26,7 @@ namespace Toji.Commands
 
         public override void OnReloaded() { }
 
-        public override void OnRegisteringCommands()
+        public override void OnEnabled()
         {
             foreach (Type type in Assembly.GetTypes())
             {
@@ -37,9 +37,24 @@ namespace Toji.Commands
 
                 CommandBase command = Activator.CreateInstance(type) as CommandBase;
 
-                command.Subscribe();
-
                 _commands.Add(command);
+            }
+
+            base.OnEnabled();
+        }
+
+        public override void OnDisabled()
+        {
+            _commands.Clear();
+
+            base.OnDisabled();
+        }
+
+        public override void OnRegisteringCommands()
+        {
+            foreach (CommandBase command in _commands)
+            {
+                command.Subscribe();
             }
         }
 
@@ -49,8 +64,6 @@ namespace Toji.Commands
             {
                 command.Unsubscribe();
             }
-
-            _commands.Clear();
         }
     }
 }

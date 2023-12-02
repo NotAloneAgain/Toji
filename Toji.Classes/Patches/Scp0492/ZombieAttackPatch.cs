@@ -16,10 +16,10 @@ using Utils.NonAllocLINQ;
 
 namespace Toji.Classes.Patches.Scp0492
 {
-    [HarmonyPatch(typeof(ZombieAttackAbility), nameof(ZombieAttackAbility.ServerProcessCmd))]
+    [HarmonyPatch(typeof(ScpAttackAbilityBase<ZombieRole>), nameof(ScpAttackAbilityBase<ZombieRole>.ServerProcessCmd))]
     internal static class ZombieAttackPatch
     {
-        private static bool Prefix(ZombieAttackAbility __instance, NetworkReader reader)
+        private static bool Prefix(ScpAttackAbilityBase<ZombieRole> __instance, NetworkReader reader)
         {
             try
             {

@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Enums;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
+using System.Linq;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
@@ -23,12 +24,7 @@ namespace Toji.Classes.Handlers
 
             if (ev.Player.TryGetSubclass(out var subclass))
             {
-                if (ev.NewRole == RoleTypeId.Tutorial && isSpawn)
-                {
-                    return;
-                }
-
-                if (ev.NewRole == RoleTypeId.Spectator && subclass.Characteristics.Find(x => x is RespawnCharacteristic) is RespawnCharacteristic respawn && respawn.Value)
+                if (ev.NewRole == RoleTypeId.Tutorial && !isSpawn)
                 {
                     return;
                 }
@@ -39,6 +35,11 @@ namespace Toji.Classes.Handlers
 
                     action.CallDelayed(default, ev.Player);
 
+                    return;
+                }
+
+                if (subclass.Characteristics.Find(x => x is RespawnCharacteristic) is RespawnCharacteristic respawn && respawn.Value)
+                {
                     return;
                 }
 
@@ -54,7 +55,7 @@ namespace Toji.Classes.Handlers
             {
                 if (!sub.Can(ev.Player))
                 {
-                    return;
+                    continue;
                 }
 
                 sub.DelayedAssign(ev.Player);
@@ -86,6 +87,19 @@ namespace Toji.Classes.Handlers
                     controller.OnHurt(ev);
                 }
 
+                if (subclass.Abilities.Any())
+                {
+                    foreach (var ability in subclass.Abilities)
+                    {
+                        if (ability is not IHurtController abilityController)
+                        {
+                            continue;
+                        }
+
+                        abilityController.OnHurt(ev);
+                    }
+                }
+
                 if (subclass.Characteristics.Find(x => x is HurtMultiplayerCharacteristic) is HurtMultiplayerCharacteristic multiplayer && multiplayer.Value != 1)
                 {
                     ev.Amount *= multiplayer.Value;
@@ -97,6 +111,19 @@ namespace Toji.Classes.Handlers
                 if (attackerSubclass is IDamageController controller)
                 {
                     controller.OnDamage(ev);
+                }
+
+                if (subclass.Abilities.Any())
+                {
+                    foreach (var ability in subclass.Abilities)
+                    {
+                        if (ability is not IDamageController abilityController)
+                        {
+                            continue;
+                        }
+
+                        abilityController.OnDamage(ev);
+                    }
                 }
 
                 if (attackerSubclass.Characteristics.Find(x => x is DamageCharacteristic) is DamageCharacteristic damage)

@@ -2,6 +2,7 @@
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Characteristics;
 using UnityEngine;
 
@@ -12,6 +13,12 @@ namespace Toji.Classes.Subclasses.ClassD.Group
         public override string Name => "Карлик";
 
         public override string Desc => "Несмотря на твое слабое тело и маленький рост ты смог выжить тут";
+
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
+        {
+            new DodgeAbility(37, 28, 0.88f),
+            new InfinityStaminaAbility()
+        };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(3)
         {

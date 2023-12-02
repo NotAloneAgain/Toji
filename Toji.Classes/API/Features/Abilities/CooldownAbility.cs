@@ -1,15 +1,20 @@
 ﻿using Exiled.API.Features;
 using System;
 using System.Collections.Generic;
+using Toji.Classes.API.Interfaces;
 using UnityEngine;
 
 namespace Toji.Classes.API.Features.Abilities
 {
-    public abstract class CooldownAbility : ActiveAbility
+    public abstract class CooldownAbility : ActiveAbility, ISubscribable
     {
         private List<AbilityUse> _lastUsed;
 
-        public CooldownAbility(uint cooldown) => Cooldown = cooldown;
+        public CooldownAbility(uint cooldown)
+        {
+            _lastUsed = new List<AbilityUse>(200);
+            Cooldown = cooldown;
+        }
 
         public uint Cooldown { get; init; }
 
@@ -20,7 +25,7 @@ namespace Toji.Classes.API.Features.Abilities
 
             var use = _lastUsed.FindLast(used => used.IsSuccessful && used.Player.UserId == player.UserId);
             var now = DateTime.Now;
-            var different = now - use.Time;
+            var different = now - (use?.Time ?? DateTime.MinValue);
 
             if (use != null && different.TotalSeconds < Cooldown)
             {
@@ -29,9 +34,17 @@ namespace Toji.Classes.API.Features.Abilities
                 return false;
             }
 
-            _lastUsed.Add(new(player, now, true, result));
-
             return true;
         }
+
+        public virtual void Subscribe() => Exiled.Events.Handlers.Server.RestartingRound += OnRestartingRound;
+
+        public virtual void Unsubscribe() => Exiled.Events.Handlers.Server.RestartingRound -= OnRestartingRound;
+
+        protected void AddUse(AbilityUse use) => _lastUsed.Add(use);
+
+        protected void AddUse(Player player, DateTime time, bool success, object result) => AddUse(new(player, time, success, result));
+
+        private void OnRestartingRound() => _lastUsed.Clear();
     }
 }

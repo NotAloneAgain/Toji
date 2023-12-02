@@ -95,9 +95,14 @@
     <Compile Include="API\Interfaces\ISingle.cs" />
     <Compile Include="API\Interfaces\ISpawnpointSubclass.cs" />
     <Compile Include="API\Interfaces\ISubscribable.cs" />
+    <Compile Include="Handlers\RagdollHandlers.cs" />
+    <Compile Include="Subclasses\Abilities\Active\ClothesAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Active\KnockAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\StealAbility.cs" />
     <Compile Include="Subclasses\Abilities\Enums\HealAuraTargets.cs" />
     <Compile Include="Subclasses\Abilities\Extensions.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\DodgeAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\InfinityStaminaAbility.cs" />
     <Compile Include="Subclasses\Abilities\Ticks\HealAura.cs" />
     <Compile Include="Subclasses\Characteristics\DamageCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\InventoryCharacteristic.cs" />
@@ -128,6 +133,11 @@
     <Compile Include="Subclasses\ClassD\DSingleSubclass.cs" />
     <Compile Include="Subclasses\ClassD\Group\Thief.cs" />
     <Compile Include="Subclasses\ClassD\Group\Pickpocket.cs" />
+    <Compile Include="Subclasses\ClassD\Single\Gang.cs" />
+    <Compile Include="Subclasses\ClassD\Single\Letting.cs" />
+    <Compile Include="Subclasses\ClassD\Single\Scp073.cs" />
+    <Compile Include="Subclasses\ClassD\Single\Scp181.cs" />
+    <Compile Include="Subclasses\ClassD\Single\TwoFaced.cs" />
     <Compile Include="Subclasses\Guards\GuardGroupSubclass.cs" />
     <Compile Include="Subclasses\Guards\GuardSingleSubclass.cs" />
     <Compile Include="Subclasses\Scientists\ScientistGroupSubclass.cs" />
@@ -147,8 +157,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Subclasses\Abilities\Passive\" />
-    <Folder Include="Subclasses\ClassD\Single\" />
     <Folder Include="Subclasses\Guards\Group\" />
     <Folder Include="Subclasses\Guards\Single\" />
     <Folder Include="Subclasses\Scientists\Group\" />
