@@ -4,11 +4,12 @@ using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Map;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Toji.BetterMap.Handlers
 {
-    internal sealed class EventHandlers
+    internal sealed class MapHandlers
     {
         public void OnGenerated()
         {
@@ -29,7 +30,7 @@ namespace Toji.BetterMap.Handlers
 
         public void OnGeneratorActivated(GeneratorActivatingEventArgs ev)
         {
-            System.Collections.Generic.IEnumerable<Player> computers = Player.Get(RoleTypeId.Scp079);
+            IEnumerable<Player> computers = Player.List.Where(ply => ply.Role.Type == RoleTypeId.Scp079);
 
             if (!ev.IsAllowed || computers.Count() == 0)
             {

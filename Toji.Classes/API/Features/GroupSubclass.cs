@@ -15,7 +15,7 @@ namespace Toji.Classes.API.Features
 
         public override bool Can(in Player player) => base.Can(player) && (this is not ILimitableGroup group || group.Players.Count < group.Max);
 
-        public override bool Assign(in Player player)
+        public sealed override bool Assign(in Player player)
         {
             if (!base.Assign(player))
             {
@@ -27,7 +27,7 @@ namespace Toji.Classes.API.Features
             return true;
         }
 
-        public override bool Revoke(in Player player)
+        public sealed override bool Revoke(in Player player)
         {
             if (!base.Revoke(player))
             {

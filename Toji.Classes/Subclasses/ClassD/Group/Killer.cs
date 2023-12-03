@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Map;
-using Exiled.Events.Handlers;
 using System.Collections.Generic;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
@@ -39,28 +39,9 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             })
         };
 
-        public override bool Assign(in Exiled.API.Features.Player player)
-        {
-            if (!base.Assign(player))
-            {
-                return false;
-            }
+        public void Subscribe() => Exiled.Events.Handlers.Map.SpawningItem += OnSpawningItem;
 
-            if (player.HasItem(ItemType.GunCOM15))
-            {
-                player.SendConsoleMessage("Ваш пистолет находится в ваших руках.", "green");
-
-                return true;
-            }
-
-            player.SendConsoleMessage(Translate(_room), "yellow");
-
-            return true;
-        }
-
-        public void Subscribe() => Map.SpawningItem += OnSpawningItem;
-
-        public void Unsubscribe() => Map.SpawningItem -= OnSpawningItem;
+        public void Unsubscribe() => Exiled.Events.Handlers.Map.SpawningItem -= OnSpawningItem;
 
         public void OnSpawningItem(SpawningItemEventArgs ev)
         {
@@ -70,6 +51,18 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             }
 
             _room = ev.Pickup.Room.Type;
+        }
+
+        protected override void OnAdded(in Player player)
+        {
+            if (player.HasItem(ItemType.GunCOM15))
+            {
+                player.SendConsoleMessage("Ваш пистолет находится в ваших руках.", "green");
+
+                return;
+            }
+
+            player.SendConsoleMessage(Translate(_room), "yellow");
         }
 
         private string Translate(RoomType type)

@@ -7,7 +7,7 @@ namespace Toji.BetterMap
 {
     public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
-        private EventHandlers _handlers;
+        private MapHandlers _handlers;
 
         public override string Name => "Toji.Map";
 

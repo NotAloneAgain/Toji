@@ -35,9 +35,18 @@ namespace Toji.Global
                 { RoleTypeId.Overwatch, "Надзиратель" },
                 { RoleTypeId.Filmmaker, "Контентмейкер" },
                 { RoleTypeId.Scp3114, "SCP-3114" },
+                { RoleTypeId.Spectator, "Наблюдатель" }
             };
         }
 
-        public static string Translate(this RoleTypeId role) => _rolesTranslation?[role] ?? role.ToString();
+        public static string Translate(this RoleTypeId role)
+        {
+            if (_rolesTranslation.ContainsKey(role) && _rolesTranslation.TryGetValue(role, out var value))
+            {
+                return value;
+            }
+
+            return role.ToString();
+        }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="ExiledAPI\Extensions\EventExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\FlagsExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\PlayerExtensions.cs" />
+    <Compile Include="Global\DictionaryExtensions.cs" />
     <Compile Include="Global\Range.cs" />
     <Compile Include="Global\Swap.cs" />
     <Compile Include="NwPluginAPI\API\Extensions\ItemExtensions.cs" />

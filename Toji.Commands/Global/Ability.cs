@@ -55,18 +55,25 @@ namespace Toji.Commands.Global
                 return CommandResultType.Fail;
             }
 
-            if (!player.TryGetSubclass(out var subclass))
+            if (!player.TryGetSubclass(out var subclass) || subclass == null)
             {
                 response = "Ты не имеешь подкласса!";
 
                 return CommandResultType.Fail;
             }
 
-            var activeAbilities = subclass.Abilities.Where(x => x is ActiveAbility).Select(x => x as ActiveAbility);
+            var activeAbilities = subclass.Abilities.Where(x => x is ActiveAbility active).Select(x => x as ActiveAbility);
 
             if (!activeAbilities.Any() || activeAbilities.All(x => x == null))
             {
                 response = "У твоего подкласса нет активных способностей!";
+
+                return CommandResultType.Fail;
+            }
+
+            if (activeAbilities.All(x => !x.AllowConsole))
+            {
+                response = "Нет способностей, которые могут активироваться из консоли!";
 
                 return CommandResultType.Fail;
             }

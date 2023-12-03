@@ -20,7 +20,7 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 
         public override string Name => "SCP-073";
 
-        public override string Desc => "У тебя очень крепкое тело и неплохая регенерация.";
+        public override string Desc => "У тебя очень крепкое тело и неплохая регенерация";
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {

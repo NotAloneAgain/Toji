@@ -22,7 +22,17 @@ namespace Toji.Classes.Subclasses.ClassD.Group
                 DoorType.HczArmory,
                 DoorType.HID,
             }),
-            new StealAbility(50, true, 20, 100, 3.76f, ItemType.Jailbird, ItemType.GunFRMG0, ItemType.GunLogicer, ItemType.ParticleDisruptor, ItemType.MicroHID, ItemType.ArmorCombat, ItemType.ArmorHeavy, ItemType.ArmorLight)
+            new StealAbility(50, true, 20, 100, 3.76f, new List<ItemType>(8)
+            {
+                ItemType.Jailbird,
+                ItemType.GunFRMG0,
+                ItemType.GunLogicer,
+                ItemType.ParticleDisruptor,
+                ItemType.MicroHID,
+                ItemType.ArmorCombat,
+                ItemType.ArmorHeavy,
+                ItemType.ArmorLight
+            })
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)

@@ -1,15 +1,12 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-using PlayerRoles.Ragdolls;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
-using Toji.Classes.Subclasses.Characteristics;
 using Toji.Global;
 using UnityEngine;
 
@@ -123,6 +120,8 @@ namespace Toji.Classes.API.Features
 
         public bool IsSingle => this.IsSingleSubclass();
 
+        public string ConsoleMessage => BuildConsoleMessage(null);
+
         public HashSet<Ragdoll> Owners { get; } = new HashSet<Ragdoll>(100);
 
         public abstract string Name { get; }
@@ -150,30 +149,6 @@ namespace Toji.Classes.API.Features
             return action.CallDelayedWithResult<bool>(delay, player);
         }
 
-        public virtual void UpdatePlayer(in Player player)
-        {
-            if (ShowInfo)
-            {
-                CreateInfo(player);
-            }
-
-            if (Abilities.Any())
-            {
-                foreach (var ability in Abilities)
-                {
-                    ability.OnEnabled(player);
-                }
-            }
-
-            if (Characteristics.Any())
-            {
-                foreach (var characteristic in Characteristics)
-                {
-                    characteristic.OnEnabled(player);
-                }
-            }
-        }
-
         public virtual bool Assign(in Player player)
         {
             if (TryGet(player, out _))
@@ -183,32 +158,15 @@ namespace Toji.Classes.API.Features
 
             player.SendConsoleMessage(BuildConsoleMessage(player), "yellow");
 
-            UpdatePlayer(player);
+            SendSpawnCassie();
 
-            if (this is ICassieSubclass cassie)
-            {
-                Cassie.MessageTranslated(cassie.SpawnAnnouncement, cassie.SpawnSubtitles);
-            }
+            SendWarningBroadcast();
 
-            if (this is IBroadcastSubclass broadcast)
-            {
-                Map.Broadcast(10, broadcast.WarningText);
-            }
+            Teleport(player);
 
-            if (this is IHintSubclass)
-            {
-                ICustomHintSubclass customHint = this as ICustomHintSubclass;
+            ShowHint(player);
 
-                string color = string.IsNullOrEmpty(customHint?.HintColor) ? Role.GetColor().ToHex() : customHint.HintColor;
-                string text = string.IsNullOrEmpty(customHint?.HintText) ? $"<line-height=95%><size=95%><voffset=-18em><color={color}>Ты - {Name}!\n{Desc}.</color></size></voffset>" : customHint.HintText;
-
-                player.ShowHint(text, 10);
-            }
-
-            if (this is ISpawnpointSubclass spawnpoint)
-            {
-                player.Position = spawnpoint.Spawnpoint.Position;
-            }
+            Update(player, true);
 
             if (!_subscribed)
             {
@@ -225,38 +183,88 @@ namespace Toji.Classes.API.Features
                 return false;
             }
 
-            if (ShowInfo)
-            {
-                DestroyInfo(player);
-            }
+            SendDeathCassie();
 
-            if (Abilities.Any())
-            {
-                foreach (var ability in Abilities)
-                {
-                    ability.OnDisabled(player);
-                }
-            }
+            SendDeathBroadcast();
 
-            if (Characteristics.Any())
-            {
-                foreach (var characteristic in Characteristics)
-                {
-                    characteristic.OnDisabled(player);
-                }
-            }
+            Update(player, false);
 
-            if (this is ICassieSubclass cassie)
+            return true;
+        }
+
+        public void Update(in Player player, bool isAdded)
+        {
+            if (isAdded)
+            {
+                OnAdded(player);
+            }
+            else
+            {
+                OnRemoved(player);
+            }
+        }
+
+        public virtual void LazySubscribe()
+        {
+            _subscribed = true;
+        }
+
+        public virtual void LazyUnsubscribe()
+        {
+            _subscribed = false;
+        }
+
+        public void SendSpawnCassie()
+        {
+            if (this is ICassieSubclass cassie && !string.IsNullOrEmpty(cassie.SpawnAnnouncement))
+            {
+                Cassie.MessageTranslated(cassie.SpawnAnnouncement, cassie.SpawnSubtitles);
+            }
+        }
+
+        public void SendDeathCassie()
+        {
+            if (this is ICassieSubclass cassie && !string.IsNullOrEmpty(cassie.DeathAnnouncement))
             {
                 Cassie.MessageTranslated(cassie.DeathAnnouncement, cassie.DeathSubtitles);
             }
+        }
 
-            if (this is IBroadcastSubclass broadcast)
+        public void SendWarningBroadcast()
+        {
+            if (this is IBroadcastSubclass broadcast && !string.IsNullOrEmpty(broadcast.WarningText))
+            {
+                Map.Broadcast(10, broadcast.WarningText);
+            }
+        }
+
+        public void SendDeathBroadcast()
+        {
+            if (this is IBroadcastSubclass broadcast && !string.IsNullOrEmpty(broadcast.DeathText))
             {
                 Map.Broadcast(10, broadcast.DeathText);
             }
+        }
 
-            return true;
+        public void Teleport(in Player player)
+        {
+            if (this is ISpawnpointSubclass spawnpoint)
+            {
+                player.Position = spawnpoint.Spawnpoint.Position;
+            }
+        }
+
+        public void ShowHint(Player player)
+        {
+            if (this is IHintSubclass)
+            {
+                ICustomHintSubclass customHint = this as ICustomHintSubclass;
+
+                string color = string.IsNullOrEmpty(customHint?.HintColor) ? Role.GetColor().ToHex() : customHint.HintColor;
+                string text = string.IsNullOrEmpty(customHint?.HintText) ? $"<line-height=95%><size=95%><voffset=-18em><color={color}>Ты - {Name}!\n{Desc}.</color></size></voffset>" : customHint.HintText;
+
+                player.ShowHint(text, 10);
+            }
         }
 
         public void Dispose()
@@ -281,17 +289,59 @@ namespace Toji.Classes.API.Features
             _subclasses.Remove(this);
         }
 
-        public virtual void LazySubscribe()
+        internal protected void OnEscaped(in Player player) => Update(player, true);
+
+        protected virtual void OnAdded(in Player player)
         {
-            _subscribed = true;
+            if (ShowInfo)
+            {
+                CreateInfo(player);
+            }
+
+            if (Abilities.Any())
+            {
+                player.SendConsoleMessage("Активация некоторых способностей происходит с помощью команды .ability", "green");
+                player.SendConsoleMessage("Если активируемых способностей много пиши .ability [Номер]", "green");
+                player.SendConsoleMessage("Помни что отсчет способностей начинается с 0.", "green");
+
+                foreach (var ability in Abilities)
+                {
+                    ability.OnEnabled(player);
+                }
+            }
+
+            if (Characteristics.Any())
+            {
+                foreach (var characteristic in Characteristics)
+                {
+                    characteristic.OnEnabled(player);
+                }
+            }
         }
 
-        public virtual void LazyUnsubscribe()
+        protected virtual void OnRemoved(in Player player)
         {
-            _subscribed = false;
-        }
+            if (ShowInfo)
+            {
+                DestroyInfo(player);
+            }
 
-        internal protected void OnEscaped(in Player player) => UpdatePlayer(player);
+            if (Abilities.Any())
+            {
+                foreach (var ability in Abilities)
+                {
+                    ability.OnDisabled(player);
+                }
+            }
+
+            if (Characteristics.Any())
+            {
+                foreach (var characteristic in Characteristics)
+                {
+                    characteristic.OnDisabled(player);
+                }
+            }
+        }
 
         protected void CreateInfo(in Player ply)
         {
@@ -309,7 +359,7 @@ namespace Toji.Classes.API.Features
 
         private string BuildConsoleMessage(in Player player)
         {
-            StringBuilder builder = new($"Ты получил подкласс:\n\t\tНазвание: {Name}.\n\t\tОписание: {Desc}.");
+            StringBuilder builder = new($"{(player == null ? string.Empty : "Ты получил подкласс:")}\n\t\tНазвание: {Name}.\n\t\tОписание: {Desc}.");
 
             if (Tags.Any())
             {

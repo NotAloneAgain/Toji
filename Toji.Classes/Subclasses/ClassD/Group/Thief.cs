@@ -15,7 +15,20 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
-            new StealAbility(35, false, 9, 30, 5.08f, ItemType.ParticleDisruptor, ItemType.MicroHID, ItemType.GunLogicer, ItemType.ArmorCombat, ItemType.ArmorHeavy, ItemType.ArmorLight, ItemType.GunShotgun, ItemType.GunE11SR, ItemType.GunCrossvec, ItemType.SCP244a, ItemType.SCP244b)
+            new StealAbility(35, false, 9, 30, 5.08f, new List<ItemType>(11)
+            {
+                ItemType.ParticleDisruptor,
+                ItemType.MicroHID,
+                ItemType.GunLogicer,
+                ItemType.ArmorCombat,
+                ItemType.ArmorHeavy,
+                ItemType.ArmorLight,
+                ItemType.GunShotgun,
+                ItemType.GunE11SR,
+                ItemType.GunCrossvec,
+                ItemType.SCP244a,
+                ItemType.SCP244b
+            })
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(1)

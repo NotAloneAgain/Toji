@@ -51,15 +51,15 @@ namespace Toji.Classes.Subclasses.Characteristics
 
         public override void OnDisabled(Player player)
         {
-            player.MaxHealth = GetDefaultValue(player.Role);
-            player.Health = GetDefaultValue(player.Role);
+            player.MaxHealth = GetDefaultValue(player?.Role ?? RoleTypeId.None);
+            player.Health = GetDefaultValue(player?.Role ?? RoleTypeId.None);
 
             base.OnDisabled(player);
         }
 
         public override string GetDesc(Player player = null)
         {
-            var defaultValue = GetDefaultValue(player.Role);
+            var defaultValue = GetDefaultValue(player?.Role ?? RoleTypeId.None);
 
             return Value > defaultValue ? "Ваше количество здоровья больше стандартного" : "Ваше количество здоровья меньше стандартного";
         }

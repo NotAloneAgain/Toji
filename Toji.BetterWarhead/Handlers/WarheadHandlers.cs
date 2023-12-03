@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using Toji.BetterWarhead.API;
 using Toji.BetterWarhead.API.Features;
 using Toji.BetterWarhead.API.Features.Events;
-using Toji.Classes.API.Extensions;
 using UnityEngine;
 
 namespace Toji.BetterWarhead.Handlers

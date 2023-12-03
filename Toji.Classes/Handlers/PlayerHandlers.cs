@@ -44,6 +44,8 @@ namespace Toji.Classes.Handlers
                 }
 
                 subclass.Revoke(ev.Player);
+
+                return;
             }
 
             if (!isPlayable || !BaseSubclass.TryGet(ev.NewRole, out var subclasses))
