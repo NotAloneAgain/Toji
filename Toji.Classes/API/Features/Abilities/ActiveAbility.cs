@@ -10,6 +10,13 @@ namespace Toji.Classes.API.Features.Abilities
         {
             result = null!;
 
+            if (!IsEnabled)
+            {
+                result = "Способность отключена!";
+
+                return false;
+            }
+
             return player != null && !player.IsHost && !player.IsNPC && player.IsAlive;
         }
     }

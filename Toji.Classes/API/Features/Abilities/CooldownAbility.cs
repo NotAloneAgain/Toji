@@ -16,7 +16,7 @@ namespace Toji.Classes.API.Features.Abilities
             Cooldown = cooldown;
         }
 
-        public uint Cooldown { get; init; }
+        public uint Cooldown { get; internal set; }
 
         public override bool Activate(Player player, out object result)
         {

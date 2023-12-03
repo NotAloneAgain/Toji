@@ -15,7 +15,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override string Name => "Убийца";
 
-        public override string Desc => "Всегда готов отнять жизнь и знаешь лучшие методики";
+        public override string Desc => "Неважно кого убить, тебе нужно больше смертей и крови";
 
         public int Chance => 18;
 
@@ -53,7 +53,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             _room = ev.Pickup.Room.Type;
         }
 
-        protected override void OnAdded(in Player player)
+        protected override void OnAdded(in Player player, bool withAbility)
         {
             if (player.HasItem(ItemType.GunCOM15))
             {

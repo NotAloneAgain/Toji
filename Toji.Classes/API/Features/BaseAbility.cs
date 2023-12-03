@@ -17,6 +17,8 @@ namespace Toji.Classes.API.Features
 
         public ReadOnlyCollection<Player> Owners => _owners.AsReadOnly();
 
+        public bool IsEnabled { get; set; } = true;
+
         public abstract string Name { get; }
 
         public abstract string Desc { get; }

@@ -12,7 +12,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
     {
         public override string Name => "Гигант";
 
-        public override string Desc => "Ты более высокий и крепкий чем другие, до этого ты использовался грузчиком";
+        public override string Desc => "Более высокий и крепкий чем другие, зачастую использовался для переноса грузов";
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {

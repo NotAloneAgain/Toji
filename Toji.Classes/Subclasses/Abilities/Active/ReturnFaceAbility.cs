@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Toji.Classes.API.Features.Abilities;
 using Toji.Global;
+using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
@@ -61,6 +62,8 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             player.Role.Set(role, SpawnReason.Revived, RoleSpawnFlags.None);
 
             player.DisableAllEffects();
+
+            player.Scale = Vector3.one;
 
             AddUse(player, DateTime.Now, true, result);
 

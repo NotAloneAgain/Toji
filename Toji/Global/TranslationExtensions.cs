@@ -39,14 +39,6 @@ namespace Toji.Global
             };
         }
 
-        public static string Translate(this RoleTypeId role)
-        {
-            if (_rolesTranslation.ContainsKey(role) && _rolesTranslation.TryGetValue(role, out var value))
-            {
-                return value;
-            }
-
-            return role.ToString();
-        }
+        public static string Translate(this RoleTypeId role) => _rolesTranslation.TryGetValue(role, out var value) ? value : role.ToString();
     }
 }

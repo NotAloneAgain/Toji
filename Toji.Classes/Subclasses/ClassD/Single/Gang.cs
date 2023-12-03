@@ -11,7 +11,7 @@ namespace Toji.Classes.Subclasses.ClassD.Single
     {
         public override string Name => "Блатной";
 
-        public override string Desc => "Тебя уважают все в тюрьме, это уважение завоевано силой";
+        public override string Desc => "Уважаем и почитаем всем D-Персоналом";
 
         public int Chance => 15;
 

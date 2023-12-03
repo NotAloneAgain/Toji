@@ -11,7 +11,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
     {
         public override string Name => "Грабитель";
 
-        public override string Desc => "Ты грабил банки и частные дома, международный эксперт в взломе и проникновении";
+        public override string Desc => "Грабил банки и частные дома, являешься международным экспертом во взломе и проникновении";
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {

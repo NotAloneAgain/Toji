@@ -1,4 +1,7 @@
-﻿using Toji.Classes.API.Interfaces;
+﻿using System.Collections.Generic;
+using Toji.Classes.API.Features;
+using Toji.Classes.API.Interfaces;
+using Toji.Classes.Subclasses.Abilities.Passive;
 
 namespace Toji.Classes.Subclasses.ClassD.Single
 {
@@ -8,7 +11,14 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 
         public override string Name => "SCP-181";
 
-        public override string Desc => "Тебе настолько сильно везет, что тебя записали как аномальный SCP-объект";
+        public override string Desc => "Везение твой конек, являеться ли нарушение У.С. SCP-Объектов сюда везением? Скоро узнаем";
+
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(3)
+        {
+            new DodgeAbility(100, 36, 0.8f),
+            new SurviveAbility(6),
+            new DoorErrorAbility(4)
+        };
 
         public string HintText => string.Empty;
 

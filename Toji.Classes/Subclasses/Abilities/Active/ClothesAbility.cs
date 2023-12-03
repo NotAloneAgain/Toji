@@ -4,6 +4,7 @@ using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Abilities;
 using Toji.Global;
@@ -78,21 +79,38 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             player.DisableAllEffects();
 
-            if (_copiedSubclasses.TryGetValue(player, out var previous))
+            if (_fullCopy)
             {
-                previous.Update(player, false);
+                if (_copiedSubclasses.TryGetValue(player, out var previous))
+                {
+                    previous.Update(player, false);
 
-                _copiedSubclasses.Remove(player);
-            }
+                    _copiedSubclasses.Remove(player);
+                }
 
-            if (BaseSubclass.TryGet(ragdoll, out var subclass))
-            {
-                subclass.Update(player, true);
-                subclass.ShowHint(player);
+                if (BaseSubclass.TryGet(ragdoll, out var subclass))
+                {
+                    var ownerSubclass = player.GetSubclass();
 
-                player.SendConsoleMessage($"Ты скопировал: {subclass.ConsoleMessage}", "yellow");
+                    player.SendConsoleMessage($"Ты скопировал: {subclass.ConsoleMessage}", "yellow");
 
-                _copiedSubclasses.Add(player, subclass);
+                    subclass.Update(player, true, false);
+                    subclass.ShowHint(player);
+
+                    foreach (var ability in subclass.Abilities)
+                    {
+                        if (ability == null || ability is ReturnFaceAbility or ClothesAbility || ownerSubclass.Abilities.Any(a => a.GetType() == ability.GetType()))
+                        {
+                            continue;
+                        }
+
+                        ownerSubclass.Abilities.Add(ability);
+
+                        ability.OnEnabled(player);
+                    }
+
+                    _copiedSubclasses.Add(player, subclass);
+                }
             }
 
             AddUse(player, DateTime.Now, true, result);

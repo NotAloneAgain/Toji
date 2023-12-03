@@ -12,7 +12,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
     {
         public override string Name => "Уборщик";
 
-        public override string Desc => "Ты убирался в комплексе, но теперь похоже не можешь продолжить свое дело";
+        public override string Desc => "Убирался в комплексе, но узнав о нарушении У.С. SCP-Объектов решил эвакуироваться";
 
         public override bool ShowInfo => true;
 

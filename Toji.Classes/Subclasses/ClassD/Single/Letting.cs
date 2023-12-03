@@ -10,7 +10,7 @@ namespace Toji.Classes.Subclasses.ClassD.Single
     {
         public override string Name => "Попущенный";
 
-        public override string Desc => "Ты был попущен блатным ранее, этот статус сохранился за тобой по сей день";
+        public override string Desc => "Попущенный блатным, вынужден драить его камеру и туалеты";
 
         public int Chance => 33;
 

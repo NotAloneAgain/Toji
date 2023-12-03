@@ -14,7 +14,7 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 
         public override List<string> Tags { get; } = new List<string>(2) { "Halloween", "Voting2023Winner" };
 
-        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(10)
         {
             new ClothesAbility(60, true),
             new ReturnFaceAbility(3)

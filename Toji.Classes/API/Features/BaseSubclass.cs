@@ -192,11 +192,11 @@ namespace Toji.Classes.API.Features
             return true;
         }
 
-        public void Update(in Player player, bool isAdded)
+        public void Update(in Player player, bool isAdded, bool withAbility = true)
         {
             if (isAdded)
             {
-                OnAdded(player);
+                OnAdded(player, withAbility);
             }
             else
             {
@@ -291,14 +291,14 @@ namespace Toji.Classes.API.Features
 
         internal protected void OnEscaped(in Player player) => Update(player, true);
 
-        protected virtual void OnAdded(in Player player)
+        protected virtual void OnAdded(in Player player, bool withAbility)
         {
             if (ShowInfo)
             {
                 CreateInfo(player);
             }
 
-            if (Abilities.Any())
+            if (Abilities.Any() && withAbility)
             {
                 player.SendConsoleMessage("Активация некоторых способностей происходит с помощью команды .ability", "green");
                 player.SendConsoleMessage("Если активируемых способностей много пиши .ability [Номер]", "green");
