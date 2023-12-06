@@ -91,9 +91,11 @@
     <Compile Include="Handlers\RagdollHandlers.cs" />
     <Compile Include="Subclasses\Abilities\Active\AmogusAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\ClothesAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Active\HideAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\RepairDoorAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\UpgradeDoorAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\KnockAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\PoisonedAttack.cs" />
     <Compile Include="Subclasses\Abilities\Passive\ReflectionAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\ReturnFaceAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\StealAbility.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Subclasses\Abilities\Passive\DodgeAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\InfinityStaminaAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\DoorErrorAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\ReviveAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\SurviveAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\TeslaReactionAbility.cs" />
     <Compile Include="Subclasses\Abilities\Ticks\HealAura.cs" />
@@ -153,8 +156,14 @@
     <Compile Include="Subclasses\Scientists\ScientistSingleSubclass.cs" />
     <Compile Include="Subclasses\Scientists\Single\Engineer.cs" />
     <Compile Include="Subclasses\Scientists\Single\Head.cs" />
+    <Compile Include="Subclasses\Scientists\Single\Hidden.cs" />
     <Compile Include="Subclasses\Scientists\Single\Infected.cs" />
     <Compile Include="Subclasses\Scientists\Single\Manager.cs" />
+    <Compile Include="Subclasses\Scp0492\Group\Poisoned.cs" />
+    <Compile Include="Subclasses\Scp0492\Group\Runner.cs" />
+    <Compile Include="Subclasses\Scp0492\Group\Tank.cs" />
+    <Compile Include="Subclasses\Scp0492\Single\Berserk.cs" />
+    <Compile Include="Subclasses\Scp0492\Single\Cursed.cs" />
     <Compile Include="Subclasses\Scp049\DoctorGroupSubclass.cs" />
     <Compile Include="Subclasses\Scp049\DoctorSingleSubclass.cs" />
     <Compile Include="Subclasses\Scp0492\ZombieGroupSubclass.cs" />
@@ -171,8 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Subclasses\Scientists\Group\" />
-    <Folder Include="Subclasses\Scp0492\Group\" />
-    <Folder Include="Subclasses\Scp0492\Single\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

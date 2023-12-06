@@ -20,7 +20,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public override string Desc => "Ремонтировал старую камеру содержания SCP-173, но узнав о нарушении У.С. SCP-Объектов решил эвакуироваться";
 
-        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
             new UpgradeDoorAbility(120, 5),
         };

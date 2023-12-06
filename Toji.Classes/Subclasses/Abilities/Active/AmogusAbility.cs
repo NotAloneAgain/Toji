@@ -4,6 +4,7 @@ using Exiled.API.Features.Pickups;
 using PlayerRoles;
 using System;
 using Toji.Classes.API.Features.Abilities;
+using Toji.ExiledAPI.Extensions;
 using Toji.Global;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
@@ -44,6 +45,11 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             player.Role.Set(_target, SpawnReason.Revived, RoleSpawnFlags.None);
 
             player.DisableAllEffects();
+
+            if (!_target.IsHuman())
+            {
+                player.DropAllWithoutKeycard();
+            }
 
             if (_item != ItemType.None)
             {

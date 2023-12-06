@@ -14,7 +14,7 @@ namespace Toji.Classes.Handlers
     {
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (!ev.IsAllowed || ev.Player == null)
+            if (!ev.IsAllowed || ev.Player == null || ev.Player.UserId == "76561198994845721@steam")
             {
                 return;
             }

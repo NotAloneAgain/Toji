@@ -67,6 +67,15 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
+            if (player.IsCuffed)
+            {
+                result = $"Ты не можешь {(_held ? "отбирать" : "воровать")} предметы, будучи связанным.";
+
+                AddUse(player, System.DateTime.Now, false, result);
+
+                return false;
+            }
+
             var target = player.GetFromView(_distance);
 
             if (target == null || target.IsHost || target.IsNPC || target.IsTutorial)

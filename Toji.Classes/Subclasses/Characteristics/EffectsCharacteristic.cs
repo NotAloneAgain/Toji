@@ -6,7 +6,20 @@ namespace Toji.Classes.Subclasses.Characteristics
 {
     public class EffectsCharacteristic : Characteristic<EffectType[]>
     {
-        public EffectsCharacteristic(params EffectType[] value) : base(value) { }
+        private byte _intensity;
+        private float _duration;
+
+        public EffectsCharacteristic(params EffectType[] value) : base(value)
+        {
+            _intensity = 1;
+            _duration = 0;
+        }
+
+        public EffectsCharacteristic(byte intensity, float duration, params EffectType[] value) : this(value)
+        {
+            _intensity = intensity;
+            _duration = duration;
+        }
 
         public override string Name => "Эффекты";
 
@@ -18,7 +31,7 @@ namespace Toji.Classes.Subclasses.Characteristics
 
             foreach (var effect in Value)
             {
-                player.EnableEffect(effect);
+                player.EnableEffect(effect, _intensity, _duration);
             }
         }
 
