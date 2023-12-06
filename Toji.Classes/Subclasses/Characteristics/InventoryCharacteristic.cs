@@ -15,6 +15,8 @@ namespace Toji.Classes.Subclasses.Characteristics
         {
             base.OnEnabled(player);
 
+            player.ClearItems();
+
             foreach (var slot in Value)
             {
                 var item = slot.GetItem();

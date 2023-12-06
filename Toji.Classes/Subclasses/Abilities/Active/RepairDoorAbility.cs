@@ -2,9 +2,12 @@
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using System;
+using Exiled.API.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Features.Abilities;
+using Mirror;
+using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
@@ -58,7 +61,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            var door = player.GetDoorFromView(_distance);
+            var door = Door.GetClosest(player.Position, out var distance);
 
             if (player.IsCuffed)
             {
@@ -69,7 +72,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            if (door == null)
+            if (door == null || distance > _distance)
             {
                 result = $"Не удалось получить дверь (максимальная дистанция {_distance - 1}м).";
 
@@ -97,6 +100,17 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             }
 
             breakable.IsDestroyed = false;
+            breakable.Base._prevDestroyed = false;
+            breakable.Base._nonInteractable = false;
+
+            if (breakable.MaxHealth <= 0)
+            {
+                breakable.MaxHealth = 100;
+            }
+
+            breakable.Health = breakable.MaxHealth;
+
+            breakable.GameObject.SetActive(true);
 
             if (breakable.Base._objectToReplace)
             {
@@ -108,6 +122,13 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 {
                     airlock.AirlockDisabled = false;
                 }
+            }
+
+            NetworkServer.Spawn(breakable.GameObject);
+
+            foreach (var ply in Player.List)
+            {
+                NetworkServer.SendSpawnMessage(breakable.Base.netIdentity, ply.Connection);
             }
 
             result = "Ты успешно починил эту дверь!";

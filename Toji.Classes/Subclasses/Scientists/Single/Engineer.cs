@@ -23,7 +23,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
             new UpgradeDoorAbility(120, 5),
-            new RepairDoorAbility(100, 5),
+            //new RepairDoorAbility(100, 5),
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(1)
