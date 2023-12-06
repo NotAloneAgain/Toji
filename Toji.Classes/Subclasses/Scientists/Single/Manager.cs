@@ -7,11 +7,12 @@ using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Features.Spawnpoints;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.Scientists.Single
 {
-    public class Manager : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, ISpawnpointSubclass
+    public class Manager : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
         public override bool ShowInfo => true;
 
@@ -19,8 +20,14 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public override string Desc => "Элитный управленец, годами управлявший комплексом";
 
-        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(1)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
+            TeslaReactionAbility.IsIgnored,
+        };
+
+        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
+        {
+            new SpawnpointCharacteristic(new DoorSpawnpoint(DoorType.NukeArmory)),
             new InventoryCharacteristic(new List<Slot>(8)
             {
                 new StaticSlot(ItemType.KeycardGuard),
@@ -30,8 +37,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
                 new StaticSlot(ItemType.Radio),
             })
         };
-
-        public BaseSpawnpoint Spawnpoint { get; } = new DoorSpawnpoint(DoorType.NukeArmory);
 
         public int Chance => 8;
 

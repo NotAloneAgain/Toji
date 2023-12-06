@@ -39,7 +39,6 @@ namespace Toji.Classes
             Player.SpawningRagdoll += _ragdoll.OnSpawningRagdoll;
             Player.SpawnedRagdoll += _ragdoll.OnSpawnedRagdoll;
 
-            Player.TriggeringTesla += _player.OnTriggeringTesla;
             Player.ChangingRole += _player.OnChangingRole;
             Player.Hurting += _player.OnHurting;
 
@@ -58,7 +57,6 @@ namespace Toji.Classes
 
             Player.Hurting -= _player.OnHurting;
             Player.ChangingRole -= _player.OnChangingRole;
-            Player.TriggeringTesla -= _player.OnTriggeringTesla;
 
             Player.SpawnedRagdoll -= _ragdoll.OnSpawnedRagdoll;
             Player.SpawningRagdoll -= _ragdoll.OnSpawningRagdoll;

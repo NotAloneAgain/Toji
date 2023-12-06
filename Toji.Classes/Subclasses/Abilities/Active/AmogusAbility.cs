@@ -23,7 +23,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
         public override string Name => "Переодевание";
 
-        public override string Desc => $"Ты можешь переодеться в {_target.Translate()}, являясь {_role.Translate()}";
+        public override string Desc => $"Ты можешь {(_target.IsHuman() ? "переодеться" : "превратиться")} в {_target.Translate()}, являясь {_role.Translate()}";
 
         public override bool Activate(Player player, out object result)
         {
@@ -55,6 +55,11 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 {
                     player.AddItem(_item);
                 }
+            }
+
+            if (Cooldown == uint.MaxValue || Cooldown == 0)
+            {
+                IsEnabled = false;
             }
 
             AddUse(player, DateTime.Now, true, result);

@@ -87,7 +87,6 @@
     <Compile Include="API\Interfaces\IRandomSubclass.cs" />
     <Compile Include="API\Interfaces\ISeasonSubclass.cs" />
     <Compile Include="API\Interfaces\ISingle.cs" />
-    <Compile Include="API\Interfaces\ISpawnpointSubclass.cs" />
     <Compile Include="API\Interfaces\ISubscribable.cs" />
     <Compile Include="Handlers\RagdollHandlers.cs" />
     <Compile Include="Subclasses\Abilities\Active\AmogusAbility.cs" />
@@ -104,6 +103,7 @@
     <Compile Include="Subclasses\Abilities\Passive\InfinityStaminaAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\DoorErrorAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\SurviveAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\TeslaReactionAbility.cs" />
     <Compile Include="Subclasses\Abilities\Ticks\HealAura.cs" />
     <Compile Include="Subclasses\Characteristics\ArtificalShieldCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\DamageCharacteristic.cs" />
@@ -113,7 +113,6 @@
     <Compile Include="Subclasses\Characteristics\DamageMultiplayerCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\AttackCooldownCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\SpawnpointCharacteristic.cs" />
-    <Compile Include="Subclasses\Characteristics\TeslaCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\SoundCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\RespawnCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\SizeCharacteristic.cs" />
@@ -154,6 +153,7 @@
     <Compile Include="Subclasses\Scientists\ScientistSingleSubclass.cs" />
     <Compile Include="Subclasses\Scientists\Single\Engineer.cs" />
     <Compile Include="Subclasses\Scientists\Single\Head.cs" />
+    <Compile Include="Subclasses\Scientists\Single\Infected.cs" />
     <Compile Include="Subclasses\Scientists\Single\Manager.cs" />
     <Compile Include="Subclasses\Scp049\DoctorGroupSubclass.cs" />
     <Compile Include="Subclasses\Scp049\DoctorSingleSubclass.cs" />

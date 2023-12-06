@@ -162,8 +162,6 @@ namespace Toji.Classes.API.Features
 
             SendWarningBroadcast();
 
-            Teleport(player);
-
             ShowHint(player);
 
             Update(player, true);
@@ -233,14 +231,6 @@ namespace Toji.Classes.API.Features
             if (this is IBroadcastSubclass broadcast && !string.IsNullOrEmpty(broadcast.DeathText))
             {
                 Map.Broadcast(10, broadcast.DeathText);
-            }
-        }
-
-        public void Teleport(in Player player)
-        {
-            if (this is ISpawnpointSubclass spawnpoint)
-            {
-                player.Position = spawnpoint.Spawnpoint.Position;
             }
         }
 

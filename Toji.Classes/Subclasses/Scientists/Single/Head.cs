@@ -11,7 +11,7 @@ using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.Scientists.Single
 {
-    public class Head : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, ISpawnpointSubclass
+    public class Head : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
         public override bool ShowInfo => true;
 
@@ -19,8 +19,9 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public override string Desc => "Отличный лидер и ученый, главенствующий над всем научным отделом";
 
-        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(1)
+        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
+            new SpawnpointCharacteristic(new DoorSpawnpoint(DoorType.Scp330)),
             new InventoryCharacteristic(new List<Slot>(8)
             {
                 new StaticSlot(ItemType.KeycardResearchCoordinator),
@@ -33,8 +34,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
                 new StaticSlot(ItemType.Radio),
             })
         };
-
-        public BaseSpawnpoint Spawnpoint { get; } = new DoorSpawnpoint(DoorType.Scp330);
 
         public int Chance => 12;
 

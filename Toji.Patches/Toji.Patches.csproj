@@ -47,6 +47,7 @@
     <Compile Include="API\Extensions\GroupExtensions.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Generic\Admins\Forces\ForceclassPatch.cs" />
+    <Compile Include="Generic\Admins\HideTagPatch.cs" />
     <Compile Include="Generic\Admins\Items\EquipItemPatch.cs" />
     <Compile Include="Generic\Admins\Items\GiveItemPatch.cs" />
     <Compile Include="Generic\Admins\Items\GrantLoadoutPatch.cs" />

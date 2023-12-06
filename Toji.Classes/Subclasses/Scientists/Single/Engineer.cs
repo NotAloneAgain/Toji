@@ -12,7 +12,7 @@ using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.Scientists.Single
 {
-    public class Engineer : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, ISpawnpointSubclass
+    public class Engineer : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
         public override bool ShowInfo => true;
 
@@ -23,11 +23,11 @@ namespace Toji.Classes.Subclasses.Scientists.Single
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
             new UpgradeDoorAbility(120, 5),
-            //new RepairDoorAbility(100, 5),
         };
 
-        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(1)
+        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
+            new SpawnpointCharacteristic(new DoorSpawnpoint(DoorType.Scp173Connector)),
             new InventoryCharacteristic(new List<Slot>(8)
             {
                 new StaticSlot(ItemType.KeycardContainmentEngineer),
@@ -36,8 +36,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
                 new StaticSlot(ItemType.Flashlight),
             })
         };
-
-        public BaseSpawnpoint Spawnpoint { get; } = new DoorSpawnpoint(DoorType.Scp173Connector);
 
         public int Chance => 12;
 

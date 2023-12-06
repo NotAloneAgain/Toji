@@ -1,13 +1,11 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
+using Mirror;
 using System;
-using Exiled.API.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Features.Abilities;
-using Mirror;
-using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {

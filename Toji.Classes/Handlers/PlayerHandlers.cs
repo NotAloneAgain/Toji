@@ -64,17 +64,6 @@ namespace Toji.Classes.Handlers
             }
         }
 
-        public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
-        {
-            if (!ev.Player.TryGetSubclass(out var subclass) || subclass.Characteristics.Find(x => x is TeslaCharacteristic) is not TeslaCharacteristic tesla)
-            {
-                return;
-            }
-
-            ev.IsTriggerable = !tesla.Value;
-            ev.IsAllowed = !tesla.Value;
-        }
-
         public void OnHurting(HurtingEventArgs ev)
         {
             if (!ev.IsAllowed || !ev.IsValid())
