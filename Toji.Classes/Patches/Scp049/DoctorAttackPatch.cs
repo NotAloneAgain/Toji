@@ -6,7 +6,6 @@ using PlayerStatsSystem;
 using System;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.Subclasses.Characteristics;
-using Toji.Classes.Subclasses.Scp049;
 using Utils.Networking;
 
 namespace Toji.Patches.Generic.Scp049

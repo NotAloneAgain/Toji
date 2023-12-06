@@ -21,6 +21,8 @@ namespace Toji.Classes.API.Features.Spawnpoints
             {
                 var door = Door.Get(door => door.Type == Type).GetRandomValue();
 
+                door.IsOpen = true;
+
                 if (Offset != Vector3.zero && Offset != Vector3.one)
                 {
                     return door.Position + Vector3.up * 2 + door.Room.Rotation * Offset;

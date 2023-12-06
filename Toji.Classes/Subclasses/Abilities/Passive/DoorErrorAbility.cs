@@ -2,7 +2,6 @@
 using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
-using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Features.Abilities;
 using Toji.ExiledAPI.Extensions;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Toji.Malfunctions.API.Features
+﻿namespace Toji.Malfunctions.API.Features
 {
     public abstract class ObjectMalfunction<TObject> : BaseMalfunction where TObject : class
     {

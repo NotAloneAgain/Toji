@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features.Doors;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Toji.BetterWarhead.API

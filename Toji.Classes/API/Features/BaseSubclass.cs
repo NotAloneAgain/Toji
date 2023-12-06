@@ -204,16 +204,6 @@ namespace Toji.Classes.API.Features
             }
         }
 
-        public virtual void LazySubscribe()
-        {
-            _subscribed = true;
-        }
-
-        public virtual void LazyUnsubscribe()
-        {
-            _subscribed = false;
-        }
-
         public void SendSpawnCassie()
         {
             if (this is ICassieSubclass cassie && !string.IsNullOrEmpty(cassie.SpawnAnnouncement))
@@ -289,7 +279,17 @@ namespace Toji.Classes.API.Features
             _subclasses.Remove(this);
         }
 
-        internal protected void OnEscaped(in Player player) => Update(player, true);
+        protected internal virtual void OnEscaped(in Player player) => Update(player, true);
+
+        protected internal virtual void LazySubscribe()
+        {
+            _subscribed = true;
+        }
+
+        protected internal virtual void LazyUnsubscribe()
+        {
+            _subscribed = false;
+        }
 
         protected virtual void OnAdded(in Player player, bool withAbility)
         {

@@ -1,13 +1,8 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Spawn;
-using Exiled.API.Interfaces;
-using Exiled.Events.EventArgs.Scp079;
 using InventorySystem.Items.Firearms.Attachments;
 using Mirror;
-using PlayerRoles.PlayableScps.Scp079.Overcons;
 using System.Linq;
-using System.Reflection;
 using Toji.Teslas.API;
 using UnityEngine;
 

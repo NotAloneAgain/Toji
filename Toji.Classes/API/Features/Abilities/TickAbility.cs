@@ -2,7 +2,6 @@
 using MEC;
 using System;
 using System.Collections.Generic;
-using Toji.Classes.API.Interfaces;
 
 namespace Toji.Classes.API.Features.Abilities
 {
@@ -34,9 +33,9 @@ namespace Toji.Classes.API.Features.Abilities
             Exiled.Events.Handlers.Server.RestartingRound -= StopCoroutine;
         }
 
-        internal protected void StartCoroutine() => _coroutineHandle = Timing.RunCoroutine(_Coroutine());
+        protected internal void StartCoroutine() => _coroutineHandle = Timing.RunCoroutine(_Coroutine());
 
-        internal protected void StopCoroutine()
+        protected internal void StopCoroutine()
         {
             if (_coroutineHandle == default)
                 return;

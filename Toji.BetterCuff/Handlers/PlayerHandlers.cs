@@ -2,7 +2,6 @@
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-using System;
 using System.Linq;
 using Toji.BetterCuff.API;
 using UnityEngine;

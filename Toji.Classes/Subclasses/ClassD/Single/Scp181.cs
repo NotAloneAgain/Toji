@@ -11,7 +11,7 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 
         public override string Name => "SCP-181";
 
-        public override string Desc => "Везение твой конек, являеться ли нарушение У.С. SCP-Объектов сюда везением? Скоро узнаем";
+        public override string Desc => "Везение твой конек, являеться ли нарушение У.С. SCP-Объектов везением? Скоро узнаем";
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(3)
         {

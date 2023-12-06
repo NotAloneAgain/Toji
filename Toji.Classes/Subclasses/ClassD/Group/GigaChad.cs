@@ -10,6 +10,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class GigaChad : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
+        public override bool ShowInfo => true;
+
         public override string Name => "Гигант";
 
         public override string Desc => "Более высокий и крепкий чем другие, зачастую использовался для переноса грузов";
@@ -41,8 +43,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             new HealthCharacteristic(150)
         };
 
-        public int Max => 3;
-
         public int Chance => 16;
+
+        public int Max => 3;
     }
 }

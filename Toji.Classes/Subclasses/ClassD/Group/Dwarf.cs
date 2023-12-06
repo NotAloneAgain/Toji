@@ -10,6 +10,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class Dwarf : DGroupSubclass, IHintSubclass, IRandomSubclass
     {
+        public override bool ShowInfo => true;
+
         public override string Name => "Карлик";
 
         public override string Desc => "Имея слабое тело и маленький рост смог выжить и не оказаться попущенным";
@@ -35,8 +37,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             })
         };
 
-        public int Max => 4;
-
         public int Chance => 16;
+
+        public int Max => 4;
     }
 }

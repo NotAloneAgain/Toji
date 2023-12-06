@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Features;
 using Toji.Classes.API.Features;
-using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {

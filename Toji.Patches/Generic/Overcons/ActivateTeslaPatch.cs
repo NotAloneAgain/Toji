@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using MapGeneration;
-using Mirror;
 using PlayerRoles.PlayableScps.Scp079;
 using PlayerRoles.PlayableScps.Scp079.GUI;
 using PlayerRoles.PlayableScps.Scp079.Overcons;

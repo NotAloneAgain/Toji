@@ -160,7 +160,9 @@ namespace Toji.Patches.Generic.Admins.Forces
                 }
 
                 if (!_usings.ContainsKey(player.UserId))
+                {
                     _usings.Add(player.UserId, 0);
+                }
 
                 var max = tag.GetForcesLimit();
 
@@ -208,17 +210,6 @@ namespace Toji.Patches.Generic.Admins.Forces
                     _usingsScp.Add(player.UserId, 1);
 
                     Swap.StartScps[role]++;
-
-                    /*foreach (Player ply in Player.GetPlayers())
-                    {
-                        if (!ply.TryGetSubclass(out var subclass) || subclass.Name != "Информатор")
-                            continue;
-
-                        var text = $"Донатер стал {role.Translate()}";
-
-                        ply.ReceiveHint($"<line-height=95%><size=95%><voffset=-20em><b><color=#FF9500>{text}</color></b></voffset></size>", 3);
-                        ply.SendConsoleMessage(text, "yellow");
-                    }*/
                 }
 
                 return false;

@@ -3,8 +3,8 @@ using Exiled.API.Extensions;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-using UnityEngine;
 using Toji.ExiledAPI.Extensions;
+using UnityEngine;
 
 namespace Toji.MoreRealistic.Handlers
 {

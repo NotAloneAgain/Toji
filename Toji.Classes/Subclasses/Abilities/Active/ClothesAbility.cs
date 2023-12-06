@@ -99,7 +99,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
                     foreach (var ability in subclass.Abilities)
                     {
-                        if (ability == null || ability is ReturnFaceAbility or ClothesAbility || ownerSubclass.Abilities.Any(a => a.GetType() == ability.GetType()))
+                        if (ability == null || ability is ReturnFaceAbility or ClothesAbility or AmogusAbility || ownerSubclass.Abilities.Any(a => a.GetType() == ability.GetType()))
                         {
                             continue;
                         }

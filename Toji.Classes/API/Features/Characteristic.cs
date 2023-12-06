@@ -1,6 +1,4 @@
-﻿using Exiled.API.Features;
-
-namespace Toji.Classes.API.Features
+﻿namespace Toji.Classes.API.Features
 {
     public abstract class Characteristic<TValue> : BaseCharacteristic
     {
@@ -9,6 +7,6 @@ namespace Toji.Classes.API.Features
             Value = value;
         }
 
-        public TValue Value { get; internal protected set; }
+        public TValue Value { get; protected internal set; }
     }
 }

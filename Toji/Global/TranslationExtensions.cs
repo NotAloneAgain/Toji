@@ -6,6 +6,7 @@ namespace Toji.Global
     public static class TranslationExtensions
     {
         private static readonly IReadOnlyDictionary<RoleTypeId, string> _rolesTranslation;
+        private static readonly IReadOnlyDictionary<RoleTypeId, string> _shortTranslation;
 
         static TranslationExtensions()
         {
@@ -37,8 +38,39 @@ namespace Toji.Global
                 { RoleTypeId.Scp3114, "SCP-3114" },
                 { RoleTypeId.Spectator, "Наблюдатель" }
             };
+
+            _shortTranslation = new Dictionary<RoleTypeId, string>()
+            {
+                { RoleTypeId.None, "Пусто" },
+                { RoleTypeId.Scp173, "SCP-173" },
+                { RoleTypeId.ClassD, "Класс D" },
+                { RoleTypeId.Scp106, "SCP-106" },
+                { RoleTypeId.NtfSpecialist, "Специалист МОГ" },
+                { RoleTypeId.Scp049, "SCP-049" },
+                { RoleTypeId.Scientist, "Ученый" },
+                { RoleTypeId.Scp079, "SCP-079" },
+                { RoleTypeId.ChaosConscript, "Новобранец ПХ" },
+                { RoleTypeId.Scp096, "SCP-096" },
+                { RoleTypeId.Scp0492, "SCP-049-2" },
+                { RoleTypeId.NtfSergeant, "Сержант МОГ" },
+                { RoleTypeId.NtfCaptain, "Капитан МОГ" },
+                { RoleTypeId.NtfPrivate, "Рядовой МОГ" },
+                { RoleTypeId.Tutorial, "Обучение" },
+                { RoleTypeId.FacilityGuard, "Охранник" },
+                { RoleTypeId.Scp939, "SCP-939" },
+                { RoleTypeId.CustomRole, "Кастомка" },
+                { RoleTypeId.ChaosRifleman, "Стрелок ПХ" },
+                { RoleTypeId.ChaosMarauder, "Мародёр ПХ" },
+                { RoleTypeId.ChaosRepressor, "Усмиритель ПХ" },
+                { RoleTypeId.Overwatch, "Надзиратель" },
+                { RoleTypeId.Filmmaker, "Контентмейкер" },
+                { RoleTypeId.Scp3114, "SCP-3114" },
+                { RoleTypeId.Spectator, "Наблюдатель" }
+            };
         }
 
         public static string Translate(this RoleTypeId role) => _rolesTranslation.TryGetValue(role, out var value) ? value : role.ToString();
+
+        public static string ShortTranslate(this RoleTypeId role) => _shortTranslation.TryGetValue(role, out var value) ? value : role.ToString();
     }
 }

@@ -10,17 +10,11 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class Janitor : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass, ISpawnpointSubclass
     {
+        public override bool ShowInfo => true;
+
         public override string Name => "Уборщик";
 
         public override string Desc => "Убирался в комплексе, но узнав о нарушении У.С. SCP-Объектов решил эвакуироваться";
-
-        public override bool ShowInfo => true;
-
-        public BaseSpawnpoint Spawnpoint { get; } = new RandomRoomSpawnpoint(RoomType.LczTCross, RoomType.LczStraight);
-
-        public int Chance => 25;
-
-        public int Max => 4;
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(1)
         {
@@ -29,5 +23,11 @@ namespace Toji.Classes.Subclasses.ClassD.Group
                 new StaticSlot(ItemType.KeycardJanitor),
             })
         };
+
+        public BaseSpawnpoint Spawnpoint { get; } = new RandomRoomSpawnpoint(RoomType.LczTCross, RoomType.LczStraight);
+
+        public int Chance => 25;
+
+        public int Max => 4;
     }
 }

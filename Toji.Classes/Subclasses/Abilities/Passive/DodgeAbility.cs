@@ -3,7 +3,6 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
 using Toji.Classes.API.Features.Abilities;
 using Toji.ExiledAPI.Extensions;
-using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {

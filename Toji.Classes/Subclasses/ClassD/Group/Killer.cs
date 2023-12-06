@@ -17,10 +17,6 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override string Desc => "Неважно кого убить, тебе нужно больше смертей и крови";
 
-        public int Chance => 18;
-
-        public int Max => 3;
-
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
             new DamageMultiplayerCharacteristic(1.1f),
@@ -38,6 +34,10 @@ namespace Toji.Classes.Subclasses.ClassD.Group
                 }),
             })
         };
+
+        public int Chance => 18;
+
+        public int Max => 3;
 
         public void Subscribe() => Exiled.Events.Handlers.Map.SpawningItem += OnSpawningItem;
 

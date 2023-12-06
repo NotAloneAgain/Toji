@@ -1,10 +1,4 @@
-﻿using Decals;
-using Exiled.API.Features;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Exiled.API.Features;
 using Toji.Classes.API.Features;
 
 namespace Toji.Classes.Subclasses.Characteristics

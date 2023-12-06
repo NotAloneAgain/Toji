@@ -9,12 +9,12 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class KnockAbility : CooldownAbility
+    public class UpgradeDoorAbility : CooldownAbility
     {
         private float _distance;
         private HashSet<DoorType> _ignoredDoors;
 
-        public KnockAbility(uint cooldown) : base(cooldown)
+        public UpgradeDoorAbility(uint cooldown) : base(cooldown)
         {
             _distance = 5;
             _ignoredDoors = new HashSet<DoorType>()
@@ -29,25 +29,25 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             };
         }
 
-        public KnockAbility(uint cooldown, float distance) : this(cooldown)
+        public UpgradeDoorAbility(uint cooldown, float distance) : this(cooldown)
         {
             _distance = distance;
         }
 
-        public KnockAbility(uint cooldown, float distance, HashSet<DoorType> ignoredDoors) : this(cooldown, distance)
+        public UpgradeDoorAbility(uint cooldown, float distance, HashSet<DoorType> ignoredDoors) : this(cooldown, distance)
         {
             _ignoredDoors = ignoredDoors;
         }
 
-        public override string Name => "Выбивание дверей";
+        public override string Name => "Улучшение дверей";
 
-        public override string Desc => "Ты можешь выбивать некоторые двери с помощью своей силы или профессиональной подготовки";
+        public override string Desc => "Ты можешь улучшать некоторые двери с помощью своих знаний";
 
         public override void OnEnabled(Player player)
         {
             base.OnEnabled(player);
 
-            player.SendConsoleMessage($"Ты не сможешь выбить двери: {string.Join(", ", _ignoredDoors.Select(x => x.ToString()))}.", "red");
+            player.SendConsoleMessage($"Ты не сможешь улучшить двери: {string.Join(", ", _ignoredDoors.Select(x => x.ToString()))}.", "red");
         }
 
         public override bool Activate(Player player, out object result)
@@ -63,7 +63,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             if (player.IsCuffed)
             {
-                result = "Ты не можешь выбивать двери, будучи связанным.";
+                result = "Ты не можешь улучшать двери, будучи связанным.";
 
                 AddUse(player, DateTime.Now, false, result);
 
@@ -81,21 +81,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             if (!door.Is(out BreakableDoor breakable) || breakable.IsDestroyed || door.IsElevator || door.IsGate || _ignoredDoors.Contains(door.Type))
             {
-                result = "Эту дверь нельзя выбить!";
-
-                AddUse(player, DateTime.Now, false, result);
-
-                return false;
-            }
-
-            if (door.IsLocked && door.DoorLockType is DoorLockType.Lockdown2176 or DoorLockType.Lockdown079)
-            {
-                result = $"Блокировка от системы безопасности, спровоцированной {door.DoorLockType switch
-                {
-                    DoorLockType.Lockdown2176 => "SCP-2176",
-                    DoorLockType.Lockdown079 => "SCP-079",
-                    _ => "неизвестно"
-                }} не позволяет выбить дверь!";
+                result = "Эту дверь нельзя улучшить!";
 
                 AddUse(player, DateTime.Now, false, result);
 
@@ -104,27 +90,17 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             if (_ignoredDoors.Contains(door.Type))
             {
-                result = "Ты не можешь выбить дверь!";
+                result = "Ты не можешь улучшить эту дверь!";
 
                 AddUse(player, System.DateTime.Now, false, result);
 
                 return false;
             }
 
-            if (!breakable.Damage(250, DoorDamageType.Grenade))
-            {
-                result = "Увы, у тебя не вышло!";
+            breakable.IgnoredDamage |= DoorDamageType.Grenade;
+            breakable.IgnoredDamage |= DoorDamageType.Scp096;
 
-                AddUse(player, System.DateTime.Now, false, result);
-
-                return false;
-            }
-
-            result = breakable.IsDestroyed switch
-            {
-                true => "Ты успешно выбил эту дверь!",
-                _ => "Тебе не удалось выбить дверь, но она явна потерпела повреждения..."
-            };
+            result = "Ты успешно улучшил эту дверь!";
 
             AddUse(player, DateTime.Now, true, result);
 

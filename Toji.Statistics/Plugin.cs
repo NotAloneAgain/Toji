@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using System;
+﻿using System;
 using Toji.Statistics.Configs;
 using Toji.Statistics.Handlers;
 

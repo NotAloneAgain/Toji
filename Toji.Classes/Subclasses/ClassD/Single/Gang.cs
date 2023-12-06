@@ -9,11 +9,11 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class Gang : DSingleSubclass, IHintSubclass, IRandomSubclass
     {
+        public override bool ShowInfo => true;
+
         public override string Name => "Блатной";
 
         public override string Desc => "Уважаем и почитаем всем D-Персоналом";
-
-        public int Chance => 15;
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
@@ -29,5 +29,7 @@ namespace Toji.Classes.Subclasses.ClassD.Single
                 new StaticSlot(ItemType.Painkillers),
             })
         };
+
+        public int Chance => 15;
     }
 }

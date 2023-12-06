@@ -2,11 +2,9 @@
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Exiled.API.Features.Items;
 using Exiled.API.Features.Pickups;
 using Exiled.Events.EventArgs.Scp914;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Toji.Redux914.Handlers
 {
