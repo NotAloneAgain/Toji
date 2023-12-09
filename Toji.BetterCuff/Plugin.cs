@@ -2,6 +2,7 @@
 using System;
 using Toji.BetterCuff.Handlers;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 
 namespace Toji.BetterCuff
 {
@@ -11,7 +12,7 @@ namespace Toji.BetterCuff
 
         public override string Name => "Toji.BetterCuff";
 
-        public override string Prefix => "Toji.BetterCuff";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

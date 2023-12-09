@@ -1,17 +1,18 @@
 ﻿using Exiled.Events.Handlers;
 using System;
-using Toji.BetterWarhead.Configs;
 using Toji.BetterWarhead.Handlers;
+using Toji.ExiledAPI.Configs;
+using Toji.Global;
 
 namespace Toji.BetterWarhead
 {
-    public sealed class Plugin : Exiled.API.Features.Plugin<Config>
+    public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
         private WarheadHandlers _handlers;
 
         public override string Name => "Toji.BetterWarhead";
 
-        public override string Prefix => "Toji.BetterWarhead";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

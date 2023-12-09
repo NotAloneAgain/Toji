@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.Handlers;
 using System;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 using Toji.RemoteKeycard.Handlers;
 
 namespace Toji.RemoteKeycard
@@ -11,7 +12,7 @@ namespace Toji.RemoteKeycard
 
         public override string Name => "Toji.RemoteKeycard";
 
-        public override string Prefix => "Toji.RemoteKeycard";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

@@ -1,16 +1,17 @@
 ﻿using System;
-using Toji.Redux914.Configs;
+using Toji.ExiledAPI.Configs;
+using Toji.Global;
 using Toji.Redux914.Handlers;
 
 namespace Toji.Redux914
 {
-    public sealed class Plugin : Exiled.API.Features.Plugin<Config>
+    public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
         private Scp914Handlers _handlers;
 
         public override string Name => "Toji.Redux914";
 
-        public override string Prefix => "Toji.Redux914";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

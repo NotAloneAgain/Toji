@@ -5,7 +5,7 @@ using Toji.Classes.API.Interfaces;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class PoisonedAttack : PassiveAbility, IDamageController
+    public class PoisonedAttackAbility : PassiveAbility, IDamageController
     {
         public override string Name => "Отравленные атаки";
 

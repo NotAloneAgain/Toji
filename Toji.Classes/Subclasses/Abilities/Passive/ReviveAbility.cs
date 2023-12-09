@@ -24,7 +24,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnDying(DyingEventArgs ev)
         {
-            if (!ev.IsValid() || !ev.IsAllowed || !Has(ev.Player) || ev.DamageHandler.Type == DamageType.Warhead)
+            if (!ev.IsValid() || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid())
             {
                 return;
             }

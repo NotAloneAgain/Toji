@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.Handlers;
 using System;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 using Toji.Teslas.Handlers;
 
 namespace Toji.Teslas
@@ -12,7 +13,7 @@ namespace Toji.Teslas
 
         public override string Name => "Toji.Teslas";
 
-        public override string Prefix => "Toji.Teslas";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

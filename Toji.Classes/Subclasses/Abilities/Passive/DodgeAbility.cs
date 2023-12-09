@@ -32,7 +32,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            if (GetRandom(_fullyChance))
+            if (GetRandom(_fullyChance) && ev.DamageHandler.Type.IsValid())
             {
                 ev.Amount = 0;
             }

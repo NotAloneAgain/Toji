@@ -1,4 +1,5 @@
 ﻿using System;
+using Toji.Global;
 using Toji.MySQL.Configs;
 using Toji.MySQL.Handlers;
 
@@ -10,7 +11,7 @@ namespace Toji.MySQL
 
         public override string Name => "Toji.MySQL";
 
-        public override string Prefix => "Toji.MySQL";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

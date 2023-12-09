@@ -7,6 +7,7 @@ using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Configs;
 using Toji.Classes.Handlers;
+using Toji.Global;
 
 namespace Toji.Classes
 {
@@ -20,7 +21,7 @@ namespace Toji.Classes
 
         public override string Name => "Toji.Classes";
 
-        public override string Prefix => "Toji.Classes";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

@@ -10,6 +10,6 @@ namespace Toji.Classes.API.Features.Abilities
 
         public bool GetRandom() => GetRandom(Chance);
 
-        public bool GetRandom(int chance) => IsEnabled && Random.Range(0, 101) > chance;
+        public bool GetRandom(int chance) => IsEnabled && Random.Range(0, 100) < chance;
     }
 }

@@ -1,44 +1,65 @@
-﻿using Exiled.API.Features;
-using Toji.Malfunctions.API.Interfaces;
+﻿using Exiled.Loader;
+using MEC;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Toji.Malfunctions.API.Features
 {
     public abstract class BaseMalfunction
     {
+        private protected DateTime _activateTime;
+        private CoroutineHandle _coroutine;
+
         public abstract string Name { get; }
+
+        public abstract int MinDuration { get; }
+
+        public abstract int MaxDuration { get; }
 
         public abstract int Chance { get; }
 
-        public abstract int Duration { get; }
+        public TimeSpan Existance => DateTime.Now - _activateTime;
 
-        public bool IsActive { get; protected set; }
+        public void Start()
+        {
+            _coroutine = Timing.RunCoroutine(_Coroutine());
+        }
+
+        public void Stop()
+        {
+            if (_coroutine == default)
+            {
+                return;
+            }
+
+            _coroutine.IsRunning = false;
+
+            _coroutine = default;
+        }
 
         public virtual void Activate(int duration)
         {
-            IsActive = true;
-
-            if (this is ICassieMalfunction cassie)
-            {
-                Cassie.MessageTranslated(cassie.WarningText, cassie.WarningSubtitles);
-            }
-
-            if (this is IBroadcastMalfunction broadcast)
-            {
-                Map.Broadcast(12, broadcast.BroadcastText);
-            }
-
-            Subscribe();
+            _activateTime = DateTime.Now;
         }
 
-        public virtual void Deactivate()
+        public abstract void Subscribe();
+
+        public abstract void Unsubscribe();
+
+        protected virtual IEnumerator<float> _Coroutine()
         {
-            IsActive = false;
+            while (true)
+            {
+                var minutes = Existance.TotalMinutes;
 
-            Unsubscribe();
+                if (Loader.Random.Next(0, 100) < Chance + minutes)
+                {
+                    Activate(Loader.Random.Next(MinDuration + (int)Math.Round(minutes * 2f, 0), MaxDuration + (int)Math.Round(minutes * 3f, 0)));
+                }
+
+                yield return Timing.WaitForSeconds(60);
+            }
         }
-
-        private protected abstract void Subscribe();
-
-        private protected abstract void Unsubscribe();
     }
 }

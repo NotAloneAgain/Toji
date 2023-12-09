@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using MEC;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace Toji.BetterWarhead.API.Features.Events
         {
             DateTime startTime = DateTime.Now;
 
-            while ((DateTime.Now - startTime).TotalSeconds <= 60 || !Round.InProgress)
+            while ((DateTime.Now - startTime).TotalSeconds > 60 || !Round.InProgress)
             {
                 foreach (var player in Player.List)
                 {
@@ -50,14 +51,7 @@ namespace Toji.BetterWarhead.API.Features.Events
         {
             while (player?.IsAlive ?? false)
             {
-                if (player.Health - 8 <= 0)
-                {
-                    player.Kill("Радиоцинное облучение");
-                }
-                else
-                {
-                    player.Health -= 8;
-                }
+                player.Hurt(8, "Радиоцинное облучение");
 
                 yield return Timing.WaitForSeconds(1);
             }

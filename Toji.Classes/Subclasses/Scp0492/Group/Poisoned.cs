@@ -13,7 +13,7 @@ namespace Toji.Classes.Subclasses.Scp0492.Group
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
-            new PoisonedAttack(),
+            new PoisonedAttackAbility(),
         };
 
         public int Chance => 15;

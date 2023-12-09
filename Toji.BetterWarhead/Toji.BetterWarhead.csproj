@@ -51,7 +51,6 @@
     <Compile Include="API\Features\BaseEvent.cs" />
     <Compile Include="API\Features\Events\BlackOut.cs" />
     <Compile Include="API\Features\Events\Radiation.cs" />
-    <Compile Include="Configs\Config.cs" />
     <Compile Include="Handlers\WarheadHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -91,11 +91,12 @@
     <Compile Include="Handlers\RagdollHandlers.cs" />
     <Compile Include="Subclasses\Abilities\Active\AmogusAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\ClothesAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Active\CurseAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\HideAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\RepairDoorAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\UpgradeDoorAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\KnockAbility.cs" />
-    <Compile Include="Subclasses\Abilities\Passive\PoisonedAttack.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\PoisonedAttackAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\ReflectionAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\ReturnFaceAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\StealAbility.cs" />

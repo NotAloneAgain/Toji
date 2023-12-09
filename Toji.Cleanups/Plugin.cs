@@ -2,6 +2,7 @@
 using System;
 using Toji.Cleanups.Handlers;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 
 namespace Toji.Cleanups
 {
@@ -11,7 +12,7 @@ namespace Toji.Cleanups
 
         public override string Name => "Toji.Cleanups";
 
-        public override string Prefix => "Toji.Cleanups";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

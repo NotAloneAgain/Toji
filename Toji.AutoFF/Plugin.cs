@@ -2,6 +2,7 @@
 using System;
 using Toji.AutoFF.Handlers;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 
 namespace Toji.AutoFF
 {
@@ -11,7 +12,7 @@ namespace Toji.AutoFF
 
         public override string Name => "Toji.AutoFF";
 
-        public override string Prefix => "Toji.AutoFF";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

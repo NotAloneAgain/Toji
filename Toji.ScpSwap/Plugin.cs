@@ -12,7 +12,7 @@ namespace Toji.ScpSwap
 
         public override string Name => "Toji.ScpSwap";
 
-        public override string Prefix => "Toji.ScpSwap";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

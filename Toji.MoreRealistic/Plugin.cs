@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.Handlers;
 using System;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 using Toji.MoreRealistic.Handlers;
 
 namespace Toji.MoreRealistic
@@ -11,7 +12,7 @@ namespace Toji.MoreRealistic
 
         public override string Name => "Toji.MoreRealistic";
 
-        public override string Prefix => "Toji.MoreRealistic";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

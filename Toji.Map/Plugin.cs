@@ -2,6 +2,7 @@
 using System;
 using Toji.BetterMap.Handlers;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 
 namespace Toji.BetterMap
 {
@@ -11,7 +12,7 @@ namespace Toji.BetterMap
 
         public override string Name => "Toji.Map";
 
-        public override string Prefix => "Toji.Map";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

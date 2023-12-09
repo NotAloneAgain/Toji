@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.ExtendedRadioBattery",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.AutoFF", "Toji.AutoFF\Toji.AutoFF.csproj", "{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Hitmarker", "Toji.Hitmarker\Toji.Hitmarker.csproj", "{BFC6C234-7D51-4E59-BB1A-29D5F50F7605}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -141,6 +143,10 @@ Global
 		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Debug|x64.Build.0 = Debug|x64
 		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Release|x64.ActiveCfg = Release|x64
 		{CC5222D8-D3A7-4900-A32D-BB0FE6C86DC8}.Release|x64.Build.0 = Release|x64
+		{BFC6C234-7D51-4E59-BB1A-29D5F50F7605}.Debug|x64.ActiveCfg = Debug|x64
+		{BFC6C234-7D51-4E59-BB1A-29D5F50F7605}.Debug|x64.Build.0 = Debug|x64
+		{BFC6C234-7D51-4E59-BB1A-29D5F50F7605}.Release|x64.ActiveCfg = Release|x64
+		{BFC6C234-7D51-4E59-BB1A-29D5F50F7605}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

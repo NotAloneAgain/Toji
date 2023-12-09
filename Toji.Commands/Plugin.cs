@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Toji.Commands.API.Features;
-using Toji.Commands.Configs;
+using Toji.ExiledAPI.Configs;
+using Toji.Global;
 
 namespace Toji.Commands
 {
-    public sealed class Plugin : Exiled.API.Features.Plugin<Config>
+    public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
         private Type _commandType;
         private List<CommandBase> _commands;
@@ -18,7 +19,7 @@ namespace Toji.Commands
 
         public override string Name => "Toji.Commands";
 
-        public override string Prefix => "Toji.Commands";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

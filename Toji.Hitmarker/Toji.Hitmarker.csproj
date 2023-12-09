@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>Toji.BetterRoles</AssemblyName>
-    <RootNamespace>Toji.BetterRoles</RootNamespace>
-    <ProjectGuid>{66D6662E-A30F-41FA-8A4B-F26C633E8331}</ProjectGuid>
+    <AssemblyName>Toji.Hitmarker</AssemblyName>
+    <RootNamespace>Toji.Hitmarker</RootNamespace>
+    <ProjectGuid>{BFC6C234-7D51-4E59-BB1A-29D5F50F7605}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,17 +24,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp-Publicized" HintPath="$(SL_REFERENCES)\Assembly-CSharp-Publicized.dll" />
-    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(SL_REFERENCES)\Assembly-CSharp-firstpass.dll" />
     <Reference Include="UnityEngine.CoreModule" HintPath="$(UNITY_REFERENCES)\UnityEngine.CoreModule.dll" />
     <Reference Include="Exiled.Events" HintPath="$(EXILED_REFERENCES)\Exiled.Events.dll" />
     <Reference Include="Exiled.API" HintPath="$(EXILED_REFERENCES)\Exiled.API.dll" />
-    <Reference Include="Pooling" HintPath="$(SL_REFERENCES)\Pooling.dll" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers\Scp3114Handlers.cs" />
-    <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="Configs\Config.cs" />
+    <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -53,7 +53,6 @@
     <Compile Include="API\Extensions.cs" />
     <Compile Include="API\Features\CommandBase.cs" />
     <Compile Include="API\Features\CooldownCommand.cs" />
-    <Compile Include="Configs\Config.cs" />
     <Compile Include="Global\Level.cs" />
     <Compile Include="Global\Suicide.cs" />
     <Compile Include="Plugin.cs" />

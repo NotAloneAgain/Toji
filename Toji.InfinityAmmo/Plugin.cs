@@ -1,6 +1,8 @@
 ﻿using Exiled.Events.Handlers;
 using System;
+using System.Linq;
 using Toji.ExiledAPI.Configs;
+using Toji.Global;
 using Toji.InfinityAmmo.Handlers;
 
 namespace Toji.InfinityAmmo
@@ -11,7 +13,7 @@ namespace Toji.InfinityAmmo
 
         public override string Name => "Toji.InfinityAmmo";
 
-        public override string Prefix => "Toji.InfinityAmmo";
+        public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
 

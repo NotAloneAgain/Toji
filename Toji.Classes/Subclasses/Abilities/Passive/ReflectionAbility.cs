@@ -24,7 +24,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnHurt(HurtingEventArgs ev)
         {
-            if (!ev.IsNotSelfDamage() || ev.Attacker.IsGodModeEnabled || ev.DamageHandler.Type == DamageType.PocketDimension || !IsEnabled)
+            if (!ev.IsNotSelfDamage() || ev.Attacker.IsGodModeEnabled || !ev.DamageHandler.Type.IsValid() || !IsEnabled)
             {
                 return;
             }
@@ -36,14 +36,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
             var amount = ev.Attacker.IsScp ? 50 : ev.Amount * _multiplayer;
 
-            if (ev.Attacker.Health - amount > 0)
-            {
-                ev.Attacker.Hurt(ev.Attacker, amount, ev.DamageHandler.Type, default);
-            }
-            else
-            {
-                ev.Attacker.Kill(ev.DamageHandler.Type);
-            }
+            ev.Attacker.Hurt(ev.Attacker, amount, ev.DamageHandler.Type, default);
         }
 
         public override void Subscribe() { }
