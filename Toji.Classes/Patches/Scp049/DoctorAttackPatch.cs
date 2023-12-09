@@ -4,8 +4,6 @@ using Mirror;
 using PlayerRoles.PlayableScps.Scp049;
 using PlayerStatsSystem;
 using System;
-using Toji.Classes.API.Extensions;
-using Toji.Classes.Subclasses.Characteristics;
 using Utils.Networking;
 
 namespace Toji.Patches.Generic.Scp049
@@ -26,11 +24,6 @@ namespace Toji.Patches.Generic.Scp049
                     return false;
 
                 var cooldown = 1.4;
-
-                if (Player.TryGet(__instance.Owner, out var player) && player.TryGetSubclass(out var subclass) && subclass.Characteristics.Find(x => x is AttackCooldownCharacteristic) is AttackCooldownCharacteristic characteristic)
-                {
-                    cooldown = characteristic.Value;
-                }
 
                 __instance.Cooldown.Trigger(cooldown);
 

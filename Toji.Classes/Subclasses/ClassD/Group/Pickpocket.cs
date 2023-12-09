@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Interfaces;
@@ -7,7 +8,7 @@ using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.ClassD.Group
 {
-    public class Pickpocket : DGroupSubclass, IHintSubclass, IRandomSubclass
+    public class Pickpocket : DGroupSubclass, IHintSubclass, IRandomSubclass, IPrioritySubclass
     {
         public override string Name => "Карманник";
 
@@ -22,9 +23,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
         {
             new InventoryCharacteristic(new List<Slot>(4)
             {
-                new RandomSlot(new Dictionary<ItemType, int>(2)
+                new RandomSlot(new Dictionary<ItemType, int>(4)
                 {
-                    { ItemType.SCP500, 1 },
                     { ItemType.KeycardJanitor, 5 },
                     { ItemType.Medkit, 10 },
                     { ItemType.Painkillers, 30 },
@@ -40,7 +40,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
                     { ItemType.Painkillers, 10 },
                     { ItemType.Coin, 40 }
                 }),
-                new RandomSlot(new Dictionary<ItemType, int>(2)
+                new RandomSlot(new Dictionary<ItemType, int>(3)
                 {
                     { ItemType.ArmorLight, 3 },
                     { ItemType.Painkillers, 5 },
@@ -49,6 +49,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             })
         };
 
-        public int Chance => 20;
+        public LoadPriority Priority => LoadPriority.Last;
+
+        public int Chance => 22;
     }
 }

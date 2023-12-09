@@ -30,6 +30,6 @@ namespace Toji.Classes.Subclasses.ClassD.Single
             })
         };
 
-        public int Chance => 15;
+        public int Chance => 16;
     }
 }

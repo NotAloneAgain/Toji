@@ -43,7 +43,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             new HealthCharacteristic(150)
         };
 
-        public int Chance => 16;
+        public int Chance => 18;
 
         public int Max => 3;
     }

@@ -12,9 +12,9 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
     {
         public DoorErrorAbility(int chance) : base(chance) { }
 
-        public override string Name => "Случайный доступ";
+        public override string Name => "Ошибочный доступ";
 
-        public override string Desc => $"Ты можешь открыть дверь, не имея к ней доступа, с шансом {Chance}%.";
+        public override string Desc => $"Ты можешь открыть дверь, не имея к ней доступа, с шансом {Chance}%";
 
         public override void Subscribe() => Player.InteractingDoor += OnInteractingDoor;
 

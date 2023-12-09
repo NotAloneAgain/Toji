@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
-using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Characteristics;
-using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Scp0492.Single
 {
@@ -23,9 +21,8 @@ namespace Toji.Classes.Subclasses.Scp0492.Single
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(3)
         {
             new EffectsCharacteristic(5, 0, EffectType.MovementBoost),
-            new AttackCooldownCharacteristic(1),
         };
 
-        public int Chance => 15;
+        public int Chance => 16;
     }
 }

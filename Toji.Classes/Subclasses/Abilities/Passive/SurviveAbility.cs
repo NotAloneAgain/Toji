@@ -1,5 +1,4 @@
-﻿using Exiled.API.Enums;
-using Exiled.Events.EventArgs.Player;
+﻿using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
 using Toji.Classes.API.Features.Abilities;
 using Toji.ExiledAPI.Extensions;
@@ -12,7 +11,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public override string Name => "Выживание";
 
-        public override string Desc => $"Ты можешь пережить смертельную атаку с шансом {Chance}%.";
+        public override string Desc => $"Ты можешь пережить смертельную атаку с шансом {Chance}%";
 
         public override void Subscribe() => Player.Dying += OnDying;
 

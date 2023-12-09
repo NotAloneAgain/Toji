@@ -33,6 +33,6 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 
         public float HintDuration => 15;
 
-        public int Chance => 5;
+        public int Chance => 7;
     }
 }

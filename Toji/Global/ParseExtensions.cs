@@ -30,7 +30,9 @@ namespace Toji.Global
 
             string result = string.Empty;
 
-            str.Replace("FF", "friendly_fire").Replace("SQL", "Sql");
+            str = str.Replace("FF", "Friendly_fire").Replace("SQL", "Sql");
+
+            bool isFirst = true;
 
             for (int i = 0; i < str.Length; i++)
             {
@@ -38,12 +40,14 @@ namespace Toji.Global
                 var prev = i == 0 ? ' ' : str[i - 1];
                 //var next = i == str.Length - 1 ? ' ' : str[i + 1];
 
-                if (char.IsUpper(c) || char.IsNumber(c) && prev != ' ' && !char.IsNumber(prev))
+                if (!isFirst && (char.IsUpper(c) || char.IsNumber(c) && prev != ' ' && !char.IsNumber(prev)))
                 {
                     result += '_';
                 }
 
                 result += char.ToLower(c);
+
+                isFirst = false;
             }
 
             return result;

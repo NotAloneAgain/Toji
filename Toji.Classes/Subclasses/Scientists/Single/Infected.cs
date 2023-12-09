@@ -24,7 +24,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
             new HealthCharacteristic(80),
-            new InventoryCharacteristic(new List<Slot>(8)
+            new InventoryCharacteristic(new List<Slot>(1)
             {
                 new StaticSlot(ItemType.KeycardScientist),
             })
@@ -32,6 +32,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public RoleTypeId NeedRole => RoleTypeId.Scp049;
 
-        public int Chance => 12;
+        public int Chance => 16;
     }
 }

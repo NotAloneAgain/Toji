@@ -1,5 +1,4 @@
-﻿using Exiled.API.Enums;
-using Exiled.Events.EventArgs.Player;
+﻿using Exiled.Events.EventArgs.Player;
 using System;
 using Toji.Classes.API.Features.Abilities;
 using Toji.Classes.API.Interfaces;

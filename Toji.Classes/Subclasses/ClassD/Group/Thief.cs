@@ -51,7 +51,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             })
         };
 
-        public int Chance => 12;
+        public int Chance => 15;
 
         public int Max => 3;
     }

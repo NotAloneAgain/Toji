@@ -9,18 +9,21 @@ namespace Toji.Classes.Subclasses.Scp0492.Group
 {
     public class Tank : ZombieGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
+        public override bool ShowInfo => true;
+
         public override string Name => "Ядовитый";
 
-        public override string Desc => "Крайне опасный зомби, вызывающий яд и разложение органических тканей у жертв";
+        public override string Desc => "Очень крепкий и сильный зомби, способный выдержать множество атак";
 
-        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(3)
+        public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(4)
         {
             new HealthCharacteristic(1500),
             new SizeCharacteristic(Vector3.one * 1.11f),
-            new EffectsCharacteristic(EffectType.SinkHole)
+            new EffectsCharacteristic(EffectType.SinkHole),
+            new HurtMultiplayerCharacteristic(0.95f)
         };
 
-        public int Chance => 15;
+        public int Chance => 18;
 
         public int Max => 3;
     }

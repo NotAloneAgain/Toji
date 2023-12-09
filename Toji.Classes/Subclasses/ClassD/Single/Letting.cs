@@ -21,6 +21,6 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 
         public Type Needed => typeof(Gang);
 
-        public int Chance => 33;
+        public int Chance => 35;
     }
 }

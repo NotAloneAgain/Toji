@@ -86,6 +86,10 @@
       <Project>{dc7a3474-2743-4a1e-a987-f4cde7255ffe}</Project>
       <Name>Toji.ExtendedRadioBattery</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Toji.Hitmarker\Toji.Hitmarker.csproj">
+      <Project>{bfc6c234-7d51-4e59-bb1a-29d5f50f7605}</Project>
+      <Name>Toji.Hitmarker</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toji.InfinityAmmo\Toji.InfinityAmmo.csproj">
       <Project>{7c6d37e1-5c66-4aef-b670-033d67b036b0}</Project>
       <Name>Toji.InfinityAmmo</Name>
@@ -133,6 +137,10 @@
     <ProjectReference Include="..\Toji.Teslas\Toji.Teslas.csproj">
       <Project>{ab2e7fc2-35fc-4079-8aec-169e306022de}</Project>
       <Name>Toji.Teslas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji\Toji.csproj">
+      <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
+      <Name>Toji</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

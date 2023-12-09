@@ -10,7 +10,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Hidden : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, INeedRole
     {
-        public override string Name => "Зараженный";
+        public override string Name => "Скрытный";
 
         public override string Desc => "Очень незаметная и скрытная персона, которая не любит лишнее внимание";
 
@@ -21,7 +21,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
-            new InventoryCharacteristic(new List<Slot>(8)
+            new InventoryCharacteristic(new List<Slot>(2)
             {
                 new StaticSlot(ItemType.KeycardScientist),
                 new StaticSlot(ItemType.Painkillers),
@@ -30,6 +30,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public RoleTypeId NeedRole => RoleTypeId.Scp939;
 
-        public int Chance => 12;
+        public int Chance => 15;
     }
 }

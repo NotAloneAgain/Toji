@@ -28,17 +28,16 @@ namespace Toji.Classes.Subclasses.Scientists.Single
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
             new SpawnpointCharacteristic(new DoorSpawnpoint(DoorType.NukeArmory)),
-            new InventoryCharacteristic(new List<Slot>(8)
+            new InventoryCharacteristic(new List<Slot>(4)
             {
-                new StaticSlot(ItemType.KeycardGuard),
-                new StaticSlot(ItemType.GunFSP9),
+                new StaticSlot(ItemType.KeycardFacilityManager),
                 new StaticSlot(ItemType.Medkit),
-                new StaticSlot(ItemType.Painkillers),
                 new StaticSlot(ItemType.Radio),
+                new StaticSlot(ItemType.ArmorLight),
             })
         };
 
-        public int Chance => 8;
+        public int Chance => 10;
 
         protected internal override void OnEscaped(in Player player)
         {

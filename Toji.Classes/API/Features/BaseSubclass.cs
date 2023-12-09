@@ -345,7 +345,16 @@ namespace Toji.Classes.API.Features
             ply.InfoArea |= PlayerInfoArea.Role | PlayerInfoArea.Nickname;
         }
 
-        protected string GetRoleInfo(in Player ply) => ply.IsScp ? $"{ply.Role.Type.Translate()} - {Name}" : Name;
+        protected string GetRoleInfo(in Player ply)
+        {
+            return ply.Role.Team switch
+            {
+                Team.SCPs => $"{ply.Role.Type.Translate()} - {Name}",
+                Team.FoundationForces => "Девятихвостая Лиса - {Name}",
+                Team.ChaosInsurgency => "Повстанец Хаоса - {Name}",
+                _ => Name,
+            };
+        }
 
         private string BuildConsoleMessage(in Player player)
         {

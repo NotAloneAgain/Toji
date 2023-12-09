@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.ClassD.Group
 {
-    public class Dwarf : DGroupSubclass, IHintSubclass, IRandomSubclass
+    public class Dwarf : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
         public override bool ShowInfo => true;
 
@@ -37,7 +37,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             })
         };
 
-        public int Chance => 16;
+        public int Chance => 18;
 
         public int Max => 4;
     }

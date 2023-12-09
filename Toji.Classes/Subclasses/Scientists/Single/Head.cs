@@ -21,8 +21,8 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
-            new SpawnpointCharacteristic(new DoorSpawnpoint(DoorType.Scp330)),
-            new InventoryCharacteristic(new List<Slot>(8)
+            new SpawnpointCharacteristic(new RandomDoorSpawnpoint(DoorType.Scp330, DoorType.LczCafe)),
+            new InventoryCharacteristic(new List<Slot>(4)
             {
                 new StaticSlot(ItemType.KeycardResearchCoordinator),
                 new StaticSlot(ItemType.Medkit),
