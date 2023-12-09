@@ -14,7 +14,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         public override string Name => "Shadowraze-ближний";
 
-        public override string Desc => "Моментально атакуете всех людей в комнате, блокируете и закрываете дверь в комнату.";
+        public override string Desc => "Моментально атакуете всех людей в комнате, блокируете и закрываете дверь в комнату";
 
         public override bool Activate(Player player, out object result)
         {
@@ -25,7 +25,7 @@ namespace Toji.Classes.Subclasses.Scp575
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalMinutes > 1)
+            if (Round.ElapsedTime.TotalMinutes < 1)
             {
                 result = "Способность разблокируется через 1 минуту после начала раунда!";
 
@@ -44,6 +44,8 @@ namespace Toji.Classes.Subclasses.Scp575
 
                 return false;
             }
+
+            room.TurnOffLights(14);
 
             foreach (var door in room.Doors)
             {

@@ -16,7 +16,7 @@ namespace Toji.Classes.Patches.Generic
     [HarmonyPatch(typeof(StandardDistanceVerification), nameof(StandardDistanceVerification.ServerCanInteract))]
     internal static class VerificationRulePatch
     {
-        private static bool Prefix(StandardDistanceVerification __instance, ReferenceHub hub, InteractableCollider collider, out bool __result)
+        private static bool Prefix(StandardDistanceVerification __instance, ReferenceHub hub, InteractableCollider collider, ref bool __result)
         {
             __result = false;
 
@@ -51,11 +51,15 @@ namespace Toji.Classes.Patches.Generic
                     hub.playerEffectsController.DisableEffect<Invisible>();
                 }
 
+                __result = true;
+
                 return false;
             }
             catch (Exception err)
             {
                 Log.Error($"[VerificationRulePatch] Error occured: {err}");
+
+                __result = true;
 
                 return true;
             }

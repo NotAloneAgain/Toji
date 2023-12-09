@@ -28,7 +28,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         public override List<string> Tags { get; } = new List<string>(1) { "Shadow" };
 
-        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(5)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(6)
         {
             new ShadowAbility(),
             new InvisibleAbility(),
@@ -58,7 +58,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         private void OnActivatingGenerator(GeneratorActivatingEventArgs ev)
         {
-            if (!ev.IsAllowed)
+            if (!ev.IsAllowed || Player == null)
             {
                 return;
             }

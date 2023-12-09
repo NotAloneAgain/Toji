@@ -20,7 +20,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
             new InfinityStaminaAbility(),
-            new ImmunityEffectsAbility(EffectType.SinkHole)
+            new ImmunityEffectsAbility(EffectType.SinkHole, EffectType.Stained)
         };
 
         public int Chance => 15;

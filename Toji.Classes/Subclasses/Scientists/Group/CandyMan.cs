@@ -19,7 +19,7 @@ namespace Toji.Classes.Subclasses.Scientists.Group
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
-            new MoreCandyAbility(4)
+            new MoreCandyAbility(3)
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(3)

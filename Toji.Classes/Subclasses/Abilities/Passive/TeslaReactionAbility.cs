@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.EventArgs.Player;
 using Exiled.Events.Handlers;
 using Toji.Classes.API.Features.Abilities;
+using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
@@ -30,6 +31,11 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
+            if (!ev.IsValid() || !Has(ev.Player))
+            {
+                return;
+            }
+
             ev.IsTriggerable = _isTrigger;
             ev.IsAllowed = _isTrigger;
         }

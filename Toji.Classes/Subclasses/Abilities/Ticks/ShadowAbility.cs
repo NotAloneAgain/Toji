@@ -18,9 +18,33 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
         public override Func<Player, bool> PlayerCondition => (Player ply) => ply != null && ply.IsAlive;
 
+        public override void OnEnabled(Player player)
+        {
+            base.OnEnabled(player);
+
+            StartCoroutine();
+        }
+
+        public override void OnDisabled(Player player)
+        {
+            StopCoroutine();
+
+            base.OnDisabled(player);
+        }
+
         public override void Iteration(Player player)
         {
+            if (player == null)
+            {
+                return;
+            }
+
             var room = player.CurrentRoom;
+
+            if (room == null)
+            {
+                return;
+            }
 
             if (room.Type == RoomType.Surface)
             {
@@ -29,15 +53,13 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                 return;
             }
 
-            if (_previousRoom != room)
+            if (_previousRoom != room && _previousRoom != null)
             {
-                _previousRoom.AreLightsOff = false;
-
-                room.TurnOffLights(1.1f);
+                _previousRoom.AreLightsOff = true;
             }
-            else
+            else if (!room.AreLightsOff)
             {
-                room.AreLightsOff = true;
+                room.AreLightsOff = false;
             }
 
             _previousRoom = room;

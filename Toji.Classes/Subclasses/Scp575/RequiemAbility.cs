@@ -23,7 +23,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         public override string Name => "Requiem";
 
-        public override string Desc => "Высвобождаете души убитых вами людей, заставляя их атаковать живых.";
+        public override string Desc => "Высвобождаете души убитых вами людей, заставляя их атаковать живых";
 
         public override void OnEnabled(Player player)
         {
@@ -48,7 +48,7 @@ namespace Toji.Classes.Subclasses.Scp575
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalMinutes > 2)
+            if (Round.ElapsedTime.TotalMinutes < 2)
             {
                 result = "Способность разблокируется через 2 минуты после начала раунда!";
 

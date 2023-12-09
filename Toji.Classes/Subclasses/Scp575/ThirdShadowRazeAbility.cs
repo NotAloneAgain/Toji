@@ -18,7 +18,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         public override string Name => "Shadowraze-дальний";
 
-        public override string Desc => "Моментально атакуете всех людей в комплексе и выключаете везде свет.";
+        public override string Desc => "Моментально атакуете всех людей в комплексе и выключаете везде свет";
 
         public override bool Activate(Player player, out object result)
         {
@@ -29,7 +29,7 @@ namespace Toji.Classes.Subclasses.Scp575
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalMinutes > 5)
+            if (Round.ElapsedTime.TotalMinutes < 5)
             {
                 result = "Способность разблокируется через 5 минут после начала раунда!";
 

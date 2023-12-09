@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.EventArgs.Scp330;
 using Exiled.Events.Handlers;
 using Toji.Classes.API.Features.Abilities;
+using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
@@ -12,7 +13,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public override string Name => "Больше конфет?";
 
-        public override string Desc => $"Вы можете взять до {_maxUsages} конфет SCP-330";
+        public override string Desc => $"Ты можешь взять до {_maxUsages + 1} конфет SCP-330";
 
         public override void Subscribe() => Scp330.InteractingScp330 += OnInteractingScp330;
 
@@ -20,7 +21,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnInteractingScp330(InteractingScp330EventArgs ev)
         {
-            if (!ev.IsAllowed)
+            if (!ev.IsAllowed || !ev.IsValid() || !Has(ev.Player))
             {
                 return;
             }

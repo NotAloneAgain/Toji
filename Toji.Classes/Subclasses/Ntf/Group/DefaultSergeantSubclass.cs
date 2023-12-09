@@ -1,12 +1,14 @@
 ﻿using Exiled.API.Enums;
 using PlayerRoles;
 using System.Collections.Generic;
+using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
 
 namespace Toji.Classes.Subclasses.Ntf.Group
 {
-    public class DefaultSergeantSubclass : NtfGroupSubclass
+    public class DefaultSergeantSubclass : NtfGroupSubclass, IPrioritySubclass
     {
         public override string Name => "Сержант";
 
@@ -23,5 +25,7 @@ namespace Toji.Classes.Subclasses.Ntf.Group
                 DoorType.HID,
             })
         };
+
+        public LoadPriority Priority => LoadPriority.Last;
     }
 }
