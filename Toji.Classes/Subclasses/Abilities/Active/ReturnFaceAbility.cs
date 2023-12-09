@@ -23,6 +23,13 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
         public override string Desc => "Ты можешь вернуть свой предыдущий облик";
 
+        public override void OnDisabled(Player player)
+        {
+            _previousRoles.Remove(player);
+
+            base.OnDisabled(player);
+        }
+
         public override void Subscribe()
         {
             base.Subscribe();

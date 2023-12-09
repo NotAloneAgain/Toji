@@ -86,14 +86,21 @@
     <Compile Include="API\Interfaces\INeedSubclass.cs" />
     <Compile Include="API\Interfaces\IPrioritySubclass.cs" />
     <Compile Include="API\Interfaces\IRandomSubclass.cs" />
+    <Compile Include="API\Interfaces\IRoleInfo.cs" />
     <Compile Include="API\Interfaces\ISeasonSubclass.cs" />
     <Compile Include="API\Interfaces\ISingle.cs" />
     <Compile Include="API\Interfaces\ISubscribable.cs" />
     <Compile Include="Handlers\RagdollHandlers.cs" />
+    <Compile Include="Patches\Generic\InteractPatch.cs" />
+    <Compile Include="Patches\Generic\VerificationRulePatch.cs" />
     <Compile Include="Subclasses\Abilities\Active\AmogusAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\ClothesAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Active\DisableAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\HealAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Active\HackAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\TradeAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\ImmunityEffectsAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\InvisibleAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\MoreCandyAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\ScalingAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\CurseAbility.cs" />
@@ -114,13 +121,20 @@
     <Compile Include="Subclasses\Abilities\Passive\SurviveAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\TeslaReactionAbility.cs" />
     <Compile Include="Subclasses\Abilities\Ticks\HealAura.cs" />
+    <Compile Include="Subclasses\Abilities\Ticks\ShadowAbility.cs" />
     <Compile Include="Subclasses\Chaos\ChaosGroupSubclass.cs" />
     <Compile Include="Subclasses\Chaos\ChaosSingleSubclass.cs" />
-    <Compile Include="Subclasses\Chaos\Group\DefaultMarauderSubclass.cs" />
-    <Compile Include="Subclasses\Chaos\Group\DefaultRiflemanSubclass.cs" />
     <Compile Include="Subclasses\Chaos\Group\DefaultConscriptSubclass.cs" />
+    <Compile Include="Subclasses\Chaos\Group\DefaultMarauderSubclass.cs" />
     <Compile Include="Subclasses\Chaos\Group\DefaultRepressorSubclass.cs" />
-    <Compile Include="Subclasses\Chaos\Single\JuggernautSubclass.cs" />
+    <Compile Include="Subclasses\Chaos\Group\DefaultRiflemanSubclass.cs" />
+    <Compile Include="Subclasses\Chaos\Single\Juggernaut.cs" />
+    <Compile Include="Subclasses\Ntf\NtfGroupSubclass.cs" />
+    <Compile Include="Subclasses\Ntf\NtfSingleSubclass.cs" />
+    <Compile Include="Subclasses\Ntf\Group\DefaultSpecialistSubclass.cs" />
+    <Compile Include="Subclasses\Ntf\Group\DefaultCaptainSubclass.cs" />
+    <Compile Include="Subclasses\Ntf\Group\DefaultSergeantSubclass.cs" />
+    <Compile Include="Subclasses\Ntf\Group\DefaultPrivateSubclass.cs" />
     <Compile Include="Subclasses\Characteristics\ArtificalShieldCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\DamageCharacteristic.cs" />
     <Compile Include="Subclasses\Characteristics\EffectsCharacteristic.cs" />
@@ -164,6 +178,8 @@
     <Compile Include="Subclasses\Guards\Single\Imposter.cs" />
     <Compile Include="Subclasses\Guards\Single\Junior.cs" />
     <Compile Include="Subclasses\Guards\Single\Senior.cs" />
+    <Compile Include="Subclasses\Ntf\Single\Technical.cs" />
+    <Compile Include="Subclasses\Ntf\Single\Medic.cs" />
     <Compile Include="Subclasses\Scientists\Group\CandyMan.cs" />
     <Compile Include="Subclasses\Scientists\Group\Medic.cs" />
     <Compile Include="Subclasses\Scientists\ScientistGroupSubclass.cs" />
@@ -184,6 +200,11 @@
     <Compile Include="Subclasses\Scp049\DoctorSingleSubclass.cs" />
     <Compile Include="Subclasses\Scp0492\ZombieGroupSubclass.cs" />
     <Compile Include="Subclasses\Scp0492\ZombieSingleSubclass.cs" />
+    <Compile Include="Subclasses\Scp575\RequiemAbility.cs" />
+    <Compile Include="Subclasses\Scp575\ThirdShadowRazeAbility.cs" />
+    <Compile Include="Subclasses\Scp575\SecondShadowRazeAbility.cs" />
+    <Compile Include="Subclasses\Scp575\Scp575Subclass.cs" />
+    <Compile Include="Subclasses\Scp575\FirstShadowRazeAbility.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

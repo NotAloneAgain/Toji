@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Exiled.API.Features;
+using PlayerRoles;
+using System.Collections.Generic;
+using System.Linq;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Interfaces;
@@ -11,7 +14,7 @@ namespace Toji.Classes.Subclasses.Scientists.Group
     {
         public override bool ShowInfo => true;
 
-        public override string Name => "Медик";
+        public override string Name => "Врач";
 
         public override string Desc => "Профессиональный врач, готовый работать со множеством ран";
 
@@ -43,5 +46,24 @@ namespace Toji.Classes.Subclasses.Scientists.Group
         public int Chance => 16;
 
         public int Max => 3;
+
+        protected internal override void OnEscaped(in Player player)
+        {
+            if (!TryGet("Медик", out var subclass) || subclass.Role != RoleTypeId.NtfSergeant || player.Role != RoleTypeId.NtfSpecialist || !subclass.Can(player))
+            {
+                base.OnEscaped(player);
+
+                return;
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                player.RemoveItem(player.Items.ElementAt(i));
+            }
+
+            Revoke(player);
+
+            subclass.Assign(player);
+        }
     }
 }

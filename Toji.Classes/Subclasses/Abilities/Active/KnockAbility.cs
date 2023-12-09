@@ -79,7 +79,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            if (!door.Is(out BreakableDoor breakable) || breakable.IsDestroyed || door.IsElevator || door.IsGate || _ignoredDoors.Contains(door.Type))
+            if (!door.Is(out BreakableDoor breakable) || breakable.IsDestroyed || door.IsElevator || door.IsGate)
             {
                 result = "Эту дверь нельзя выбить!";
 
@@ -94,7 +94,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 {
                     DoorLockType.Lockdown2176 => "SCP-2176",
                     DoorLockType.Lockdown079 => "SCP-079",
-                    _ => "неизвестно"
+                    _ => "НННЯ...ЕИЗВЕСТНО"
                 }} не позволяет выбить дверь!";
 
                 AddUse(player, DateTime.Now, false, result);
@@ -106,7 +106,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             {
                 result = "Ты не можешь выбить дверь!";
 
-                AddUse(player, System.DateTime.Now, false, result);
+                AddUse(player, DateTime.Now, false, result);
 
                 return false;
             }
@@ -115,7 +115,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             {
                 result = "Увы, у тебя не вышло!";
 
-                AddUse(player, System.DateTime.Now, false, result);
+                AddUse(player, DateTime.Now, false, result);
 
                 return false;
             }

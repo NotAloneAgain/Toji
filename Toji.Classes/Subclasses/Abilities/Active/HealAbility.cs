@@ -6,7 +6,23 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 {
     public class HealAbility : CooldownAbility
     {
-        public HealAbility(uint cooldown) : base(cooldown) { }
+        private float _distance;
+        private float _stamina;
+        private int _health;
+
+        public HealAbility(uint cooldown) : base(cooldown)
+        {
+            _distance = 4;
+            _stamina = 0.15f;
+            _health = 40;
+        }
+
+        public HealAbility(uint cooldown, float distance, float stamina, int health) : this(cooldown)
+        {
+            _distance = distance;
+            _stamina = stamina;
+            _health = health;
+        }
 
         public override string Name => "Лечение";
 
@@ -30,7 +46,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            var target = player.GetFromView(4);
+            var target = player.GetFromView(_distance);
 
             if (target == null || target.IsHost || target.IsNPC || target.IsTutorial)
             {
@@ -59,9 +75,9 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            target.Heal(40, false);
+            target.Heal(_health, false);
             target.DisableEffect(EffectType.Bleeding);
-            target.Stamina += 0.15f;
+            target.Stamina += _stamina;
 
             result = $"Ты успешно подлатал {target.CustomName}";
 

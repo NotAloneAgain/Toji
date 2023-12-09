@@ -347,6 +347,11 @@ namespace Toji.Classes.API.Features
 
         protected string GetRoleInfo(in Player ply)
         {
+            if (this is IRoleInfo info)
+            {
+                return info.RoleInfo;
+            }
+
             return ply.Role.Team switch
             {
                 Team.SCPs => $"{ply.Role.Type.Translate()} - {Name}",

@@ -25,7 +25,7 @@ namespace Toji.Classes
 
         public override string Author => "NotAloneAgain";
 
-        public override PluginPriority Priority => PluginPriority.Higher;
+        public override PluginPriority Priority => PluginPriority.Low;
 
         public override Version Version { get; } = new(1, 0, 0);
 

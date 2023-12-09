@@ -49,7 +49,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnDied(DiedEventArgs ev)
         {
-            if (!ev.IsNotSelfDamage() || !Owners.Contains(ev.Attacker))
+            if (!ev.IsNotSelfDamage() || !Has(ev.Attacker))
             {
                 return;
             }
@@ -74,7 +74,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
         {
             var boost = player.GetEffect(EffectType.MovementBoost) as MovementBoost;
 
-            while ((player?.IsAlive ?? false) && Owners.Contains(player))
+            while ((player?.IsAlive ?? false) && Has(player))
             {
                 var stats = _stats[player];
 

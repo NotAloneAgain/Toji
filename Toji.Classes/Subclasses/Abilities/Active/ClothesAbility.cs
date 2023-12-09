@@ -46,13 +46,20 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
         public override string Name => "Перевоплощение";
 
-        public override string Desc => $"Ты можешь копировать внешнее строение и поведение трупов{(_fullCopy ? ", вместе с их способностями и характеристиками" : string.Empty)}";
+        public override string Desc => $"Ты можешь скопировать внешнее строение и поведение мертвого существа{(_fullCopy ? ", вместе с его способностями и характеристиками" : string.Empty)}";
 
         public override void OnEnabled(Player player)
         {
             base.OnEnabled(player);
 
             player.SendConsoleMessage($"Ты не сможешь перевоплотиться в трупы: {string.Join(", ", _ignoredRoles.Select(role => role.Translate()))}.", "red");
+        }
+
+        public override void OnDisabled(Player player)
+        {
+            base.OnDisabled(player);
+
+            _copiedSubclasses.Remove(player);
         }
 
         public override bool Activate(Player player, out object result)

@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using Exiled.API.Features.Pickups;
 using System.Collections.Generic;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
@@ -24,7 +25,14 @@ namespace Toji.Classes.Subclasses.Characteristics
                 if (item == ItemType.None)
                     continue;
 
-                player.AddItem(item);
+                if (player.IsInventoryFull)
+                {
+                    Pickup.CreateAndSpawn(item, player.Position, player.Rotation, player);
+                }
+                else
+                {
+                    player.AddItem(item);
+                }
             }
         }
 

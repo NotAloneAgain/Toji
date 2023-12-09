@@ -41,7 +41,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
         public void OnDying(DyingEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsNotSelfDamage() || !Owners.Contains(ev.Player))
+            if (!ev.IsAllowed || !ev.IsNotSelfDamage() || !Has(ev.Player))
             {
                 return;
             }
@@ -59,6 +59,8 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             {
                 Activate(player, out _);
             }
+
+            _cursed.Remove(ev.Player);
         }
 
         public void OnDamage(HurtingEventArgs ev)

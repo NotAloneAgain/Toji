@@ -35,7 +35,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
             var amount = ev.Attacker.IsScp ? 50 : ev.Amount * _multiplayer;
 
-            ev.Attacker.Hurt(ev.Attacker, amount, ev.DamageHandler.Type, default);
+            ev.Attacker.Hurt(ev.Player, amount, ev.DamageHandler.Type, default);
         }
 
         public override void Subscribe() { }

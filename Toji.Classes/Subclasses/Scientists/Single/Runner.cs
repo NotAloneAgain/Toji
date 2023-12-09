@@ -1,4 +1,5 @@
 ﻿using CustomPlayerEffects;
+using Exiled.API.Enums;
 using Exiled.Events.EventArgs.Player;
 using System.Collections.Generic;
 using Toji.Classes.API.Features;
@@ -8,7 +9,7 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Scientists.Single
 {
-    public class Runner : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, ISubscribable
+    public class Runner : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
         public override string Name => "Неутомимый";
 
@@ -16,25 +17,12 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 
         public override List<string> Tags { get; } = new List<string>(1) { "Shadow" };
 
-        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
-            new InfinityStaminaAbility()
+            new InfinityStaminaAbility(),
+            new ImmunityEffectsAbility(EffectType.SinkHole)
         };
 
         public int Chance => 15;
-
-        public void Subscribe() => Exiled.Events.Handlers.Player.ReceivingEffect += OnReceivingEffect;
-
-        public void Unsubscribe() => Exiled.Events.Handlers.Player.ReceivingEffect -= OnReceivingEffect;
-
-        private void OnReceivingEffect(ReceivingEffectEventArgs ev)
-        {
-            if (!ev.IsAllowed || !ev.IsValid() || !Has(ev.Player))
-            {
-                return;
-            }
-
-            ev.IsAllowed = ev.Effect is not Sinkhole;
-        }
     }
 }

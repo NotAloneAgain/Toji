@@ -39,7 +39,7 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
-            new SizeCharacteristic(Vector3.one * 1.12f),
+            new SizeCharacteristic(Vector3.one * 1.085f),
             new HealthCharacteristic(150)
         };
 
