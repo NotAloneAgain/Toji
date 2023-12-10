@@ -1,4 +1,5 @@
-﻿using PlayerRoles;
+﻿using Exiled.API.Enums;
+using PlayerRoles;
 using System.Collections.Generic;
 
 namespace Toji.Global
@@ -72,5 +73,26 @@ namespace Toji.Global
         public static string Translate(this RoleTypeId role) => _rolesTranslation.TryGetValue(role, out var value) ? value : role.ToString();
 
         public static string ShortTranslate(this RoleTypeId role) => _shortTranslation.TryGetValue(role, out var value) ? value : role.ToString();
+
+        public static string Translate(this ZoneType zone) => zone switch
+        {
+            ZoneType.LightContainment => "в лёгкой зоне содержания",
+            ZoneType.HeavyContainment => "в тяжёлой зоне содержания",
+            ZoneType.Entrance => "в офисной зоне",
+            ZoneType.Surface => "на Поверхности",
+            ZoneType.Other => "в неизвестной зоне",
+            _ => "в неизвестности"
+        };
+
+        public static string Translate(this Team team) => team switch
+        {
+            Team.SCPs => "SCP-Объект",
+            Team.FoundationForces => "МОГ",
+            Team.ChaosInsurgency => "Хаос",
+            Team.Scientists => "Научный персонал",
+            Team.ClassD => "Персонал класса D",
+            Team.Dead => "Мертвец",
+            _ => "Неизвестно",
+        };
     }
 }
