@@ -5,9 +5,10 @@ using Exiled.Events.EventArgs.Server;
 using PlayerRoles;
 using System.Linq;
 using Toji.AutoFF.API.Enums;
+using Toji.Classes.API.Extensions;
 using UnityEngine;
 
-#pragma warning disable IDE0060 // Удалите неиспользуемый параметр
+#pragma warning disable IDE0060
 
 namespace Toji.AutoFF.Handlers
 {
@@ -15,15 +16,9 @@ namespace Toji.AutoFF.Handlers
     {
         private EndRoundAction _roundAction;
 
-        public void OnRoundStarted()
-        {
-            Server.FriendlyFire = false;
-        }
+        public void OnRoundStarted() => Server.FriendlyFire = false;
 
-        public void OnRestartingRound()
-        {
-            Server.FriendlyFire = false;
-        }
+        public void OnRestartingRound() => Server.FriendlyFire = false;
 
         public void OnEndingRound(EndingRoundEventArgs ev)
         {
@@ -175,27 +170,8 @@ namespace Toji.AutoFF.Handlers
 
                 player.CurrentItem = player.AddItem(item);
 
-                player.Teleport(GetSafeTeleportPosition(rooms[Random.Range(0, rooms.Count)]) + Vector3.up);
+                player.Teleport(rooms[Random.Range(0, rooms.Count)].GetSafePosition() + Vector3.up);
             }
         }
-
-        private static Vector3 GetSafeTeleportPosition(Room room)
-        {
-            if (IsSafe(room.Type))
-            {
-                return room.Position;
-            }
-
-            var doors = room.Doors.ToList();
-
-            if (doors.Count == 0)
-            {
-                return room.Position;
-            }
-
-            return doors[Random.Range(0, doors.Count)].Position;
-        }
-
-        private static bool IsSafe(RoomType room) => room is RoomType.Lcz173 or RoomType.HczTesla or RoomType.HczTestRoom;
     }
 }

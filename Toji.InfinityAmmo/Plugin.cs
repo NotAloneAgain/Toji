@@ -1,6 +1,5 @@
 ﻿using Exiled.Events.Handlers;
 using System;
-using System.Linq;
 using Toji.ExiledAPI.Configs;
 using Toji.Global;
 using Toji.InfinityAmmo.Handlers;

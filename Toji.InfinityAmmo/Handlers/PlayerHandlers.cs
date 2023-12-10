@@ -7,9 +7,9 @@ namespace Toji.InfinityAmmo.Handlers
     {
         public void OnReloadingWeapon(ReloadingWeaponEventArgs ev)
         {
-            if (ev.IsValid() && ev.Firearm == null)
+            if (!ev.IsValid() || ev.Firearm == null)
             {
-                return;;
+                return;
             }
 
             ev.Player.ClearAmmo();

@@ -1,11 +1,9 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Extensions;
+﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using System.Collections.Generic;
-using System.Linq;
 using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 

@@ -1,8 +1,8 @@
 ﻿using Exiled.Events.Handlers;
 using System;
+using Toji.Global;
 using Toji.Hitmarker.Configs;
 using Toji.Hitmarker.Handlers;
-using Toji.Global;
 
 namespace Toji.Hitmarker
 {
