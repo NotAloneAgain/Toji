@@ -1,10 +1,8 @@
 ﻿using PlayerRoles;
 using System.Collections.Generic;
 using Toji.Classes.API.Features;
-using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
-using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.Ntf.Single
 {

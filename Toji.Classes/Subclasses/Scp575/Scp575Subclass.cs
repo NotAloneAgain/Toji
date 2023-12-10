@@ -1,16 +1,11 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Map;
-using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
-using Toji.Classes.Subclasses.Abilities.Active;
 using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Abilities.Ticks;
 
@@ -42,14 +37,14 @@ namespace Toji.Classes.Subclasses.Scp575
 
         public int Chance => 10;
 
-        internal protected override void LazySubscribe()
+        protected internal override void LazySubscribe()
         {
             base.LazySubscribe();
 
             Exiled.Events.Handlers.Map.GeneratorActivating += OnActivatingGenerator;
         }
 
-        internal protected override void LazyUnsubscribe()
+        protected internal override void LazyUnsubscribe()
         {
             Exiled.Events.Handlers.Map.GeneratorActivating -= OnActivatingGenerator;
 

@@ -1,11 +1,8 @@
-﻿using CustomPlayerEffects;
-using Exiled.API.Enums;
-using Exiled.Events.EventArgs.Player;
+﻿using Exiled.API.Enums;
 using System.Collections.Generic;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Passive;
-using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Scientists.Single
 {

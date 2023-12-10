@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Toji.Commands.API
+﻿namespace Toji.Commands.API
 {
     public static class Extensions
     {

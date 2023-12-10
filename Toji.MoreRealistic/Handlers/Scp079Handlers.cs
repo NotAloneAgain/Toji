@@ -1,12 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Scp079;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Hitmarker.Handlers

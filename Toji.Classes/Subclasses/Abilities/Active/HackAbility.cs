@@ -1,10 +1,6 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
 using Exiled.API.Features.Doors;
-using Interactables.Interobjects.DoorUtils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
