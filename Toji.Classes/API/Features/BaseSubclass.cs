@@ -16,12 +16,14 @@ namespace Toji.Classes.API.Features
     {
         private static readonly Dictionary<RoleTypeId, List<BaseSubclass>> _roleToSubclasses;
         private static readonly SortedSet<BaseSubclass> _subclasses;
+        private static readonly HashSet<Player> _players;
         private bool _subscribed;
 
         static BaseSubclass()
         {
-            _subclasses = new SortedSet<BaseSubclass>(new PriorityComparer());
             _roleToSubclasses = new Dictionary<RoleTypeId, List<BaseSubclass>>(50);
+            _subclasses = new SortedSet<BaseSubclass>(new PriorityComparer());
+            _players = new(Server.MaxPlayerCount);
         }
 
         public BaseSubclass()
@@ -114,7 +116,7 @@ namespace Toji.Classes.API.Features
             return subclasses != null && subclasses.Any();
         }
 
-        public static bool HasAny(Player player) => ReadOnlyCollection.Any(subclass => subclass.Has(player));
+        public static bool Contains(Player player) => _players.Contains(player);
 
         public bool IsGroup => this.IsGroupSubclass();
 
@@ -140,7 +142,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Has(in Player player) => player != null && !player.IsHost && player.IsAlive;
 
-        public virtual bool Can(in Player player) => player != null && !player.IsHost && player.IsAlive && !HasAny(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
+        public virtual bool Can(in Player player) => player != null && !player.IsHost && player.IsAlive && !Contains(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
 
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
@@ -171,6 +173,8 @@ namespace Toji.Classes.API.Features
                 LazySubscribe();
             }
 
+            _players.Add(player);
+
             return true;
         }
 
@@ -186,6 +190,8 @@ namespace Toji.Classes.API.Features
             SendDeathBroadcast();
 
             Update(player, false);
+
+            _players.Remove(player);
 
             return true;
         }

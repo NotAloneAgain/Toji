@@ -74,7 +74,7 @@ namespace Toji.Global
 
         public static string ShortTranslate(this RoleTypeId role) => _shortTranslation.TryGetValue(role, out var value) ? value : role.ToString();
 
-        public static string Translate(this ZoneType zone) => zone switch
+        public static string TranslateZone(this ZoneType zone) => zone switch
         {
             ZoneType.LightContainment => "в лёгкой зоне содержания",
             ZoneType.HeavyContainment => "в тяжёлой зоне содержания",

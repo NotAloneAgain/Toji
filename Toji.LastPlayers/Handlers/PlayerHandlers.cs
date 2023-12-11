@@ -35,7 +35,7 @@ namespace Toji.LastPlayers.Handlers
 
             while (player.IsAlive && Player.List.Count(ply => ply.Role.Team == team) == 1)
             {
-                Map.Broadcast(10, $"<color=#E55807><b>Последний {Translate(team)} находится {player.CurrentRoom.Zone.Translate()}!</b></color>");
+                Map.Broadcast(10, $"<color=#E55807><b>Последний {Translate(team)} находится {player.CurrentRoom.Zone.TranslateZone()}!</b></color>");
 
                 yield return Timing.WaitForSeconds(60);
             }

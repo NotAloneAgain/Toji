@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.NicknameFilters", "Toj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.LastPlayers", "Toji.LastPlayers\Toji.LastPlayers.csproj", "{0C888C61-A990-4B2D-8D97-7AF58222C55C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.LeaveReplacer", "Toji.LeaveReplacer\Toji.LeaveReplacer.csproj", "{8B5EF9C4-27A3-4F3C-BDC3-0D24EE3876D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -159,6 +161,10 @@ Global
 		{0C888C61-A990-4B2D-8D97-7AF58222C55C}.Debug|x64.Build.0 = Debug|x64
 		{0C888C61-A990-4B2D-8D97-7AF58222C55C}.Release|x64.ActiveCfg = Release|x64
 		{0C888C61-A990-4B2D-8D97-7AF58222C55C}.Release|x64.Build.0 = Release|x64
+		{8B5EF9C4-27A3-4F3C-BDC3-0D24EE3876D3}.Debug|x64.ActiveCfg = Debug|x64
+		{8B5EF9C4-27A3-4F3C-BDC3-0D24EE3876D3}.Debug|x64.Build.0 = Debug|x64
+		{8B5EF9C4-27A3-4F3C-BDC3-0D24EE3876D3}.Release|x64.ActiveCfg = Release|x64
+		{8B5EF9C4-27A3-4F3C-BDC3-0D24EE3876D3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
