@@ -36,9 +36,9 @@ namespace Toji.Teslas.Handlers
 
             if (count > 2)
             {
-                int offset = 0;
+                int offset = 1;
 
-                while (count - offset > 2)
+                do
                 {
                     var tesla = TeslaGateController.Singleton.TeslaGates.GetRandomValue();
 
@@ -50,6 +50,8 @@ namespace Toji.Teslas.Handlers
                     var pos = tesla.Position;
                     var rot = tesla.Room.transform.rotation;
 
+                    Log.Info(rot);
+
                     try
                     {
                         var back = Vector3.back * 2;
@@ -60,7 +62,7 @@ namespace Toji.Teslas.Handlers
 
                         Vector3 spawnPos = pos + rot * forward;
 
-                        if (Physics.OverlapBox(spawnPos, Vector3.one, invertedRotation).Length > 0)
+                        if (Physics.OverlapBox(spawnPos, Vector3.one, invertedRotation).Length > 0 || rot is { y: >= 0.7f, w: >= 0.7f })
                         {
                             invertedRotation = Quaternion.Euler(Vector3.up * -90);
                         }
@@ -76,7 +78,7 @@ namespace Toji.Teslas.Handlers
                     tesla.Delete();
 
                     offset++;
-                }
+                } while (count - offset > 2);
             }
         }
     }

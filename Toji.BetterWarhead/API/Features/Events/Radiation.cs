@@ -17,20 +17,17 @@ namespace Toji.BetterWarhead.API.Features.Events
             _ntfBounds = (980f, 1008f).CalculateBounds(new Vector2(65.292f, -32.957f), new Vector2(60.787f, -32.957f), new Vector2(60.207f, -37.652f), new Vector2(65.740f, -37.707f));
         }
 
-        public override int Chance => 20;
+        public override int Chance => 35;
 
         public override string Text => "Произошел выброс радиации из взорванного комплекса. Немедленно укрыться!";
 
-        private protected override void Activate()
-        {
-            Timing.RunCoroutine(_CheckPlayers());
-        }
+        private protected override void Activate() => Timing.RunCoroutine(_CheckPlayers());
 
         private IEnumerator<float> _CheckPlayers()
         {
             DateTime startTime = DateTime.Now;
 
-            while ((DateTime.Now - startTime).TotalSeconds > 60 || !Round.InProgress)
+            while ((DateTime.Now - startTime).TotalSeconds < 60 && Round.InProgress)
             {
                 foreach (var player in Player.List)
                 {
@@ -42,15 +39,15 @@ namespace Toji.BetterWarhead.API.Features.Events
                     Timing.RunCoroutine(_RadiationDamage(player));
                 }
 
-                yield return Timing.WaitForSeconds(1);
+                yield return Timing.WaitForSeconds(1.25f);
             }
         }
 
         private IEnumerator<float> _RadiationDamage(Player player)
         {
-            while (player?.IsAlive ?? false)
+            while (player is not null and { IsAlive: true } && InRadiationZone(player.Position))
             {
-                player.Hurt(8, "Радиоцинное облучение");
+                player.Hurt(player.IsScp ? 32 : 8, "Радиоцинное облучение");
 
                 yield return Timing.WaitForSeconds(1);
             }

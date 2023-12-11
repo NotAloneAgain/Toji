@@ -8,24 +8,15 @@ using MEC;
 using System.Collections.Generic;
 using Toji.BetterWarhead.API;
 using Toji.BetterWarhead.API.Features;
-using Toji.BetterWarhead.API.Features.Events;
 using UnityEngine;
 
 namespace Toji.BetterWarhead.Handlers
 {
     internal sealed class WarheadHandlers
     {
-        private static IReadOnlyList<BaseEvent> _events;
+        private List<BaseEvent> _events;
 
-        static WarheadHandlers() => _events = new List<BaseEvent>(2)
-        {
-            new BlackOut(),
-            new Radiation()
-        };
-
-        internal WarheadHandlers()
-        {
-        }
+        internal WarheadHandlers() => CreateEvents();
 
         public void OnDetonating(DetonatingEventArgs ev)
         {
@@ -85,7 +76,7 @@ namespace Toji.BetterWarhead.Handlers
 
             var selectedEvent = _events.GetRandomValue();
 
-            if (Random.Range(0, 100) < selectedEvent.Chance)
+            if (Random.Range(0, 100) > selectedEvent.Chance)
             {
                 return;
             }
@@ -107,6 +98,25 @@ namespace Toji.BetterWarhead.Handlers
             };
 
             // Some shit...
+        }
+
+        private void CreateEvents()
+        {
+            _events = new List<BaseEvent>();
+
+            System.Type eventType = typeof(BaseEvent);
+
+            foreach (System.Type type in GetType().Assembly.GetTypes())
+            {
+                if (!type.IsClass || type.IsAbstract || !type.IsSubclassOf(eventType))
+                {
+                    continue;
+                }
+
+                BaseEvent malfunction = System.Activator.CreateInstance(type) as BaseEvent;
+
+                _events.Add(malfunction);
+            }
         }
     }
 }

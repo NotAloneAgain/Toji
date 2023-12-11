@@ -4,6 +4,7 @@ using PluginAPI.Events;
 using Toji.Patches.Configs;
 using Toji.Patches.Generic.Admins.Forces;
 using Toji.Patches.Generic.Admins.Items;
+using Toji.Patches.Generic.Sinkhole;
 
 #pragma warning disable IDE0060 // Удалите неиспользуемый параметр
 
@@ -43,6 +44,7 @@ namespace Toji.Patches
         {
             ForceclassPatch.Reset();
             GiveItemPatch.Reset();
+            SpawnPatch.Reset();
         }
     }
 }

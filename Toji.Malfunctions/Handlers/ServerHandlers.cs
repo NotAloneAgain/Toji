@@ -33,7 +33,7 @@ namespace Toji.Malfunctions.Handlers
             {
                 var malfunction = _allMalfunctions.GetRandomValue();
 
-                if (Loader.Random.Next(0, 100) < 15)
+                if (Loader.Random.Next(0, 100) > 15)
                 {
                     malfunction.Start();
                 }

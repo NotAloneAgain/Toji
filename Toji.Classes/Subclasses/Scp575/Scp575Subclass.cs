@@ -1,6 +1,9 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.Events.EventArgs.Interfaces;
 using Exiled.Events.EventArgs.Map;
+using Exiled.Events.EventArgs.Scp106;
+using Exiled.Events.Patches.Events.Scp106;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +44,16 @@ namespace Toji.Classes.Subclasses.Scp575
         {
             base.LazySubscribe();
 
+            Exiled.Events.Handlers.Scp106.Stalking += Disallow;
+            Exiled.Events.Handlers.Scp106.Teleporting += Disallow;
             Exiled.Events.Handlers.Map.GeneratorActivating += OnActivatingGenerator;
         }
 
         protected internal override void LazyUnsubscribe()
         {
             Exiled.Events.Handlers.Map.GeneratorActivating -= OnActivatingGenerator;
+            Exiled.Events.Handlers.Scp106.Teleporting -= Disallow;
+            Exiled.Events.Handlers.Scp106.Stalking -= Disallow;
 
             base.LazyUnsubscribe();
         }
@@ -66,6 +73,16 @@ namespace Toji.Classes.Subclasses.Scp575
 
                 Revoke(Player);
             }
+        }
+
+        private void Disallow(IDeniableEvent ev)
+        {
+            if (this is not IPlayerEvent plyEvent)
+            {
+                return;
+            }
+
+            ev.IsAllowed = !Has(plyEvent.Player);
         }
     }
 }

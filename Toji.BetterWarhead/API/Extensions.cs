@@ -20,7 +20,6 @@ namespace Toji.BetterWarhead.API
 
             Vector3 min = Vector3.zero;
             Vector3 max = Vector3.zero;
-            Vector3 center = Vector3.zero;
 
             foreach (var vector in vectors)
             {
@@ -31,14 +30,9 @@ namespace Toji.BetterWarhead.API
                 max.x = Mathf.Max(vector.x, max.x);
                 max.y = Mathf.Max(vector.y, max.y);
                 max.z = Mathf.Max(vector.z, max.z);
-
-                center += vector;
             }
 
-            center /= vectors.Length;
-
             result.SetMinMax(min, max);
-            result.center = center;
 
             return result;
         }
@@ -55,8 +49,8 @@ namespace Toji.BetterWarhead.API
                 min.x = Mathf.Min(vector.x, min.x);
                 min.z = Mathf.Min(vector.y, min.z);
 
-                max.x = Mathf.Min(vector.x, max.x);
-                max.z = Mathf.Min(vector.y, max.z);
+                max.x = Mathf.Max(vector.x, max.x);
+                max.z = Mathf.Max(vector.y, max.z);
             }
 
             result.SetMinMax(min, max);

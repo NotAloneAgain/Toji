@@ -53,6 +53,7 @@
     <Compile Include="Generic\Overcons\ActivateTeslaPatch.cs" />
     <Compile Include="Generic\Players\DisarmingRulesPatch.cs" />
     <Compile Include="Generic\Players\InfinityAmmoPatch.cs" />
+    <Compile Include="Generic\Sinkhole\SpawnPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

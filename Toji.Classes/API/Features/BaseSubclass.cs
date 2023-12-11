@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Subclasses.Characteristics;
 using Toji.Global;
 using UnityEngine;
 
@@ -275,7 +276,26 @@ namespace Toji.Classes.API.Features
             _subclasses.Remove(this);
         }
 
-        protected internal virtual void OnEscaped(in Player player) => Update(player, true);
+        protected internal virtual void OnEscaped(in Player player)
+        {
+            if (ShowInfo)
+            {
+                CreateInfo(player);
+            }
+
+            if (Characteristics.Any())
+            {
+                foreach (var characteristic in Characteristics)
+                {
+                    if (characteristic is InventoryCharacteristic or SpawnpointCharacteristic)
+                    {
+                        continue;
+                    }
+
+                    characteristic.OnEnabled(player);
+                }
+            }
+        }
 
         protected internal virtual void LazySubscribe()
         {
