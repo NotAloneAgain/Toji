@@ -69,6 +69,14 @@
       <Project>{7c6d37e1-5c66-4aef-b670-033d67b036b0}</Project>
       <Name>Toji.InfinityAmmo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Toji.LastPlayers\Toji.LastPlayers.csproj">
+      <Project>{0c888c61-a990-4b2d-8d97-7af58222c55c}</Project>
+      <Name>Toji.LastPlayers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.LeaveReplacer\Toji.LeaveReplacer.csproj">
+      <Project>{8b5ef9c4-27a3-4f3c-bdc3-0d24ee3876d3}</Project>
+      <Name>Toji.LeaveReplacer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toji.Malfunctions\Toji.Malfunctions.csproj">
       <Project>{963e170c-d043-4b2a-adb5-c97cf67b41e8}</Project>
       <Name>Toji.Malfunctions</Name>
@@ -84,6 +92,10 @@
     <ProjectReference Include="..\Toji.MySQL\Toji.MySQL.csproj">
       <Project>{656a302e-734c-44e7-af13-a68095a97d6c}</Project>
       <Name>Toji.MySQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.NicknameFilters\Toji.NicknameFilters.csproj">
+      <Project>{75b8e577-a8bc-4f0f-91af-5b93837843f4}</Project>
+      <Name>Toji.NicknameFilters</Name>
     </ProjectReference>
     <ProjectReference Include="..\Toji.Patches\Toji.Patches.csproj">
       <Project>{b8acd89b-8e1d-4678-8d58-b423ee767d58}</Project>
