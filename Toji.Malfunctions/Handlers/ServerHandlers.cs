@@ -31,6 +31,8 @@ namespace Toji.Malfunctions.Handlers
         {
             for (int i = 0; i < 4 && _allMalfunctions.Count > 0; i++)
             {
+                yield return Timing.WaitForSeconds(10);
+
                 var malfunction = _allMalfunctions.GetRandomValue();
 
                 if (Loader.Random.Next(0, 100) > 15)
@@ -40,8 +42,6 @@ namespace Toji.Malfunctions.Handlers
 
                 _allMalfunctions.Remove(malfunction);
                 _handledMalfunctions.Add(malfunction);
-
-                yield return Timing.WaitForSeconds(10);
             }
         }
 

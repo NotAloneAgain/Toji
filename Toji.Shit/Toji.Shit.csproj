@@ -101,6 +101,10 @@
       <Project>{b8acd89b-8e1d-4678-8d58-b423ee767d58}</Project>
       <Name>Toji.Patches</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Toji.Pocket\Toji.Pocket.csproj">
+      <Project>{d63bbcce-8add-4214-a821-d029bf673c41}</Project>
+      <Name>Toji.Pocket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toji.Redux914\Toji.Redux914.csproj">
       <Project>{2902440d-61af-404d-9ea0-4a1e414859ab}</Project>
       <Name>Toji.Redux914</Name>

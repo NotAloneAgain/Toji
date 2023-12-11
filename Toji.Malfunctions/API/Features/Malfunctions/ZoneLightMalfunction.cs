@@ -20,7 +20,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         {
             var zone = SelectZone();
 
-            Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошло {Name.ToLower()} {TranslateZone(zone)}\nИсправление займет {GetSecondsString(duration)}</b></color>");
+            Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошло {Name.ToLower()} {TranslateZone(zone)}, исправление займет {GetSecondsString(duration)}</b></color>");
 
             Map.TurnOffAllLights(duration, zone);
         }

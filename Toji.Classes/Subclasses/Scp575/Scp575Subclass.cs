@@ -77,7 +77,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         private void Disallow(IDeniableEvent ev)
         {
-            if (this is not IPlayerEvent plyEvent)
+            if (this is not IPlayerEvent plyEvent || !ev.IsAllowed)
             {
                 return;
             }

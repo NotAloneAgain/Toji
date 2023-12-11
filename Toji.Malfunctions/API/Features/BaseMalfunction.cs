@@ -60,9 +60,6 @@ namespace Toji.Malfunctions.API.Features
                     var min = (int)(MinDuration + minutes * 2);
                     var max = (int)(MaxDuration + minutes * 3);
 
-                    Log.Info($"Min: {min}");
-                    Log.Info($"Max: {max}");
-
                     Activate(Loader.Random.Next(min, max));
 
                     yield return Timing.WaitForSeconds(60 + Cooldown);

@@ -14,7 +14,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
         public override string Name => "Поглощение света";
 
-        public override string Desc => "Твоя аура поглащает свет в комнате и наносит урон тем, кто не достал фонари";
+        public override string Desc => "Твоя аура поглощает свет в комнате и наносит урон тем, кто не достал фонари";
 
         public override Func<Player, bool> PlayerCondition => (Player ply) => ply != null && ply.IsAlive;
 
