@@ -44,9 +44,9 @@ namespace Toji.Malfunctions.API.Features
 
         public abstract void Activate(int duration);
 
-        public abstract void Subscribe();
+        public virtual void Subscribe() { }
 
-        public abstract void Unsubscribe();
+        public virtual void Unsubscribe() { }
 
         protected virtual IEnumerator<float> _Coroutine()
         {
@@ -59,7 +59,15 @@ namespace Toji.Malfunctions.API.Features
                     var min = (int)(MinDuration + minutes * 2);
                     var max = (int)(MaxDuration + minutes * 3);
 
-                    Activate(Loader.Random.Next(min, max));
+                    var duration = Loader.Random.Next(min, max);
+
+                    Subscribe();
+
+                    Activate(duration);
+
+                    yield return Timing.WaitForSeconds(duration);
+
+                    Unsubscribe();
 
                     yield return Timing.WaitForSeconds(60 + Cooldown);
                 }
@@ -69,6 +77,16 @@ namespace Toji.Malfunctions.API.Features
                 }
             }
         }
+
+        protected ZoneType SelectZone() => UnityEngine.Random.Range(0, 101) switch
+        {
+            >= 80 => ZoneType.Surface,
+            >= 60 => ZoneType.Entrance,
+            >= 40 => ZoneType.HeavyContainment,
+            >= 20 => ZoneType.Other,
+            >= 10 => ZoneType.Unspecified,
+            _ => ZoneType.LightContainment
+        };
 
         protected string TranslateZone(ZoneType zone) => zone switch
         {

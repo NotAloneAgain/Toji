@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Toji.Malfunctions.API.Features.Malfunctions
 {
@@ -22,21 +22,12 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
             Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошло {Name.ToLower()} {TranslateZone(zone)}, исправление займет {GetSecondsString(duration)}</b></color>");
 
+            if (zone == ZoneType.Other)
+            {
+                Map.TurnOffAllLights(duration, new List<ZoneType>() { ZoneType.LightContainment, ZoneType.HeavyContainment, ZoneType.Entrance });
+            }
+
             Map.TurnOffAllLights(duration, zone);
         }
-
-        public override void Subscribe() { }
-
-        public override void Unsubscribe() { }
-
-        private ZoneType SelectZone() => Random.Range(0, 101) switch
-        {
-            >= 80 => ZoneType.Surface,
-            >= 60 => ZoneType.Entrance,
-            >= 40 => ZoneType.HeavyContainment,
-            >= 20 => ZoneType.Other,
-            >= 10 => ZoneType.Unspecified,
-            _ => ZoneType.LightContainment
-        };
     }
 }

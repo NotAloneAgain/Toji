@@ -31,11 +31,11 @@ namespace Toji.Malfunctions.Handlers
         {
             for (int i = 0; i < 4 && _allMalfunctions.Count > 0; i++)
             {
-                yield return Timing.WaitForSeconds(10);
+                yield return Timing.WaitForSeconds(15);
 
                 var malfunction = _allMalfunctions.GetRandomValue();
 
-                if (Loader.Random.Next(0, 100) > 15)
+                if (Loader.Random.Next(0, 100) > 19)
                 {
                     malfunction.Start();
                 }
