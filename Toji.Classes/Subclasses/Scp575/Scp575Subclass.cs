@@ -2,8 +2,6 @@
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Interfaces;
 using Exiled.Events.EventArgs.Map;
-using Exiled.Events.EventArgs.Scp106;
-using Exiled.Events.Patches.Events.Scp106;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;

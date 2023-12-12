@@ -1,7 +1,6 @@
 ﻿using System;
 using Toji.ExiledAPI.Configs;
 using Toji.Global;
-using Toji.LeaveReplacer.Configs;
 using Toji.LeaveReplacer.Handlers;
 
 namespace Toji.LeaveReplacer

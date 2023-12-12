@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Map;
+using Mirror;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
 using System.Collections.Generic;
@@ -21,11 +22,15 @@ namespace Toji.BetterMap.Handlers
             door = Door.Get(DoorType.HID).As<BreakableDoor>();
 
             door.IgnoredDamage |= Interactables.Interobjects.DoorUtils.DoorDamageType.Grenade;
-        }
 
-        public void OnPlacingBulletHole(PlacingBulletHoleEventArgs ev)
-        {
-            ev.IsAllowed = false;
+            foreach (var generator in Generator.List)
+            {
+                NetworkServer.UnSpawn(generator.GameObject);
+
+                generator.Transform.localScale *= 0.88f;
+
+                NetworkServer.Spawn(generator.GameObject);
+            }
         }
 
         public void OnGeneratorActivated(GeneratorActivatingEventArgs ev)

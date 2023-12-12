@@ -1,11 +1,9 @@
-﻿using CustomPlayerEffects;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Roles;
 using MEC;
 using System;
 using System.Collections.Generic;
-using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
 namespace Toji.Pocket.API

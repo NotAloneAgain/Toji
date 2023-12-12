@@ -23,7 +23,6 @@ namespace Toji.BetterMap
             _handlers = new();
 
             Map.GeneratorActivating += _handlers.OnGeneratorActivated;
-            Map.PlacingBulletHole += _handlers.OnPlacingBulletHole;
             Map.Generated += _handlers.OnGenerated;
 
             base.OnEnabled();
@@ -32,7 +31,6 @@ namespace Toji.BetterMap
         public override void OnDisabled()
         {
             Map.Generated -= _handlers.OnGenerated;
-            Map.PlacingBulletHole -= _handlers.OnPlacingBulletHole;
             Map.GeneratorActivating -= _handlers.OnGeneratorActivated;
 
             _handlers = null;

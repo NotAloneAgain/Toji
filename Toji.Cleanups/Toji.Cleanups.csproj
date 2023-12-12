@@ -23,25 +23,45 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(UNITY_REFERENCES)\UnityEngine.PhysicsModule.dll" />
     <Reference Include="Assembly-CSharp-Publicized" HintPath="$(SL_REFERENCES)\Assembly-CSharp-Publicized.dll" />
     <Reference Include="Assembly-CSharp-firstpass" HintPath="$(SL_REFERENCES)\Assembly-CSharp-firstpass.dll" />
     <Reference Include="UnityEngine.CoreModule" HintPath="$(UNITY_REFERENCES)\UnityEngine.CoreModule.dll" />
     <Reference Include="CommandSystem.Core" HintPath="$(SL_REFERENCES)\CommandSystem.Core.dll" />
     <Reference Include="Exiled.Events" HintPath="$(EXILED_REFERENCES)\Exiled.Events.dll" />
     <Reference Include="Exiled.API" HintPath="$(EXILED_REFERENCES)\Exiled.API.dll" />
-    <Reference Include="NorthwoodLib" HintPath="$(SL_REFERENCES)\NorthwoodLib.dll" />
     <Reference Include="PluginAPI" HintPath="$(SL_REFERENCES)\PluginAPI.dll" />
     <Reference Include="Pooling" HintPath="$(SL_REFERENCES)\Pooling.dll" />
     <Reference Include="Mirror" HintPath="$(SL_REFERENCES)\Mirror.dll" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Handlers\RoundHandlers.cs" />
+    <Compile Include="API\Enums\CleanupType.cs" />
+    <Compile Include="API\Enums\GameStage.cs" />
+    <Compile Include="API\Extensions.cs" />
+    <Compile Include="API\Features\BaseCleanup.cs" />
+    <Compile Include="API\Features\ItemCleanup.cs" />
+    <Compile Include="API\Features\RagdollCleanup.cs" />
+    <Compile Include="API\Interfaces\IItemCleanup.cs" />
+    <Compile Include="API\Interfaces\IRagdollCleanup.cs" />
+    <Compile Include="Handlers\MapHandlers.cs" />
+    <Compile Include="Handlers\PlayerHandlers.cs" />
+    <Compile Include="Handlers\ServerHandlers.cs" />
+    <Compile Include="List\HyperLateItemsCleanup.cs" />
+    <Compile Include="List\LateItemsCleanup.cs" />
+    <Compile Include="List\MidItemsCleanup.cs" />
+    <Compile Include="List\EarlyItemsCleanup.cs" />
+    <Compile Include="List\LateRagdollsCleanup.cs" />
+    <Compile Include="List\MidRagdollsCleanup.cs" />
+    <Compile Include="List\HyperLateRagdollsCleanup.cs" />
+    <Compile Include="List\EarlyRagdollsCleanup.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Toji.Classes\Toji.Classes.csproj">
+      <Project>{1276b6c8-db3d-4f19-b40a-4e4dfa63bcd0}</Project>
+      <Name>Toji.Classes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toji\Toji.csproj">
       <Project>{EE5A9879-DB40-4EC2-B4BE-FB1CD502CCC2}</Project>
       <Name>Toji</Name>
