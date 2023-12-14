@@ -22,6 +22,11 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         {
             base.Activate(duration);
 
+            if (Value.Type is ElevatorType.LczA or ElevatorType.LczB && Map.IsLczDecontaminated)
+            {
+                return;
+            }
+
             Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошла {Name.ToLower()} {Parse(Value.Type)}, исправление займет {GetSecondsString(duration)}</b></color>");
 
             foreach (ElevatorDoor door in Value.Doors)

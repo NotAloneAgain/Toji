@@ -52,7 +52,7 @@ namespace Toji.Cleanups.List
 
                 var room = item.Room;
 
-                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(item.Position) > 11)))
+                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(item.Position) <= 11)))
                 {
                     continue;
                 }

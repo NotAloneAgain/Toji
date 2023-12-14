@@ -20,6 +20,11 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         {
             var zone = SelectZone();
 
+            if (zone == ZoneType.LightContainment && Map.IsLczDecontaminated)
+            {
+                zone = ZoneType.HeavyContainment;
+            }
+
             Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошло {Name.ToLower()} {TranslateZone(zone)}, исправление займет {GetSecondsString(duration)}</b></color>");
 
             if (zone == ZoneType.Other)

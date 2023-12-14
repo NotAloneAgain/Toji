@@ -4,7 +4,7 @@ using Exiled.API.Features.Doors;
 
 namespace Toji.Malfunctions.API.Features.Malfunctions
 {
-    public class GateMalfunction : DoorMalfunction<Gate>
+    public class GateMalfunction : BaseDoorMalfunction<Gate>
     {
         public override string Name => "Поломка ворот";
 

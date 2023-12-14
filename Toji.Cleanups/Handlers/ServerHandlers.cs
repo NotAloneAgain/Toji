@@ -55,7 +55,12 @@ namespace Toji.Cleanups.Handlers
 
                 float cooldown = 120;
 
-                cleanup?.Cleanup(pickups, players, out cooldown);
+                if (cleanup != null)
+                {
+                    Log.Info($"Invoked {cleanup.GetType().Name}");
+
+                    cleanup.Cleanup(pickups, players, out cooldown);
+                }
 
                 yield return Timing.WaitForSeconds(cooldown);
             }

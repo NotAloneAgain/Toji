@@ -1,4 +1,6 @@
-﻿using Exiled.API.Extensions;
+﻿using Exiled.API.Enums;
+using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Player;
 using System;
@@ -7,9 +9,9 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Malfunctions.API.Features
 {
-    public abstract class DoorMalfunction<TDoor> : ObjectMalfunction<TDoor> where TDoor : Door
+    public abstract class BaseDoorMalfunction<TDoor> : ObjectMalfunction<TDoor> where TDoor : Door
     {
-        public virtual Func<TDoor, bool> Condition => (TDoor door) => door == null || door.IsLocked || door.IsElevator || !door.AllowsScp106 || door.Is<BreakableDoor>(out var breakable) && breakable.IsDestroyed;
+        public virtual Func<TDoor, bool> Condition => (TDoor door) => door == null || door.IsLocked || door.IsElevator || !door.AllowsScp106 || door.Is<BreakableDoor>(out var breakable) && breakable.IsDestroyed || door.Zone == ZoneType.LightContainment && Map.IsLczDecontaminated;
 
         public override void Subscribe() => Exiled.Events.Handlers.Player.InteractingDoor += OnInteractingDoor;
 

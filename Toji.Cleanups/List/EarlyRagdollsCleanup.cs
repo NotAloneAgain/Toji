@@ -36,7 +36,7 @@ namespace Toji.Cleanups.List
                 var room = ragdoll.Room;
                 var position = ragdoll.Position;
 
-                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) > 20)) || hasMimicry && BaseSubclass.TryGet(ragdoll, out _))
+                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) <= 20)) || hasMimicry && BaseSubclass.TryGet(ragdoll, out _))
                 {
                     continue;
                 }

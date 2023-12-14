@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Features\BaseMalfunction.cs" />
-    <Compile Include="API\Features\DoorMalfunction.cs" />
+    <Compile Include="API\Features\BaseDoorMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\DoorMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\DoorRestartSystemMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\GateMalfunction.cs" />

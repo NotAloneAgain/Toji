@@ -5,7 +5,7 @@ using System;
 
 namespace Toji.Malfunctions.API.Features.Malfunctions
 {
-    public class DoorMalfunction : DoorMalfunction<BreakableDoor>
+    public class DoorMalfunction : BaseDoorMalfunction<BreakableDoor>
     {
         public override string Name => "Поломка двери";
 

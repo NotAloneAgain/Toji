@@ -31,7 +31,7 @@ namespace Toji.Cleanups.List
                 var room = ragdoll.Room;
                 var position = ragdoll.Position;
 
-                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) > 11)) && ragdoll.GameObject.IsValid())
+                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) <= 11)) && ragdoll.GameObject.IsValid())
                 {
                     continue;
                 }

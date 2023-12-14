@@ -17,6 +17,8 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
         public override void Activate(int duration)
         {
+            base.Activate(duration);
+
             if (Value == null)
             {
                 return;
