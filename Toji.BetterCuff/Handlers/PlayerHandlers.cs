@@ -4,6 +4,7 @@ using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using System.Linq;
 using Toji.BetterCuff.API;
+using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
 namespace Toji.BetterCuff.Handlers
@@ -46,7 +47,14 @@ namespace Toji.BetterCuff.Handlers
 
         public void OnDying(DyingEventArgs ev)
         {
-            if (ev.Player == null || ev.Player.IsHost || ev.Player.IsDead || ev.Player.IsNPC || ev.Player.IsGodModeEnabled || !ev.Player.IsCuffed && ev.Player.Cuffer == null)
+            if (!ev.IsAllowed)
+            {
+                return;
+            }
+
+            ev.Player.FriendlyFireMultiplier.Clear();
+
+            if (!ev.IsNotSelfDamage() || ev.Player.IsGodModeEnabled || !ev.Player.IsCuffed && ev.Player.Cuffer == null)
             {
                 return;
             }

@@ -79,13 +79,14 @@ namespace Toji.Pocket.API
                 yield break;
             }
 
+            player.EnableEffect(EffectType.PocketCorroding);
+
             yield return Timing.WaitForSeconds(1);
 
             player.IsUsingStamina = isUsingStamina;
             player.IsGodModeEnabled = inGodMode;
 
             player.Hurt(10, DamageType.PocketDimension);
-            player.EnableEffect(EffectType.PocketCorroding);
 
             _players.Remove(player);
             _enterTime.Remove(player);
