@@ -46,7 +46,7 @@ namespace Toji.BetterWarhead.Handlers
 
             foreach (var player in Player.List)
             {
-                if (player == null || player.IsHost || player.IsDead || player.IsNPC || !player.Position.InComplex())
+                if (player == null || player.IsHost || player.IsDead || player.IsNPC || player.Position.InComplex())
                 {
                     continue;
                 }
