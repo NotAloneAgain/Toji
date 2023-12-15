@@ -79,7 +79,7 @@ namespace Toji.Patches.Generic.Sinkhole
 
                 NetworkServer.UnSpawn(sinkhole.gameObject);
 
-                var result = room.transform.position - Vector3.up * 0.18f;
+                var result = room.transform.position - Vector3.up * 0.11f;
 
                 sinkhole.transform.position = result;
                 position = result;

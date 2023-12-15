@@ -42,6 +42,13 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
+            if (player.IsInPocketDimension)
+            {
+                result = "Да пошел ты нахуй";
+
+                return false;
+            }
+
             player.Role.Set(_target, SpawnReason.Revived, RoleSpawnFlags.None);
 
             player.DisableAllEffects();

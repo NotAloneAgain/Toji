@@ -101,17 +101,19 @@ namespace Toji.LeaveReplacer.Handlers
                 var role = queue.Dequeue();
 
                 player = FindPlayer(role);
-            } while (queue.Count > 0 && player is null or { IsHost: true });
+            } while (queue.Count > 0 && (player == null || player.IsHost));
 
-            if (player == null)
+            if (player != null)
             {
-                do
-                {
-                    var role = roles.Dequeue();
-
-                    player = FindPlayer(role, false);
-                } while (roles.Count > 0 && player is null or { IsHost: true });
+                return player;
             }
+
+            do
+            {
+                var role = roles.Dequeue();
+
+                player = FindPlayer(role, false);
+            } while (queue.Count > 0 && (player == null || player.IsHost));
 
             return player;
         }

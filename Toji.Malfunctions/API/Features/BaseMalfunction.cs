@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.Loader;
 using MEC;
 using System;
@@ -42,7 +43,7 @@ namespace Toji.Malfunctions.API.Features
             _coroutine = default;
         }
 
-        public abstract void Activate(int duration);
+        public virtual void Activate(int duration) => Log.Info($"Activate {GetType().Name}");
 
         public virtual void Subscribe() { }
 

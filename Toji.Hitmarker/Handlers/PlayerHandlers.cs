@@ -4,6 +4,8 @@ using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using System.Collections.Generic;
+using Toji.Classes.API.Extensions;
+using Toji.Classes.Subclasses.Scp575;
 using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
@@ -54,7 +56,7 @@ namespace Toji.Hitmarker.Handlers
 
             foreach (var player in Player.List)
             {
-                if (player.Role.Type != RoleTypeId.Scp106)
+                if (player.Role.Type != RoleTypeId.Scp106 || player.TryGetSubclass<Scp575Subclass>(out _))
                 {
                     continue;
                 }

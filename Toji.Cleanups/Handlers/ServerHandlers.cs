@@ -77,7 +77,12 @@ namespace Toji.Cleanups.Handlers
 
                 float cooldown = 120;
 
-                cleanup?.Cleanup(ragdolls, players, out cooldown);
+                if (cleanup != null)
+                {
+                    Log.Info($"Invoked {cleanup.GetType().Name}");
+
+                    cleanup.Cleanup(ragdolls, players, out cooldown);
+                }
 
                 yield return Timing.WaitForSeconds(cooldown);
             }

@@ -18,6 +18,8 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
         public override void Activate(int duration)
         {
+            base.Activate(duration);
+
             var zone = SelectZone();
 
             if (zone == ZoneType.LightContainment && Map.IsLczDecontaminated)

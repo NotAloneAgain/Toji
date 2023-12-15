@@ -78,7 +78,7 @@ namespace Toji.Classes.Handlers
                     controller.OnHurt(ev);
                 }
 
-                if (subclass.Abilities.Any())
+                if (subclass.Abilities?.Any() ?? false)
                 {
                     foreach (var ability in subclass.Abilities)
                     {
@@ -104,7 +104,7 @@ namespace Toji.Classes.Handlers
                     controller.OnDamage(ev);
                 }
 
-                if (subclass.Abilities.Any())
+                if (subclass.Abilities?.Any() ?? false)
                 {
                     foreach (var ability in subclass.Abilities)
                     {

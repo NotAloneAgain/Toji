@@ -14,14 +14,14 @@ namespace Toji.Patches.Generic.Players
             var faction = __instance.Team.GetFaction();
             var targetFaction = detainer.GetFaction();
 
-            if (faction == targetFaction && __instance.RoleTypeId != RoleTypeId.ClassD && detainer.roleManager.CurrentRole.RoleTypeId != RoleTypeId.ClassD)
+            if (faction == targetFaction)
             {
-                __result = false;
+                __result = __instance.RoleTypeId == RoleTypeId.ClassD && detainer.roleManager.CurrentRole.RoleTypeId == RoleTypeId.ClassD;
             }
 
             if (!__instance.TryGetOwner(out var hub))
             {
-                __result = false;
+                __result = true;
             }
 
             if (hub.interCoordinator.AnyBlocker(BlockedInteraction.BeDisarmed))

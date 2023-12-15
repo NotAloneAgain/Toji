@@ -24,7 +24,9 @@ namespace Toji.LastPlayers.Handlers
 
         private IEnumerator<float> _PrintMessages(Player player, Team team)
         {
-            if (player == null || player.IsHost)
+            yield return Timing.WaitForSeconds(0.00005f);
+
+            if (player == null || player.IsHost || player.Role.Team != team)
             {
                 yield break;
             }

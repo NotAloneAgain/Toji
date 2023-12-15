@@ -4,7 +4,12 @@
     {
         public TObject Value { get; private protected set; }
 
-        public override void Activate(int duration) => Value = SelectObject();
+        public override void Activate(int duration)
+        {
+            base.Activate(duration);
+
+            Value = SelectObject();
+        }
 
         public abstract TObject SelectObject();
     }
