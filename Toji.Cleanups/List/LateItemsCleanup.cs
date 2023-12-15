@@ -43,7 +43,7 @@ namespace Toji.Cleanups.List
             {
                 var category = item.Type.GetCategory();
 
-                if (!item.GameObject.IsValid())
+                if (!item.GameObject.IsValid() || category == ItemCategory.Ammo)
                 {
                     item.Destroy();
 

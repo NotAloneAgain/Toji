@@ -79,9 +79,6 @@ namespace Toji.Pocket.API
                 yield break;
             }
 
-            player.Position = Vector3.down * 1997f;
-
-            yield return Timing.WaitUntilTrue(() => role.IsGrounded);
             yield return Timing.WaitForSeconds(1);
 
             player.IsUsingStamina = isUsingStamina;
