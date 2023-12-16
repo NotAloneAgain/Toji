@@ -14,7 +14,7 @@ namespace Toji.Classes.Handlers
     {
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid() || ev.Player.UserId == "76561198994845721@steam")
+            if (!ev.IsAllowed || !ev.IsValid(false))
             {
                 return;
             }
@@ -44,8 +44,6 @@ namespace Toji.Classes.Handlers
                 }
 
                 subclass.Revoke(ev.Player);
-
-                return;
             }
 
             if (!isPlayable || !isSpawn || !BaseSubclass.TryGet(ev.NewRole, out var subclasses))
@@ -66,7 +64,7 @@ namespace Toji.Classes.Handlers
 
         public void OnHurting(HurtingEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid())
+            if (ev == null || !ev.IsAllowed || !ev.IsValid())
             {
                 return;
             }

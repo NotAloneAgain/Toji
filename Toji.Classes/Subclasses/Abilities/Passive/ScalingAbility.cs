@@ -64,7 +64,10 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnDamage(HurtingEventArgs ev)
         {
-            var stats = _stats[ev.Attacker];
+            if (!Has(ev.Player) || !_stats.TryGetValue(ev.Attacker, out var stats))
+            {
+                return;
+            }
 
             ev.Amount = stats.Damage;
             ev.Attacker.Heal(ev.Amount * stats.Vampire);

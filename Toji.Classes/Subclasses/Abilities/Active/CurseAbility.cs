@@ -10,7 +10,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 {
     public class CurseAbility : ActiveAbility, ISubscribable, IDamageController
     {
-        private Dictionary<Player, HashSet<Player>> _cursed;
+        private Dictionary<string, HashSet<Player>> _cursed;
 
         public CurseAbility()
         {
@@ -46,28 +46,33 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return;
             }
 
-            if (!_cursed.TryGetValue(ev.Player, out var cursed))
+            if (!_cursed.TryGetValue(ev.Player.UserId, out var cursed))
             {
-                _cursed.Add(ev.Player, new HashSet<Player>(Server.MaxPlayerCount) { ev.Attacker });
+                _cursed.Add(ev.Player.UserId, new HashSet<Player>(Server.MaxPlayerCount) { ev.Attacker });
             }
             else
             {
                 cursed.Add(ev.Attacker);
             }
 
-            foreach (var player in _cursed[ev.Player])
+            foreach (var player in _cursed[ev.Player.UserId])
             {
                 Activate(player, out _);
             }
 
-            _cursed.Remove(ev.Player);
+            _cursed.Remove(ev.Player.UserId);
         }
 
         public void OnDamage(HurtingEventArgs ev)
         {
-            if (!_cursed.TryGetValue(ev.Attacker, out var cursed))
+            if (!ev.IsNotSelfDamage())
             {
-                _cursed.Add(ev.Attacker, new HashSet<Player>(Server.MaxPlayerCount) { ev.Player });
+                return;
+            }
+
+            if (!_cursed.TryGetValue(ev.Attacker.UserId, out var cursed))
+            {
+                _cursed.Add(ev.Attacker.UserId, new HashSet<Player>(Server.MaxPlayerCount) { ev.Player });
             }
             else
             {

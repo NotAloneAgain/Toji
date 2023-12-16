@@ -143,7 +143,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Has(in Player player) => player != null && !player.IsHost && player.IsAlive;
 
-        public virtual bool Can(in Player player) => player != null && !player.IsHost && !Contains(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
+        public virtual bool Can(in Player player) => player != null && !player.IsHost && player.IsAlive && !Contains(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
 
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
@@ -154,7 +154,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Assign(in Player player)
         {
-            if (TryGet(player, out _) || !player.IsAlive)
+            if (TryGet(player, out _))
             {
                 return false;
             }
