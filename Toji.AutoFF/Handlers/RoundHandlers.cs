@@ -90,7 +90,7 @@ namespace Toji.AutoFF.Handlers
                                 2 => RoleTypeId.ChaosMarauder,
                                 1 => RoleTypeId.ChaosConscript,
                                 _ => RoleTypeId.ChaosRepressor
-                            });
+                            }, RoleSpawnFlags.UseSpawnpoint);
 
                             player.DisableAllEffects();
                         }

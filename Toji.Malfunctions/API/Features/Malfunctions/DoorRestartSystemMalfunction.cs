@@ -31,9 +31,14 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
             foreach (Door door in Door.List)
             {
-                if (door.IsLocked || !door.AllowsScp106 || door.Zone != zone && zone != ZoneType.Unspecified && (zone != ZoneType.Other || door.Zone == ZoneType.Surface))
+                if (door.IsLocked || !door.AllowsScp106)
                 {
                     continue;
+                }
+
+                if (zone != ZoneType.Unspecified && door.Zone != zone && (zone != ZoneType.Other || door.Zone == ZoneType.Surface))
+                {
+                    return;
                 }
 
                 door.IsOpen = false;

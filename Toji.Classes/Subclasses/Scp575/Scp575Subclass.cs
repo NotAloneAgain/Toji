@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Interfaces;
 using Exiled.Events.EventArgs.Map;
+using Exiled.Events.EventArgs.Scp106;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Abilities.Ticks;
+using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Scp575
 {
@@ -28,10 +30,10 @@ namespace Toji.Classes.Subclasses.Scp575
         {
             new ShadowAbility(),
             new InvisibleAbility(),
-            new FirstShadowRazeAbility(70),
-            new SecondShadowRazeAbility(210),
-            new ThirdShadowRazeAbility(370),
-            new RequiemAbility(480),
+            new FirstShadowRazeAbility(60),
+            new SecondShadowRazeAbility(200),
+            new ThirdShadowRazeAbility(360),
+            new RequiemAbility(440),
         };
 
         public string RoleInfo => Name;
@@ -44,12 +46,14 @@ namespace Toji.Classes.Subclasses.Scp575
 
             Exiled.Events.Handlers.Scp106.Stalking += Disallow;
             Exiled.Events.Handlers.Scp106.Teleporting += Disallow;
+            Exiled.Events.Handlers.Scp106.Attacking += OnAttacking;
             Exiled.Events.Handlers.Map.GeneratorActivating += OnActivatingGenerator;
         }
 
         protected internal override void LazyUnsubscribe()
         {
             Exiled.Events.Handlers.Map.GeneratorActivating -= OnActivatingGenerator;
+            Exiled.Events.Handlers.Scp106.Attacking -= OnAttacking;
             Exiled.Events.Handlers.Scp106.Teleporting -= Disallow;
             Exiled.Events.Handlers.Scp106.Stalking -= Disallow;
 
@@ -71,6 +75,18 @@ namespace Toji.Classes.Subclasses.Scp575
 
                 Revoke(Player);
             }
+        }
+
+        public void OnAttacking(AttackingEventArgs ev)
+        {
+            if (!ev.IsValid() || !Has(ev.Player) || !ev.IsAllowed)
+            {
+                return;
+            }
+
+            ev.IsAllowed = false;
+            ev.Scp106.Owner.ShowHitMarker();
+            ev.Player.Hurt(15, DamageType.Scp106);
         }
 
         private void Disallow(IDeniableEvent ev)

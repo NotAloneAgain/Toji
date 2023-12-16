@@ -1,7 +1,9 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Hazards;
+using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Player;
+using PlayerRoles;
 using System.Linq;
 using Toji.ExiledAPI.Extensions;
 using Toji.Pocket.API;
@@ -18,6 +20,19 @@ namespace Toji.Pocket.Handlers
                 return;
             }
 
+            foreach (var scp in Player.List.Where(x => x.Role.Type == RoleTypeId.Scp106))
+            {
+                if (scp == null || scp.IsHost || !scp.Role.Is<Scp096Role>(out var scp096))
+                {
+                    continue;
+                }
+
+                if (scp096.Targets.Contains(ev.Player))
+                {
+                    return;
+                }
+            }
+
             ev.Player.RegisterEntering();
         }
 
@@ -26,6 +41,19 @@ namespace Toji.Pocket.Handlers
             if (!ev.IsValid() || ev.Player.IsNoclipPermitted || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment || ev.Player.GetStayingTime() < 6 || ev.Player.IsInPortal())
             {
                 return;
+            }
+
+            foreach (var scp in Player.List.Where(x => x.Role.Type == RoleTypeId.Scp106))
+            {
+                if (scp == null || scp.IsHost || !scp.Role.Is<Scp096Role>(out var scp096))
+                {
+                    continue;
+                }
+
+                if (scp096.Targets.Contains(ev.Player))
+                {
+                    return;
+                }
             }
 
             ev.Player.PortalTeleport();

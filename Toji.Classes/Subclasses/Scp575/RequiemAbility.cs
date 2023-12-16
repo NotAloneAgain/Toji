@@ -35,6 +35,20 @@ namespace Toji.Classes.Subclasses.Scp575
             base.OnDisabled(player);
         }
 
+        public override void Subscribe()
+        {
+            base.Subscribe();
+
+            Exiled.Events.Handlers.Player.Died += OnDied;
+        }
+
+        public override void Unsubscribe()
+        {
+            Exiled.Events.Handlers.Player.Died -= OnDied;
+
+            base.Unsubscribe();
+        }
+
         public override bool Activate(Player player, out object result)
         {
             if (!base.Activate(player, out result))
