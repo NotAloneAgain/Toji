@@ -92,30 +92,33 @@ namespace Toji.LeaveReplacer.Handlers
 
         private Player SelectPlayer(Queue<RoleTypeId> roles)
         {
-            Player player = Server.Host;
-
             var queue = roles.Copy();
 
-            do
+            while (queue.Count > 0)
             {
                 var role = queue.Dequeue();
 
-                player = FindPlayer(role);
-            } while (queue.Count > 0 && (player == null || player.IsHost));
+                Player player = FindPlayer(role);
 
-            if (player != null)
-            {
-                return player;
+                if (player != null && !player.IsHost && !player.IsNPC)
+                {
+                    return player;
+                }
             }
 
-            do
+            while (queue.Count > 0)
             {
                 var role = roles.Dequeue();
 
-                player = FindPlayer(role, false);
-            } while (queue.Count > 0 && (player == null || player.IsHost));
+                Player player = FindPlayer(role, false);
 
-            return player;
+                if (player != null && !player.IsHost && !player.IsNPC)
+                {
+                    return player;
+                }
+            }
+
+            return null;
         }
 
         private Player FindPlayer(RoleTypeId role, bool checkSubclass = true)

@@ -1,5 +1,4 @@
 ﻿using Exiled.API.Features;
-using HarmonyLib;
 using Mirror;
 using PlayerRoles.PlayableScps.Scp049;
 using PlayerStatsSystem;
@@ -8,7 +7,7 @@ using Utils.Networking;
 
 namespace Toji.Patches.Generic.Scp049
 {
-    [HarmonyPatch(typeof(Scp049AttackAbility), nameof(Scp049AttackAbility.ServerProcessCmd))]
+    //[HarmonyPatch(typeof(Scp049AttackAbility), nameof(Scp049AttackAbility.ServerProcessCmd))]
     internal static class DoctorAttackPatch
     {
         private static bool Prefix(Scp049AttackAbility __instance, NetworkReader reader)
@@ -23,9 +22,7 @@ namespace Toji.Patches.Generic.Scp049
                 if (__instance._target == null || !__instance.IsTargetValid(__instance._target))
                     return false;
 
-                var cooldown = 1.4;
-
-                __instance.Cooldown.Trigger(cooldown);
+                __instance.Cooldown.Trigger(1.4f);
 
                 __instance._target.playerStats.DealDamage(new Scp049DamageHandler(__instance.Owner, -1f, 0));
 

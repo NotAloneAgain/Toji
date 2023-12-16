@@ -14,7 +14,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
         public override int MaxDuration => 80;
 
-        public override int Cooldown => 110;
+        public override int Cooldown => 190;
 
         public override void Activate(int duration)
         {

@@ -14,7 +14,7 @@ namespace Toji.Classes.Handlers
     {
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (!ev.IsAllowed || ev.Player == null || ev.Player.UserId == "76561198994845721@steam")
+            if (!ev.IsAllowed || !ev.IsValid() || ev.Player.UserId == "76561198994845721@steam")
             {
                 return;
             }
@@ -48,7 +48,7 @@ namespace Toji.Classes.Handlers
                 return;
             }
 
-            if (!isPlayable || !BaseSubclass.TryGet(ev.NewRole, out var subclasses))
+            if (!isPlayable || !isSpawn || !BaseSubclass.TryGet(ev.NewRole, out var subclasses))
             {
                 return;
             }
@@ -60,7 +60,7 @@ namespace Toji.Classes.Handlers
                     continue;
                 }
 
-                sub.DelayedAssign(ev.Player);
+                sub.DelayedAssign(ev.Player, 0.05f);
             }
         }
 
@@ -75,14 +75,14 @@ namespace Toji.Classes.Handlers
             {
                 if (subclass is IHurtController controller)
                 {
-                    controller.OnHurt(ev);
+                    controller?.OnHurt(ev);
                 }
 
                 if (subclass.Abilities?.Any() ?? false)
                 {
                     foreach (var ability in subclass.Abilities)
                     {
-                        if (ability is not IHurtController abilityController)
+                        if (ability == null || ability is not IHurtController abilityController)
                         {
                             continue;
                         }
@@ -91,9 +91,17 @@ namespace Toji.Classes.Handlers
                     }
                 }
 
-                if (subclass.Characteristics.Find(x => x is HurtMultiplayerCharacteristic) is HurtMultiplayerCharacteristic multiplayer && multiplayer.Value != 1)
+                if (subclass.Characteristics?.Any() ?? false)
                 {
-                    ev.Amount *= multiplayer.Value;
+                    foreach (var characteristic in subclass.Characteristics)
+                    {
+                        if (characteristic == null || characteristic is not HurtMultiplayerCharacteristic multiplayer)
+                        {
+                            continue;
+                        }
+
+                        ev.Amount *= multiplayer.Value;
+                    }
                 }
             }
 
@@ -101,14 +109,14 @@ namespace Toji.Classes.Handlers
             {
                 if (attackerSubclass is IDamageController controller)
                 {
-                    controller.OnDamage(ev);
+                    controller?.OnDamage(ev);
                 }
 
                 if (subclass.Abilities?.Any() ?? false)
                 {
                     foreach (var ability in subclass.Abilities)
                     {
-                        if (ability is not IDamageController abilityController)
+                        if (ability == null || ability is not IDamageController abilityController)
                         {
                             continue;
                         }
@@ -117,14 +125,25 @@ namespace Toji.Classes.Handlers
                     }
                 }
 
-                if (attackerSubclass.Characteristics.Find(x => x is DamageCharacteristic) is DamageCharacteristic damage)
+                if (subclass.Characteristics?.Any() ?? false)
                 {
-                    ev.Amount = damage.Value;
-                }
+                    foreach (var characteristic in subclass.Characteristics)
+                    {
+                        if (characteristic == null)
+                        {
+                            continue;
+                        }
 
-                if (attackerSubclass.Characteristics.Find(x => x is DamageMultiplayerCharacteristic) is DamageMultiplayerCharacteristic multiplayer && multiplayer.Value != 1)
-                {
-                    ev.Amount *= multiplayer.Value;
+                        if (characteristic is DamageCharacteristic damage)
+                        {
+                            ev.Amount = damage.Value;
+                        }
+
+                        if (characteristic is DamageMultiplayerCharacteristic multiplayer)
+                        {
+                            ev.Amount *= multiplayer.Value;
+                        }
+                    }
                 }
             }
         }

@@ -97,7 +97,7 @@ namespace Toji.Patches.Generic.Sinkhole
 
             Printer.Info($"Spawning hazard: \"{sinkhole.gameObject.name}\", round is{(RoundStart.RoundStarted ? " started." : "n't started.")}");
 
-            typeof(PlayerRoleManager).GetEvent("OnRoleChanged").AddEventHandler(null, sinkhole.OnRoleChanged);
+            typeof(PlayerRoleManager).GetEvents().FirstOrDefault(ev => ev.Name == "OnRoleChanged")?.AddEventHandler(null, sinkhole.OnRoleChanged);
         }
 
         public static void Reset()

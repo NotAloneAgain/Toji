@@ -8,7 +8,8 @@ namespace Toji.BetterWarhead
 {
     public sealed class Plugin : Exiled.API.Features.Plugin<DefaultConfig>
     {
-        private WarheadHandlers _handlers;
+        private WarheadHandlers _warhead;
+        private ServerHandlers _server;
 
         public override string Name => "Toji.BetterWarhead";
 
@@ -20,22 +21,28 @@ namespace Toji.BetterWarhead
 
         public override void OnEnabled()
         {
-            _handlers = new();
+            _warhead = new();
+            _server = new();
 
-            Warhead.Detonating += _handlers.OnDetonating;
-            Warhead.Detonated += _handlers.OnDetonated;
-            Warhead.Starting += _handlers.OnStarting;
+            Server.RestartingRound += _server.OnRestartingRound;
+
+            Warhead.Detonating += _warhead.OnDetonating;
+            Warhead.Detonated += _warhead.OnDetonated;
+            Warhead.Starting += _warhead.OnStarting;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            _handlers = null;
+            Warhead.Starting -= _warhead.OnStarting;
+            Warhead.Detonated -= _warhead.OnDetonated;
+            Warhead.Detonating -= _warhead.OnDetonating;
 
-            Warhead.Starting -= _handlers.OnStarting;
-            Warhead.Detonated -= _handlers.OnDetonated;
-            Warhead.Detonating -= _handlers.OnDetonating;
+            Server.RestartingRound -= _server.OnRestartingRound;
+
+            _server = null;
+            _warhead = null;
 
             base.OnDisabled();
         }

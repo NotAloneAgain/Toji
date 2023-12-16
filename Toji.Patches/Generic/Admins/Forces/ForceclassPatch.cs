@@ -168,7 +168,7 @@ namespace Toji.Patches.Generic.Admins.Forces
 
                 var remaining = max - _usings[player.UserId];
 
-                if (_usings[player.UserId] >= max || remaining < 0)
+                if (_usings[player.UserId] >= max || remaining <= 0)
                 {
                     response = "Ты уже максимальное кол-во раз использовал донат!";
                     return false;

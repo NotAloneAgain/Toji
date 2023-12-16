@@ -22,7 +22,7 @@ namespace Toji.Hitmarker.Handlers
 
         public void OnHurting(HurtingEventArgs ev)
         {
-            if (ev.IsNotSelfDamage() || !ev.IsAllowed || !ev.DamageHandler.Type.IsValid() || ev.Player.LeadingTeam == ev.Attacker.LeadingTeam || ev.Amount <= 0)
+            if (!ev.IsNotSelfDamage() || !ev.IsAllowed || !ev.DamageHandler.Type.IsValid() || ev.Player.LeadingTeam == ev.Attacker.LeadingTeam || ev.Amount <= 0)
             {
                 return;
             }

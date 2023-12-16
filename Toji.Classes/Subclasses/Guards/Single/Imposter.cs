@@ -37,7 +37,7 @@ namespace Toji.Classes.Subclasses.Guards.Single
 
         public void OnHurt(HurtingEventArgs ev)
         {
-            if (ev.IsNotSelfDamage() || ev.Player.Role.Type != RoleTypeId.FacilityGuard || ev.Attacker.Role.Side != Side.ChaosInsurgency)
+            if (!ev.IsNotSelfDamage() || ev.Player.Role.Type != RoleTypeId.FacilityGuard || ev.Attacker.Role.Side != Side.ChaosInsurgency)
             {
                 return;
             }

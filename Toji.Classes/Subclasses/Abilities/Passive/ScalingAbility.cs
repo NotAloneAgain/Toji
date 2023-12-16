@@ -49,7 +49,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnDied(DiedEventArgs ev)
         {
-            if (ev.IsNotSelfDamage() || !Has(ev.Attacker))
+            if (!ev.IsNotSelfDamage() || !Has(ev.Attacker))
             {
                 return;
             }
