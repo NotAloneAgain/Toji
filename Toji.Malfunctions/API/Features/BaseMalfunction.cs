@@ -79,15 +79,30 @@ namespace Toji.Malfunctions.API.Features
             }
         }
 
-        protected ZoneType SelectZone() => UnityEngine.Random.Range(0, 101) switch
+        protected ZoneType SelectZone()
         {
-            >= 80 => ZoneType.Surface,
-            >= 60 => ZoneType.Entrance,
-            >= 40 => ZoneType.HeavyContainment,
-            >= 20 => ZoneType.Other,
-            >= 10 => ZoneType.Unspecified,
-            _ => ZoneType.LightContainment
-        };
+            var zone = UnityEngine.Random.Range(0, 101) switch
+            {
+                >= 80 => ZoneType.Surface,
+                >= 60 => ZoneType.Entrance,
+                >= 40 => ZoneType.HeavyContainment,
+                >= 20 => ZoneType.Other,
+                >= 10 => ZoneType.Unspecified,
+                _ => ZoneType.LightContainment
+            };
+
+            if (Warhead.IsDetonated)
+            {
+                zone = ZoneType.Surface;
+            }
+
+            if (Map.IsLczDecontaminated && zone == ZoneType.LightContainment)
+            {
+                zone = ZoneType.HeavyContainment;
+            }
+
+            return zone;
+        }
 
         protected string TranslateZone(ZoneType zone) => zone switch
         {

@@ -27,7 +27,7 @@ namespace Toji.BetterRoles.Handlers
                 return;
             }
 
-            if (ev.NewRole == RoleTypeId.Scp3114)
+            if (ev.NewRole == RoleTypeId.Scp3114 && ev.SpawnFlags == RoleSpawnFlags.All)
             {
                 Timing.RunCoroutine(OnChangingToScp3114(ev.Player));
 

@@ -78,7 +78,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             var target = player.GetFromView(_distance);
 
-            if (target == null || target.IsHost || target.IsNPC || target.IsTutorial)
+            if (target == null || target.IsHost || target.IsNPC || target.IsTutorial || target.UserId == player.UserId)
             {
                 result = "Не удалось получить цель!";
 
