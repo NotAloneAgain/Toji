@@ -25,6 +25,8 @@ namespace Toji.Pocket.API
             _enterTime.Add(player, DateTime.Now);
         }
 
+        public static void RegisterExiting(this Player player) => _enterTime.Remove(player);
+
         public static double GetStayingTime(this Player player)
         {
             if (player.IsInPortal())
@@ -89,7 +91,6 @@ namespace Toji.Pocket.API
             player.Hurt(10, DamageType.PocketDimension);
 
             _players.Remove(player);
-            _enterTime.Remove(player);
         }
     }
 }

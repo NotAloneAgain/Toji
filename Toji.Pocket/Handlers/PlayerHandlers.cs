@@ -59,6 +59,16 @@ namespace Toji.Pocket.Handlers
             ev.Player.PortalTeleport();
         }
 
+        public void OnExitingEnvironmentalHazard(ExitingEnvironmentalHazardEventArgs ev)
+        {
+            if (!ev.IsValid() || ev.Player.IsNoclipPermitted || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment || ev.Player.IsInPortal())
+            {
+                return;
+            }
+
+            ev.Player.RegisterExiting();
+        }
+
         private Room GetClosest(Vector3 vector)
         {
             var room = Room.List.OrderBy(x => Vector3.Distance(vector, x.Position)).FirstOrDefault();
