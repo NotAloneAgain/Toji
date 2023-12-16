@@ -16,7 +16,7 @@ namespace Toji.Pocket
 
         public override string Author => "NotAloneAgain";
 
-        public override Version Version { get; } = new(1, 0, 0);
+        public override Version Version { get; } = new(1, 0, 1);
 
         public override void OnEnabled()
         {
