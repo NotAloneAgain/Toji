@@ -64,6 +64,11 @@ namespace Toji.Cleanups.Handlers
 
                 yield return Timing.WaitForSeconds(cooldown);
             }
+
+            foreach (var pickup in Pickup.List)
+            {
+                pickup.Destroy();
+            }
         }
 
         private IEnumerator<float> _CleanupRagdolls()
@@ -85,6 +90,11 @@ namespace Toji.Cleanups.Handlers
                 }
 
                 yield return Timing.WaitForSeconds(cooldown);
+            }
+
+            foreach (var ragdoll in Ragdoll.List)
+            {
+                ragdoll.Destroy();
             }
         }
     }
