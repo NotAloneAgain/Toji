@@ -38,7 +38,7 @@ namespace Toji.Classes.Handlers
                     return;
                 }
 
-                if (subclass.Characteristics.Find(x => x is RespawnCharacteristic) is RespawnCharacteristic respawn && respawn.Value && ev.Reason is not SpawnReason.ForceClass and not SpawnReason.Destroyed)
+                if (subclass.Characteristics.Find(x => x is RespawnCharacteristic) is RespawnCharacteristic respawn && respawn.Value && ev.Reason != SpawnReason.Destroyed)
                 {
                     return;
                 }
