@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using Mirror;
 using System.Collections.Generic;
 using Toji.Cleanups.API.Enums;
 using Toji.Cleanups.API.Features;
@@ -17,12 +18,12 @@ namespace Toji.Cleanups.List
 
             foreach (var ragdoll in ragdolls)
             {
-                if (ragdoll.ExistenceTime < 11)
+                if (ragdoll == null || ragdoll.ExistenceTime < 11)
                 {
                     continue;
                 }
 
-                ragdoll.Destroy();
+                NetworkServer.Destroy(ragdoll.GameObject);
             }
         }
     }

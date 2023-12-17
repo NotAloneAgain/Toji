@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Mirror;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Toji.Cleanups.List
 
             foreach (var ragdoll in ragdolls)
             {
-                if (RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime < 31)
+                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime < 31)
                 {
                     continue;
                 }
@@ -41,7 +42,7 @@ namespace Toji.Cleanups.List
                     continue;
                 }
 
-                ragdoll.Destroy();
+                NetworkServer.Destroy(ragdoll.GameObject);
             }
         }
     }

@@ -1,9 +1,13 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Mirror;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
+using Toji.Classes.API.Extensions;
+using Toji.Classes.API.Features;
+using Toji.Classes.Subclasses.Abilities.Active;
 using Toji.Cleanups.API;
 using Toji.Cleanups.API.Enums;
 using Toji.Cleanups.API.Features;
@@ -21,9 +25,12 @@ namespace Toji.Cleanups.List
         {
             cooldown = 70;
 
+            var subclasses = players.Select(x => x.GetSubclass());
+            var hasMimicry = subclasses.Any(sub => sub != null && sub.Abilities.Any(ability => ability.GetType() == typeof(ClothesAbility)));
+
             foreach (var ragdoll in ragdolls)
             {
-                if (RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime < 16)
+                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime < 16)
                 {
                     continue;
                 }
@@ -31,12 +38,12 @@ namespace Toji.Cleanups.List
                 var room = ragdoll.Room;
                 var position = ragdoll.Position;
 
-                if (players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) <= 11)) && ragdoll.GameObject.IsValid())
+                if ((players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) <= 11)) || hasMimicry && BaseSubclass.TryGet(ragdoll, out _)) && ragdoll.GameObject.IsValid())
                 {
                     continue;
                 }
 
-                ragdoll.Destroy();
+                NetworkServer.Destroy(ragdoll.GameObject);
             }
         }
     }

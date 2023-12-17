@@ -71,7 +71,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            var ragdoll = Ragdoll.List.Where(r => !_ignoredRoles.Contains(r.Role)).OrderBy(r => Vector3.Distance(r.Position, player.Position)).First();
+            var ragdoll = Ragdoll.List.Where(r => r != null && r.Transform != null && !_ignoredRoles.Contains(r.Role)).OrderBy(r => Vector3.Distance(r.Position, player.Position)).First();
 
             if (ragdoll == null || ragdoll.Room != player.CurrentRoom || Vector3.Distance(ragdoll.Position, player.Position) > (player.Zone == ZoneType.Surface ? 3.8f : 5))
             {
