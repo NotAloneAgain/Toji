@@ -18,9 +18,10 @@ namespace Toji.Classes.Subclasses.Ntf.Single
 
         public override List<string> Tags { get; } = new List<string>(1) { "Shadow" };
 
-        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
-            new HackAbility(190)
+            new HackAbility(190),
+            new DisableAbility(200),
         };
 
         public RoleTypeId NeedRole => RoleTypeId.Scp079;

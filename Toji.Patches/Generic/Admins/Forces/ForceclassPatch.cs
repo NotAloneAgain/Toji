@@ -13,7 +13,6 @@ using System.Linq;
 using Toji.Global;
 using Toji.Patches.API.Extensions;
 using Utils;
-using Log = PluginAPI.Core.Log;
 
 namespace Toji.Patches.Generic.Admins.Forces
 {
@@ -46,6 +45,13 @@ namespace Toji.Patches.Generic.Admins.Forces
             }
 
             ReferenceHub senderHub = (sender as PlayerCommandSender).ReferenceHub;
+
+            if (senderHub == hub)
+            {
+                response = "brr";
+
+                return false;
+            }
 
             List<ReferenceHub> list = RAUtils.ProcessPlayerIdOrNamesList(arguments, 0, out var array, false);
             var self = list.Count == 1 && senderHub == list[0];

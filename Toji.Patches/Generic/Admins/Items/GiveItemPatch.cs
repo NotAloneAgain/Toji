@@ -3,6 +3,7 @@ using CommandSystem.Commands.RemoteAdmin.Inventory;
 using GameCore;
 using HarmonyLib;
 using PluginAPI.Core;
+using RemoteAdmin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,24 @@ namespace Toji.Patches.Generic.Admins.Items
         {
             __result = false;
 
-            if (!sender.CheckPermission(PlayerPermissions.GivingItems, out response))
+            var commandSender = sender as PlayerCommandSender;
+
+            if (commandSender == null)
+            {
+                response = "brr";
+
                 return false;
+            }
+
+            if (!commandSender.CheckPermission(PlayerPermissions.GivingItems, out response))
+            {
+                return false;
+            }
+
+            if (ReferenceHub.LocalHub == commandSender.ReferenceHub)
+            {
+                return true;
+            }
 
             if (arguments.Count < 2)
             {
@@ -54,7 +71,7 @@ namespace Toji.Patches.Generic.Admins.Items
 
             if (targets != null)
             {
-                var player = Player.Get(sender);
+                var player = Player.Get(commandSender);
 
                 if (player.IsDonator(out var tag))
                 {

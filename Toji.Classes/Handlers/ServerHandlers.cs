@@ -1,9 +1,4 @@
 ﻿using Exiled.API.Features;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Toji.Classes.API.Extensions;
 
 namespace Toji.Classes.Handlers
