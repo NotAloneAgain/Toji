@@ -81,8 +81,8 @@ namespace Toji.Classes.Subclasses.Scp575
             }
 
             ev.IsAllowed = false;
-            ev.Scp106.Owner.ShowHitMarker();
-            ev.Player.Hurt(15, DamageType.Scp106);
+            ev.Player.ShowHitMarker();
+            ev.Target.Hurt(15, DamageType.Scp106);
         }
     }
 }

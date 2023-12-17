@@ -15,9 +15,10 @@ namespace Toji.Classes
     {
         private const string HarmonyId = "zenin";
 
-        private Harmony _harmony;
-        private PlayerHandlers _player;
         private RagdollHandlers _ragdoll;
+        private ServerHandlers _server;
+        private PlayerHandlers _player;
+        private Harmony _harmony;
 
         public override string Name => "Toji.Classes";
 
@@ -34,13 +35,17 @@ namespace Toji.Classes
             _harmony = new(HarmonyId);
 
             _ragdoll = new();
+            _server = new();
             _player = new();
 
             RagdollManager.OnRagdollRemoved += _ragdoll.OnRagdollRemoved;
             Player.SpawningRagdoll += _ragdoll.OnSpawningRagdoll;
             Player.SpawnedRagdoll += _ragdoll.OnSpawnedRagdoll;
 
+            Server.RestartingRound += _server.OnRoundRestarting;
+
             Player.ChangingRole += _player.OnChangingRole;
+            Player.Destroying += _player.OnDestroying;
             Player.Hurting += _player.OnHurting;
 
             CreateSubclasses();
@@ -57,13 +62,18 @@ namespace Toji.Classes
             DestroySubclasses();
 
             Player.Hurting -= _player.OnHurting;
+            Player.Destroying -= _player.OnDestroying;
             Player.ChangingRole -= _player.OnChangingRole;
+
+            Server.RestartingRound -= _server.OnRoundRestarting;
 
             Player.SpawnedRagdoll -= _ragdoll.OnSpawnedRagdoll;
             Player.SpawningRagdoll -= _ragdoll.OnSpawningRagdoll;
             RagdollManager.OnRagdollRemoved -= _ragdoll.OnRagdollRemoved;
 
             _player = null;
+            _server = null;
+            _ragdoll = null;
 
             _harmony = null;
 

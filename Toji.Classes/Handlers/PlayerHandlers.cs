@@ -62,6 +62,16 @@ namespace Toji.Classes.Handlers
             }
         }
 
+        public void OnDestroying(DestroyingEventArgs ev)
+        {
+            if (!ev.IsValid() || !ev.Player.TryGetSubclass(out var subclass))
+            {
+                return;
+            }
+
+            subclass.Revoke(ev.Player);
+        }
+
         public void OnHurting(HurtingEventArgs ev)
         {
             if (ev == null || !ev.IsAllowed || !ev.IsValid())

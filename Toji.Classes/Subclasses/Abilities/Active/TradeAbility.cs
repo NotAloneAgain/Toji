@@ -38,7 +38,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            if ((player.CurrentItem?.Type ?? ItemType.None) == ItemType.Coin)
+            if ((player.CurrentItem?.Type ?? ItemType.None) != ItemType.Coin)
             {
                 result = "Ты не держишь монетку в руках!";
 

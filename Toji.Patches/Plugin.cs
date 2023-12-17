@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 using PluginAPI.Events;
 using Toji.Patches.Configs;
 using Toji.Patches.Generic.Admins.Forces;
@@ -40,7 +41,10 @@ namespace Toji.Patches
             _harmony = null;
         }
 
-        public void OnRestartRound(RoundRestartEvent ev)
+        [PluginEvent(ServerEventType.RoundRestart)]
+        public void OnRestartRound(RoundRestartEvent ev) => Reset();
+
+        private void Reset()
         {
             ForceclassPatch.Reset();
             GiveItemPatch.Reset();

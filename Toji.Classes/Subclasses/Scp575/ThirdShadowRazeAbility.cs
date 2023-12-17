@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.DamageHandlers;
 using System;
 using Toji.Classes.API.Features.Abilities;
 
@@ -51,7 +52,7 @@ namespace Toji.Classes.Subclasses.Scp575
                     continue;
                 }
 
-                ply.Hurt(player, 25, DamageType.Crushed, default);
+                ply.Hurt(new CustomDamageHandler(ply, player, 25, DamageType.Scp106));
             }
 
             AddUse(player, DateTime.Now, true, result);

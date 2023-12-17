@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.DamageHandlers;
 using Exiled.API.Features.Doors;
 using System;
 using Toji.Classes.API.Features.Abilities;
@@ -49,16 +50,19 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var door in Door.List)
             {
-                if (door.DoorLockType == DoorLockType.AdminCommand || door.Is<BreakableDoor>(out var breakable) && breakable.IsLocked && !breakable.AllowsScp106 || door.Zone != zone)
+                if (door.DoorLockType == DoorLockType.AdminCommand || door.Is<BreakableDoor>(out var breakable) && (breakable.IsLocked || !breakable.AllowsScp106) || door.Zone != zone)
                 {
                     continue;
                 }
 
-                door.IsOpen = false;
+                if (!door.IsGate && !door.IsElevator && door.IsOpen)
+                {
+                    door.IsOpen = false;
+                }
 
                 if (!door.IsLocked)
                 {
-                    door.Lock(15, DoorLockType.AdminCommand);
+                    door.Lock(20, DoorLockType.AdminCommand);
                 }
             }
 
@@ -69,7 +73,7 @@ namespace Toji.Classes.Subclasses.Scp575
                     continue;
                 }
 
-                ply.Hurt(player, 15, DamageType.Crushed, default);
+                ply.Hurt(new CustomDamageHandler(ply, player, 15, DamageType.Scp106));
             }
 
             AddUse(player, DateTime.Now, true, result);

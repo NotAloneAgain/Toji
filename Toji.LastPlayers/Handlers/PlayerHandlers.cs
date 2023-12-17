@@ -14,7 +14,7 @@ namespace Toji.LastPlayers.Handlers
         {
             var team = ev.Player.Role.Team;
 
-            if (Player.List.Count < 9 || team is Team.Dead or Team.OtherAlive || team == Team.SCPs && Player.List.First(ply => ply.Role.Team == Team.SCPs).Role.Type == RoleTypeId.Scp079 || Player.List.Count(ply => ply.Role.Team == team) != 1)
+            if (Player.List.Count < 10 || team is Team.Dead or Team.OtherAlive || team == Team.SCPs && Player.List.First(ply => ply.Role.Team == Team.SCPs).Role.Type == RoleTypeId.Scp079 || Player.List.Count(ply => ply.Role.Team == team) != 1)
             {
                 return;
             }

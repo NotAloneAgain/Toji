@@ -193,15 +193,6 @@ namespace Toji.Patches.Generic.Admins.Forces
                     if (target != null && role != RoleTypeId.Overwatch)
                     {
                         target.roleManager.ServerSetRole(role, RoleChangeReason.RemoteAdmin, flags);
-
-                        try
-                        {
-                            AddLog(2, string.Format("{0} changed role of player {1} to {2}.", sender.LogName, target.LoggedNameFromRefHub(), role), 1, false);
-                        }
-                        catch (Exception err)
-                        {
-                            Log.Error($"Error on donator force: {err.Message}\n{err.StackTrace}");
-                        }
                     }
                 }
 
@@ -222,23 +213,6 @@ namespace Toji.Patches.Generic.Admins.Forces
         {
             _usings.Clear();
             _usingsScp.Clear();
-        }
-
-        private static void AddLog(int module, string msg, int type, bool init = false)
-        {
-            var text = TimeBehaviour.Rfc3339Time();
-
-            var lockObject = ServerLogs.LockObject;
-
-            lock (lockObject)
-            {
-                ServerLogs.Queue.Enqueue(new(msg, ServerLogs.Txt[type], ServerLogs.Modulestxt[module], text));
-            }
-
-            if (init)
-                return;
-
-            ServerLogs._state = ServerLogs.LoggingState.Write;
         }
     }
 }

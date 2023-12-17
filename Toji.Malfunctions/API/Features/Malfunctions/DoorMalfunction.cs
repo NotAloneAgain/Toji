@@ -23,6 +23,11 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         {
             base.Activate(duration);
 
+            if (Value == null)
+            {
+                return;
+            }
+
             Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошла {Name.ToLower()} {TranslateZone(Value.Zone)}, исправление займет {GetSecondsString(duration)}</b></color>");
 
             Value.Lock(duration, DoorLockType.SpecialDoorFeature);

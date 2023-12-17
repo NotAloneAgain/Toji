@@ -22,7 +22,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         {
             base.Activate(duration);
 
-            if (Value.Type is ElevatorType.LczA or ElevatorType.LczB && Map.IsLczDecontaminated)
+            if (Value == null || Value.Type is ElevatorType.LczA or ElevatorType.LczB && Map.IsLczDecontaminated || Warhead.IsDetonated)
             {
                 return;
             }

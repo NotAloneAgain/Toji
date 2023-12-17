@@ -91,6 +91,7 @@
     <Compile Include="API\Interfaces\ISingle.cs" />
     <Compile Include="API\Interfaces\ISubscribable.cs" />
     <Compile Include="Handlers\RagdollHandlers.cs" />
+    <Compile Include="Handlers\ServerHandlers.cs" />
     <Compile Include="Patches\Generic\InteractPatch.cs" />
     <Compile Include="Patches\Generic\VerificationRulePatch.cs" />
     <Compile Include="Subclasses\Abilities\Active\AmogusAbility.cs" />

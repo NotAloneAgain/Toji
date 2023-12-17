@@ -4,6 +4,7 @@ using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
 using Exiled.Events.EventArgs.Scp914;
+using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
 namespace Toji.Redux914.Handlers
@@ -35,7 +36,7 @@ namespace Toji.Redux914.Handlers
 
         public void OnUpgradingInventoryItem(UpgradingInventoryItemEventArgs ev)
         {
-            if (!ev.IsAllowed)
+            if (!ev.IsAllowed || !ev.IsValid())
             {
                 return;
             }
@@ -62,7 +63,7 @@ namespace Toji.Redux914.Handlers
 
         public void OnUpgradingPlayer(UpgradingPlayerEventArgs ev)
         {
-            if (!ev.IsAllowed)
+            if (!ev.IsAllowed || !ev.IsValid())
             {
                 return;
             }
@@ -168,6 +169,11 @@ namespace Toji.Redux914.Handlers
         private Vector3 GetSafePosition(Room room)
         {
             if (room.Type == RoomType.Lcz173 && Random.Range(0, 100) >= 30)
+            {
+                return room.Doors.GetRandomValue().Position;
+            }
+
+            if (room.Type == RoomType.Lcz330)
             {
                 return room.Doors.GetRandomValue().Position;
             }

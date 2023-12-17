@@ -58,8 +58,8 @@ namespace Toji.Malfunctions.API.Features
 
                 if (Loader.Random.Next(0, 100) < Chance + minutes)
                 {
-                    var min = Mathf.Max((int)(MinDuration + minutes * 2), MinDuration);
-                    var max = Mathf.Min((int)(MaxDuration + minutes * 3), MaxDuration);
+                    var min = Mathf.Clamp(MinDuration + (int)(minutes * 2), MinDuration, MaxDuration - 20);
+                    var max = Mathf.Clamp(MaxDuration + (int)(minutes * 3), MinDuration + 20, MaxDuration);
 
                     var duration = Loader.Random.Next(min, max);
 

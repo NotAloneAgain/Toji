@@ -20,7 +20,7 @@ namespace Toji.Pocket.Handlers
                 return;
             }
 
-            foreach (var scp in Player.List.Where(x => x.Role.Type == RoleTypeId.Scp106))
+            foreach (var scp in Player.List.Where(x => x.Role.Type == RoleTypeId.Scp096))
             {
                 if (scp == null || scp.IsHost || !scp.Role.Is<Scp096Role>(out var scp096))
                 {
@@ -43,7 +43,7 @@ namespace Toji.Pocket.Handlers
                 return;
             }
 
-            foreach (var scp in Player.List.Where(x => x.Role.Type == RoleTypeId.Scp106))
+            foreach (var scp in Player.List.Where(x => x.Role.Type == RoleTypeId.Scp096))
             {
                 if (scp == null || scp.IsHost || !scp.Role.Is<Scp096Role>(out var scp096))
                 {

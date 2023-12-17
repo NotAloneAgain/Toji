@@ -21,9 +21,16 @@ namespace Toji.Malfunctions.API.Features
         {
             TDoor value = null!;
 
+            var doors = Door.List.Where(door => door is TDoor);
+
+            if (!doors.Any())
+            {
+                return null;
+            }
+
             do
             {
-                value = Door.List.Where(door => door is TDoor).GetRandomValue() as TDoor;
+                value = doors.GetRandomValue() as TDoor;
             } while (Condition(value));
 
             return value;

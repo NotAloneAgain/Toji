@@ -22,6 +22,16 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
             var zone = SelectZone();
 
+            if (zone != ZoneType.Surface && Warhead.IsDetonated)
+            {
+                if (Room.Get(RoomType.Surface).AreLightsOff)
+                {
+                    return;
+                }
+
+                zone = ZoneType.Surface;
+            }
+
             if (zone == ZoneType.LightContainment && Map.IsLczDecontaminated)
             {
                 zone = ZoneType.HeavyContainment;
