@@ -18,7 +18,7 @@ namespace Toji.Classes.Subclasses.Scientists.Single
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
             new AmogusAbility(0, RoleTypeId.Scp0492, RoleTypeId.Scientist),
-            new ReviveAbility(RoleTypeId.Scp0492)
+            new ReviveAbility(RoleTypeId.Scp0492, RoleTypeId.Scientist)
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)

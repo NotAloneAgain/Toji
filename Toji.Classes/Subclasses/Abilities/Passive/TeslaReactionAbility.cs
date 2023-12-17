@@ -31,7 +31,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (!ev.IsValid() || !Has(ev.Player))
+            if (!ev.IsValid() || !IsEnabled || !Has(ev.Player))
             {
                 return;
             }

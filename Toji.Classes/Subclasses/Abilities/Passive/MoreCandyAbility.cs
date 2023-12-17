@@ -21,7 +21,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnInteractingScp330(InteractingScp330EventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid() || !Has(ev.Player))
+            if (!IsEnabled || !ev.IsAllowed || !ev.IsValid() || !Has(ev.Player))
             {
                 return;
             }

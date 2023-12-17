@@ -22,7 +22,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            if (!ev.IsValid() || ev.IsAllowed || !Has(ev.Player) || !GetRandom() || ev.Door.IsOpen)
+            if (!ev.IsValid() || !IsEnabled || ev.IsAllowed || !Has(ev.Player) || !GetRandom() || ev.Door.IsOpen)
             {
                 return;
             }

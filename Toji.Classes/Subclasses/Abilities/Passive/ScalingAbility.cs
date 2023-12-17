@@ -49,7 +49,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnDied(DiedEventArgs ev)
         {
-            if (!ev.IsNotSelfDamage() || !Has(ev.Attacker))
+            if (!ev.IsNotSelfDamage() || !IsEnabled || !Has(ev.Attacker))
             {
                 return;
             }
@@ -64,7 +64,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnDamage(HurtingEventArgs ev)
         {
-            if (!Has(ev.Player) || !_stats.TryGetValue(ev.Attacker, out var stats))
+            if (!Has(ev.Player) || !IsEnabled || !_stats.TryGetValue(ev.Attacker, out var stats))
             {
                 return;
             }

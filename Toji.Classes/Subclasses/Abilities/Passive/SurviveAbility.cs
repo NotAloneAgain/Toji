@@ -19,7 +19,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnDying(DyingEventArgs ev)
         {
-            if (!ev.IsFullyValid() || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid() || !GetRandom())
+            if (!ev.IsFullyValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid() || !GetRandom())
             {
                 return;
             }

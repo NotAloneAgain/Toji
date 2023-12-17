@@ -10,9 +10,14 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 {
     public class ReviveAbility : PassiveAbility
     {
+        private RoleTypeId _target;
         private RoleTypeId _role;
 
-        public ReviveAbility(RoleTypeId role) => _role = role;
+        public ReviveAbility(RoleTypeId role, RoleTypeId target)
+        {
+            _target = target;
+            _role = role;
+        }
 
         public override string Name => "Возрождение";
 
@@ -24,7 +29,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnDying(DyingEventArgs ev)
         {
-            if (!ev.IsValid() || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid())
+            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid() || ev.Player.Role.Type != _target)
             {
                 return;
             }
@@ -33,7 +38,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
             ev.Player.Role.Set(_role, SpawnReason.Revived, RoleSpawnFlags.None);
 
-            if (!_role.IsHuman())
+            if (!_role.IsHuman() && !ev.Player.IsInventoryEmpty)
             {
                 ev.Player.DropAllWithoutKeycard();
             }

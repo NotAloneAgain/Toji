@@ -26,7 +26,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnReceivingEffect(ReceivingEffectEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid() || !Has(ev.Player))
+            if (!ev.IsAllowed || !IsEnabled || !ev.IsValid() || !Has(ev.Player))
             {
                 return;
             }
