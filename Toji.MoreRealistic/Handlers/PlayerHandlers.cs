@@ -36,6 +36,13 @@ namespace Toji.MoreRealistic.Handlers
 
         public void OnHurting(HurtingEventArgs ev)
         {
+            if (ev.Attacker == null && ev.DamageHandler.Type is DamageType.Explosion)
+            {
+                ev.IsAllowed = false;
+
+                return;
+            }
+
             if (!ev.IsAllowed || !ev.IsNotSelfDamage() || !ev.DamageHandler.Type.IsValid() || ev.Player.IsScp || ev.Player.LeadingTeam == ev.Attacker.LeadingTeam)
             {
                 return;

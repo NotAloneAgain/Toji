@@ -76,7 +76,7 @@ namespace Toji.Classes.Handlers
 
         public void OnHurting(HurtingEventArgs ev)
         {
-            if (ev == null || !ev.IsAllowed || !ev.IsValid())
+            if (ev == null || !ev.IsAllowed || !ev.IsValid() || ev.Amount <= 0)
             {
                 return;
             }
