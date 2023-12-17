@@ -23,7 +23,7 @@ namespace Toji.Classes.Handlers
 
         public void OnSpawningRagdoll(SpawningRagdollEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid() || !ev.Player.TryGetSubclass(out var subclass))
+            if (!ev.IsAllowed || !ev.IsValid() || !ev.Player.TryGetSubclass(out _))
             {
                 return;
             }

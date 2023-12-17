@@ -1,6 +1,8 @@
-﻿using Exiled.API.Features;
+﻿using CustomPlayerEffects;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
+using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Teslas.Handlers
 {
@@ -8,7 +10,7 @@ namespace Toji.Teslas.Handlers
     {
         public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (!ev.IsAllowed || ev.Player.IsHost || ev.Player.IsNPC || !Warhead.IsInProgress && ev.Player.Role.Team != Team.FoundationForces && ev.Player.Role.Type != RoleTypeId.Scp079 && !ev.Tesla.Room.AreLightsOff)
+            if (!ev.IsAllowed || !ev.IsValid() || !Warhead.IsInProgress && ev.Player.Role.Team != Team.FoundationForces && ev.Player.Role.Type != RoleTypeId.Scp079 && !ev.Tesla.Room.AreLightsOff && !ev.Player.HasEffect<Invisible>())
             {
                 return;
             }

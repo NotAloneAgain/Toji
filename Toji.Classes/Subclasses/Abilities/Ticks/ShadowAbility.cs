@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.DamageHandlers;
 using Exiled.API.Features.Items;
 using InventorySystem.Items;
 using System;
@@ -83,7 +84,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                     percent /= 4;
                 }
 
-                ply.Hurt(player, ply.MaxHealth * (percent / 100), DamageType.Bleeding, null);
+                ply.Hurt(new CustomDamageHandler(ply, player, ply.MaxHealth * (percent / 100), DamageType.Scp106));
             }
         }
     }

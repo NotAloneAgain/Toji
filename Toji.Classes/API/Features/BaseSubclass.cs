@@ -381,8 +381,8 @@ namespace Toji.Classes.API.Features
             return ply.Role.Team switch
             {
                 Team.SCPs => $"{ply.Role.Type.Translate()} - {Name}",
-                Team.FoundationForces => "Девятихвостая Лиса - {Name}",
-                Team.ChaosInsurgency => "Повстанец Хаоса - {Name}",
+                Team.FoundationForces => $"Девятихвостая Лиса - {Name}",
+                Team.ChaosInsurgency => $"Повстанец Хаоса - {Name}",
                 _ => Name,
             };
         }

@@ -83,6 +83,7 @@ namespace Toji.NicknameFilters.Configs
             "сsgetto.bet",
             "csdrop",
             "csfail",
+            "csgowin.ru"
         };
     }
 }

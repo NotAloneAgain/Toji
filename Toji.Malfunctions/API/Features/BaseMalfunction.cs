@@ -4,6 +4,7 @@ using Exiled.Loader;
 using MEC;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Toji.Malfunctions.API.Features
 {
@@ -57,8 +58,8 @@ namespace Toji.Malfunctions.API.Features
 
                 if (Loader.Random.Next(0, 100) < Chance + minutes)
                 {
-                    var min = (int)(MinDuration + minutes * 2);
-                    var max = (int)(MaxDuration + minutes * 3);
+                    var min = Mathf.Max((int)(MinDuration + minutes * 2), MinDuration);
+                    var max = Mathf.Min((int)(MaxDuration + minutes * 3), MaxDuration);
 
                     var duration = Loader.Random.Next(min, max);
 

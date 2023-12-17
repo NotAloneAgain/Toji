@@ -11,7 +11,7 @@ namespace Toji.Classes.Subclasses.Scp0492.Group
     {
         public override bool ShowInfo => true;
 
-        public override string Name => "Ядовитый";
+        public override string Name => "Танк";
 
         public override string Desc => "Очень крепкий и сильный зомби, способный выдержать множество атак";
 

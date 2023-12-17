@@ -24,12 +24,14 @@ namespace Toji.Pocket
 
             Player.StayingOnEnvironmentalHazard += _handlers.OnStayingEnvironmentalHazard;
             Player.EnteringEnvironmentalHazard += _handlers.OnEnteringEnvironmentalHazard;
+            Player.ExitingEnvironmentalHazard += _handlers.OnExitingEnvironmentalHazard;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
+            Player.ExitingEnvironmentalHazard -= _handlers.OnExitingEnvironmentalHazard;
             Player.EnteringEnvironmentalHazard -= _handlers.OnEnteringEnvironmentalHazard;
             Player.StayingOnEnvironmentalHazard -= _handlers.OnStayingEnvironmentalHazard;
 

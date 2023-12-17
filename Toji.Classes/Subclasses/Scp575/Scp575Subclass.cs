@@ -44,8 +44,6 @@ namespace Toji.Classes.Subclasses.Scp575
         {
             base.LazySubscribe();
 
-            Exiled.Events.Handlers.Scp106.Stalking += Disallow;
-            Exiled.Events.Handlers.Scp106.Teleporting += Disallow;
             Exiled.Events.Handlers.Scp106.Attacking += OnAttacking;
             Exiled.Events.Handlers.Map.GeneratorActivating += OnActivatingGenerator;
         }
@@ -54,8 +52,6 @@ namespace Toji.Classes.Subclasses.Scp575
         {
             Exiled.Events.Handlers.Map.GeneratorActivating -= OnActivatingGenerator;
             Exiled.Events.Handlers.Scp106.Attacking -= OnAttacking;
-            Exiled.Events.Handlers.Scp106.Teleporting -= Disallow;
-            Exiled.Events.Handlers.Scp106.Stalking -= Disallow;
 
             base.LazyUnsubscribe();
         }
@@ -87,16 +83,6 @@ namespace Toji.Classes.Subclasses.Scp575
             ev.IsAllowed = false;
             ev.Scp106.Owner.ShowHitMarker();
             ev.Player.Hurt(15, DamageType.Scp106);
-        }
-
-        private void Disallow(IDeniableEvent ev)
-        {
-            if (this is not IPlayerEvent plyEvent || !ev.IsAllowed)
-            {
-                return;
-            }
-
-            ev.IsAllowed = !Has(plyEvent.Player);
         }
     }
 }

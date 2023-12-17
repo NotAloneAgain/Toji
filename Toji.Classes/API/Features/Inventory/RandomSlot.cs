@@ -24,7 +24,7 @@ namespace Toji.Classes.API.Features.Inventory
         {
             foreach (var item in _items)
             {
-                if (Random.Range(0, 100) < item.Value)
+                if (Random.Range(0, 100) >= item.Value)
                 {
                     continue;
                 }

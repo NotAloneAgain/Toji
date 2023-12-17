@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Loader;
 using MEC;
 using System;
@@ -43,6 +44,10 @@ namespace Toji.Malfunctions.Handlers
                 _allMalfunctions.Remove(malfunction);
                 _handledMalfunctions.Add(malfunction);
             }
+
+            yield return Timing.WaitUntilTrue(() => Warhead.IsDetonated);
+
+            DestroyMalfunctions();
         }
 
         private void CreateMalfunctions()

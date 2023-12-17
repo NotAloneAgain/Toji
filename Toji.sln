@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.LeaveReplacer", "Toji.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Pocket", "Toji.Pocket\Toji.Pocket.csproj", "{D63BBCCE-8ADD-4214-A821-D029BF673C41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Hud", "Toji.Hud\Toji.Hud.csproj", "{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -171,6 +173,10 @@ Global
 		{D63BBCCE-8ADD-4214-A821-D029BF673C41}.Debug|x64.Build.0 = Debug|x64
 		{D63BBCCE-8ADD-4214-A821-D029BF673C41}.Release|x64.ActiveCfg = Release|x64
 		{D63BBCCE-8ADD-4214-A821-D029BF673C41}.Release|x64.Build.0 = Release|x64
+		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Debug|x64.ActiveCfg = Debug|x64
+		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Debug|x64.Build.0 = Debug|x64
+		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Release|x64.ActiveCfg = Release|x64
+		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

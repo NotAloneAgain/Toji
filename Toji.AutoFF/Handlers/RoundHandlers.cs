@@ -38,7 +38,7 @@ namespace Toji.AutoFF.Handlers
         {
             Server.FriendlyFire = true;
 
-            if (_roundAction.ToString().Contains("Force") && Player.List.Count > 35)
+            if (_roundAction.ToString().Contains("Force") && Player.List.Count > 32)
             {
                 return;
             }
