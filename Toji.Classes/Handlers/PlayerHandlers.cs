@@ -1,6 +1,8 @@
 ﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
+using System;
 using System.Linq;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
@@ -83,10 +85,17 @@ namespace Toji.Classes.Handlers
             {
                 if (subclass is IHurtController controller)
                 {
-                    controller?.OnHurt(ev);
+                    try
+                    {
+                        controller.OnHurt(ev);
+                    }
+                    catch (Exception err)
+                    {
+                        Log.Warn($"Error on processing hurt controller of {subclass.GetType().Name}: {err}");
+                    }
                 }
 
-                if (subclass.Abilities?.Any() ?? false)
+                if (subclass.Abilities.Any())
                 {
                     foreach (var ability in subclass.Abilities)
                     {
@@ -95,11 +104,18 @@ namespace Toji.Classes.Handlers
                             continue;
                         }
 
-                        abilityController.OnHurt(ev);
+                        try
+                        {
+                            abilityController.OnHurt(ev);
+                        }
+                        catch (Exception err)
+                        {
+                            Log.Warn($"Error on processing hurt controller of {ability.GetType().Name}: {err}");
+                        }
                     }
                 }
 
-                if (subclass.Characteristics?.Any() ?? false)
+                if (subclass.Characteristics.Any())
                 {
                     foreach (var characteristic in subclass.Characteristics)
                     {
@@ -108,7 +124,14 @@ namespace Toji.Classes.Handlers
                             continue;
                         }
 
-                        ev.Amount *= multiplayer.Value;
+                        try
+                        {
+                            ev.Amount *= multiplayer.Value;
+                        }
+                        catch (Exception err)
+                        {
+                            Log.Warn($"Error on processing hurt multiplayer of {characteristic.GetType().Name}: {err}");
+                        }
                     }
                 }
             }
@@ -117,10 +140,17 @@ namespace Toji.Classes.Handlers
             {
                 if (attackerSubclass is IDamageController controller)
                 {
-                    controller?.OnDamage(ev);
+                    try
+                    {
+                        controller.OnDamage(ev);
+                    }
+                    catch (Exception err)
+                    {
+                        Log.Warn($"Error on processing damage controller of {subclass.GetType().Name}: {err}");
+                    }
                 }
 
-                if (subclass.Abilities?.Any() ?? false)
+                if (subclass.Abilities.Any())
                 {
                     foreach (var ability in subclass.Abilities)
                     {
@@ -129,11 +159,18 @@ namespace Toji.Classes.Handlers
                             continue;
                         }
 
-                        abilityController.OnDamage(ev);
+                        try
+                        {
+                            abilityController.OnDamage(ev);
+                        }
+                        catch (Exception err)
+                        {
+                            Log.Warn($"Error on processing damage controller of {ability.GetType().Name}: {err}");
+                        }
                     }
                 }
 
-                if (subclass.Characteristics?.Any() ?? false)
+                if (subclass.Characteristics.Any())
                 {
                     foreach (var characteristic in subclass.Characteristics)
                     {
@@ -144,12 +181,26 @@ namespace Toji.Classes.Handlers
 
                         if (characteristic is DamageCharacteristic damage)
                         {
-                            ev.Amount = damage.Value;
+                            try
+                            {
+                                ev.Amount = damage.Value;
+                            }
+                            catch (Exception err)
+                            {
+                                Log.Warn($"Error on processing damage value of {characteristic.GetType().Name}: {err}");
+                            }
                         }
 
                         if (characteristic is DamageMultiplayerCharacteristic multiplayer)
                         {
-                            ev.Amount *= multiplayer.Value;
+                            try
+                            {
+                                ev.Amount *= multiplayer.Value;
+                            }
+                            catch (Exception err)
+                            {
+                                Log.Warn($"Error on processing damage multiplayer of {characteristic.GetType().Name}: {err}");
+                            }
                         }
                     }
                 }
