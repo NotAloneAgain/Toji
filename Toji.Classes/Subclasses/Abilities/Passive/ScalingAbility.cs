@@ -13,7 +13,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 {
     public class ScalingAbility : PassiveAbility, IDamageController
     {
-        private Dictionary<Player, ScalingStats> _stats;
+        private Dictionary<string, ScalingStats> _stats;
 
         public ScalingAbility()
         {
@@ -28,7 +28,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
         {
             base.OnEnabled(player);
 
-            _stats.Add(player, new ScalingStats());
+            _stats.Add(player.UserId, new ScalingStats(350, 20, 0.25f, 2));
 
             player.Health = 350;
             player.MaxHealth = 350;
@@ -40,7 +40,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
         {
             base.OnDisabled(player);
 
-            _stats.Remove(player);
+            _stats.Remove(player.UserId);
         }
 
         public override void Subscribe() => Exiled.Events.Handlers.Player.Died += OnDied;
@@ -54,17 +54,19 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            var stats = _stats[ev.Attacker];
+            var stats = _stats[ev.Attacker.UserId];
 
             stats.Damage = Mathf.Clamp(stats.Damage + 10, 20, 150);
             stats.Health = Mathf.Clamp(stats.Health + 50, 350, 1400);
             stats.Vampire = Mathf.Clamp(stats.Vampire + 0.025f, 0.25f, 0.425f);
             stats.Movement = (byte)Mathf.Clamp(stats.Movement + 2, 2, 40);
+
+            _stats[ev.Attacker.UserId] = stats;
         }
 
         public void OnDamage(HurtingEventArgs ev)
         {
-            if (!Has(ev.Player) || !IsEnabled || !_stats.TryGetValue(ev.Attacker, out var stats))
+            if (!Has(ev.Player) || !ev.IsAllowed || !IsEnabled || !_stats.TryGetValue(ev.Attacker.UserId, out var stats))
             {
                 return;
             }
@@ -79,7 +81,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
             while ((player?.IsAlive ?? false) && Has(player))
             {
-                var stats = _stats[player];
+                var stats = _stats[player.UserId];
 
                 if (player.MaxHealth < stats.Health)
                 {
@@ -97,12 +99,12 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         struct ScalingStats
         {
-            public ScalingStats()
+            public ScalingStats(int health, int damage, float vampire, byte movement)
             {
-                Health = 350;
-                Damage = 20;
-                Vampire = 0.25f;
-                Movement = 2;
+                Health = health;
+                Damage = damage;
+                Vampire = vampire;
+                Movement = movement;
             }
 
             public int Health { get; set; }

@@ -55,6 +55,8 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             if (player.HasEffect<Invisible>())
             {
+                result = "..................";
+
                 AddUse(player, DateTime.Now, false, result);
 
                 return false;

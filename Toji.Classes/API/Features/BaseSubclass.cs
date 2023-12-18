@@ -359,13 +359,13 @@ namespace Toji.Classes.API.Features
             }
         }
 
-        protected void CreateInfo(in Player ply)
+        internal protected void CreateInfo(in Player ply)
         {
             ply.CustomInfo = $"{ply.CustomName}{(string.IsNullOrEmpty(ply.CustomInfo) ? string.Empty : $"\n{ply.CustomInfo}")}\n{GetRoleInfo(ply)}";
             ply.InfoArea &= ~(PlayerInfoArea.Role | PlayerInfoArea.Nickname);
         }
 
-        protected void DestroyInfo(in Player ply)
+        internal protected void DestroyInfo(in Player ply)
         {
             ply.CustomInfo = ply.CustomInfo.Replace(ply.CustomName, string.Empty).Replace("\n", string.Empty).Replace(GetRoleInfo(ply), string.Empty);
             ply.InfoArea |= PlayerInfoArea.Role | PlayerInfoArea.Nickname;

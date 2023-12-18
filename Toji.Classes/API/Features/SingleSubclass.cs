@@ -13,7 +13,7 @@ namespace Toji.Classes.API.Features
 
         public sealed override bool Assign(in Player player)
         {
-            if (!base.Assign(player))
+            if (!base.Assign(player) || Player != null)
             {
                 return false;
             }

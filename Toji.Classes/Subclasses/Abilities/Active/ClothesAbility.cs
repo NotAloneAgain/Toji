@@ -7,6 +7,7 @@ using System.Linq;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Abilities;
+using Toji.Classes.Subclasses.Characteristics;
 using Toji.Global;
 using UnityEngine;
 
@@ -101,7 +102,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
                     player.SendConsoleMessage($"Ты скопировал: {subclass.ConsoleMessage}", "yellow");
 
-                    subclass.Update(player, true, false);
+                    subclass.CreateInfo(player);
                     subclass.ShowHint(player);
 
                     foreach (var ability in subclass.Abilities)
@@ -114,6 +115,16 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                         ownerSubclass.Abilities.Add(ability);
 
                         ability.OnEnabled(player);
+                    }
+
+                    foreach (var characteristic in subclass.Characteristics)
+                    {
+                        if (characteristic == null || characteristic is InventoryCharacteristic or SpawnpointCharacteristic)
+                        {
+                            continue;
+                        }
+
+                        characteristic.OnEnabled(player);
                     }
 
                     _copiedSubclasses.Add(player, subclass);
