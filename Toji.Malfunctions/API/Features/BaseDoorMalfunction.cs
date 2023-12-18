@@ -23,7 +23,7 @@ namespace Toji.Malfunctions.API.Features
 
             var doors = Door.List.Where(door => door is TDoor);
 
-            if (!doors.Any())
+            if (!doors.Any() || Warhead.IsDetonated || Warhead.IsInProgress || doors.All(door => Condition(door as TDoor)))
             {
                 return null;
             }
