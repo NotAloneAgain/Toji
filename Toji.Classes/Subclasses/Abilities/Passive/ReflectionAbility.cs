@@ -23,7 +23,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnHurt(HurtingEventArgs ev)
         {
-            if (!ev.IsNotSelfDamage() || !IsEnabled || ev.Attacker.IsGodModeEnabled || !ev.DamageHandler.Type.IsValid() || !IsEnabled)
+            if (!ev.IsNotSelfDamage() || !IsEnabled || ev.Attacker.IsGodModeEnabled || !ev.DamageHandler.Type.IsValid() || ev.Amount <= 0)
             {
                 return;
             }

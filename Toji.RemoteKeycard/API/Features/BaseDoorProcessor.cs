@@ -1,7 +1,9 @@
-﻿using Exiled.API.Features;
+﻿using CustomPlayerEffects;
+using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using System.Collections.Generic;
 using System.Linq;
+using Toji.ExiledAPI.Extensions;
 using Toji.RemoteKeycard.API.Enums;
 
 namespace Toji.RemoteKeycard.API.Features
@@ -13,6 +15,11 @@ namespace Toji.RemoteKeycard.API.Features
         static BaseDoorProcessor()
         {
             _processors = new List<BaseDoorProcessor>(10);
+        }
+
+        public BaseDoorProcessor()
+        {
+            _processors.Add(this);
         }
 
         public static IReadOnlyCollection<BaseDoorProcessor> ReadOnlyCollection => _processors.AsReadOnly();
@@ -28,26 +35,30 @@ namespace Toji.RemoteKeycard.API.Features
                 return false;
             }
 
-            if (door is Gate gate)
-            {
-                return ProcessGate(gate, player);
-            }
-
-            if (door is CheckpointDoor checkpoint)
-            {
-                return ProcessCheckpoint(checkpoint, player);
-            }
+            bool keycard = !player.IsCuffed && !player.HasEffect<SeveredHands>();
 
             var basic = door as BasicDoor;
 
             if (door.IsKeycardDoor)
             {
-                return ProcessKeycard(basic, player);
+                keycard = keycard && ProcessKeycard(basic, player);
             }
             else
             {
-                return ProcessNotKeycard(basic, player);
+                keycard = keycard && ProcessNotKeycard(basic, player);
             }
+
+            if (door is Gate gate)
+            {
+                return ProcessGate(gate, player) && keycard;
+            }
+
+            if (door is CheckpointDoor checkpoint)
+            {
+                return ProcessCheckpoint(checkpoint, player) && keycard;
+            }
+
+            return keycard;
         }
 
         protected abstract bool ProcessGate(Gate gate, Player player);

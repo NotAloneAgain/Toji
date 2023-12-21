@@ -1,20 +1,27 @@
 ﻿using CustomPlayerEffects;
-using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Player;
-using PlayerRoles;
 using System.Linq;
 using Toji.ExiledAPI.Extensions;
 using Toji.RemoteKeycard.API;
-using Toji.RemoteKeycard.API.Enums;
 using Toji.RemoteKeycard.API.Features;
+using Toji.RemoteKeycard.Processors;
 
 namespace Toji.RemoteKeycard.Handlers
 {
     internal sealed class PlayerHandlers
     {
+        private readonly HumanDoorProcessor _human;
+        private readonly ScpDoorProcessor _scp;
+
+        public PlayerHandlers()
+        {
+            _human = new();
+            _scp = new();
+        }
+
         public void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
             if (!ev.IsValid() || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving)
@@ -22,7 +29,7 @@ namespace Toji.RemoteKeycard.Handlers
                 return;
             }
 
-            ev.IsAllowed = BaseDoorProcessor.Get(ev.Player.IsScp ? DoorProcessorType.Scp : DoorProcessorType.Human).ProcessDoor(ev.Door, ev.Player);
+            ev.IsAllowed = (ev.Player.IsScp ? (BaseDoorProcessor)_scp : _human).ProcessDoor(ev.Door, ev.Player);
         }
 
         public void OnInteractingLocker(InteractingLockerEventArgs ev)
