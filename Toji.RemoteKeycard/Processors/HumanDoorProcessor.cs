@@ -14,12 +14,12 @@ namespace Toji.RemoteKeycard.Processors
     {
         public override DoorProcessorType Type => DoorProcessorType.Human;
 
-        protected override bool ProcessCheckpoint(CheckpointDoor door, Player player) => !door.IsLocked && player.CheckPermissions(KeycardPermissions.Checkpoints);
+        protected override bool ProcessCheckpoint(Door door, Player player) => player.CheckPermissions(KeycardPermissions.Checkpoints);
 
-        protected override bool ProcessGate(Gate gate, Player player) => !gate.IsLocked && (player.CheckPermissions(gate.RequiredPermissions.RequiredPermissions) || player.Role is { Team: Team.FoundationForces, Type: not RoleTypeId.FacilityGuard });
+        protected override bool ProcessGate(Gate gate, Player player) => player.CheckPermissions(gate.RequiredPermissions.RequiredPermissions);
 
-        protected override bool ProcessKeycard(BasicDoor door, Player player) => !door.IsLocked && player.CheckPermissions(door.RequiredPermissions.RequiredPermissions);
+        protected override bool ProcessKeycard(Door door, Player player) => !door.IsLocked && player.CheckPermissions(door.RequiredPermissions.RequiredPermissions);
 
-        protected override bool ProcessNotKeycard(BasicDoor door, Player player) => !door.IsLocked && !player.IsCuffed && !player.HasEffect<SeveredHands>();
+        protected override bool ProcessNotKeycard(Door door, Player player) => !door.IsLocked && !player.IsCuffed && !player.HasEffect<SeveredHands>();
     }
 }

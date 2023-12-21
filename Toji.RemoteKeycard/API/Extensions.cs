@@ -9,7 +9,7 @@ namespace Toji.RemoteKeycard.API
     {
         public static bool CheckPermissions(this Player player, KeycardPermissions perms)
         {
-            if (player.IsBypassModeEnabled || player.HasItem(ItemType.KeycardO5))
+            if (player.IsBypassModeEnabled || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.None)
             {
                 return true;
             }

@@ -11,7 +11,7 @@ namespace Toji.RemoteKeycard.Processors
     {
         public override DoorProcessorType Type => DoorProcessorType.Scp;
 
-        protected override bool ProcessCheckpoint(CheckpointDoor door, Player player)
+        protected override bool ProcessCheckpoint(Door door, Player player)
         {
             if (player.Role.Type == RoleTypeId.Scp079)
             {
@@ -46,10 +46,10 @@ namespace Toji.RemoteKeycard.Processors
                 };
             }
 
-            return false;
+            return gate.RequiredPermissions == null || gate.RequiredPermissions.RequiredPermissions == Interactables.Interobjects.DoorUtils.KeycardPermissions.None;
         }
 
-        protected override bool ProcessKeycard(BasicDoor door, Player player)
+        protected override bool ProcessKeycard(Door door, Player player)
         {
             if (player.Role.Type == RoleTypeId.Scp079)
             {
@@ -68,7 +68,7 @@ namespace Toji.RemoteKeycard.Processors
             return false;
         }
 
-        protected override bool ProcessNotKeycard(BasicDoor door, Player player)
+        protected override bool ProcessNotKeycard(Door door, Player player)
         {
             if (player.Role.Type == RoleTypeId.Scp079)
             {
