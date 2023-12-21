@@ -90,6 +90,7 @@ namespace Toji.Pocket.API
 
             player.Hurt(10, DamageType.PocketDimension);
 
+            _enterTime.Remove(player);
             _players.Remove(player);
         }
     }

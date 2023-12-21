@@ -9,6 +9,8 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 {
     public class DefaultCaptainSubclass : NtfGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Капитан";
 
         public override RoleTypeId Role => RoleTypeId.NtfCaptain;

@@ -8,8 +8,6 @@ namespace Toji.Classes.Subclasses.Scp0492.Single
 {
     public class Berserk : ZombieSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Берсерк";
 
         public override string Desc => "Яростный зомби, он скорее погибнет, чем отпустит добычу";

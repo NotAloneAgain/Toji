@@ -33,7 +33,7 @@ namespace Toji.LastPlayers.Handlers
 
             player.Broadcast(10, $"<color=#E55807><b>Вы последний {Translate(team)}!</b></color>");
 
-            yield return Timing.WaitForSeconds(20);
+            yield return Timing.WaitForSeconds(15);
 
             while (player.IsAlive && Player.List.Count(ply => ply.Role.Team == team) == 1)
             {

@@ -13,8 +13,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Head : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Научный руководитель";
 
         public override string Desc => "Отличный лидер и ученый, главенствующий над всем научным отделом";

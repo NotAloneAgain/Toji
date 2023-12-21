@@ -9,7 +9,7 @@ namespace Toji.Classes.Subclasses.Guards.Single
 {
     public class Informator : GuardSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
+        public override bool ShowInfo => false;
 
         public override string Name => "Информатор";
 

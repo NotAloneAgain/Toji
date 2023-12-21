@@ -8,6 +8,8 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Runner : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Неутомимый";
 
         public override string Desc => "В результате неудачного биологического эксперимента получил сверх-выносливость и иммунитет к замедлению";

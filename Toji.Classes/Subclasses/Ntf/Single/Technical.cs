@@ -8,8 +8,6 @@ namespace Toji.Classes.Subclasses.Ntf.Single
 {
     public class Technical : NtfSingleSubclass, IHintSubclass, IRandomSubclass, INeedRole
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Технический специалист";
 
         public override RoleTypeId Role => RoleTypeId.NtfSergeant;

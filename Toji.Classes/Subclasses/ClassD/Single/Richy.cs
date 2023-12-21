@@ -8,8 +8,6 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class Richy : DGroupSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Богатей";
 
         public override string Desc => "Богатый D-Персонал, делающий ставки на то, кто следующим умрет";

@@ -7,8 +7,6 @@ namespace Toji.Classes.Subclasses.Scp0492.Group
 {
     public class Poisoned : ZombieGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Ядовитый";
 
         public override string Desc => "Крайне опасный зомби, вызывающий яд и разложение органических тканей у жертв";

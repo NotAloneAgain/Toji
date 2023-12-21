@@ -154,7 +154,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Assign(in Player player)
         {
-            if (TryGet(player, out _) || !player.IsAlive)
+            if (TryGet(player, out _) || !player.IsAlive || Contains(player))
             {
                 return false;
             }

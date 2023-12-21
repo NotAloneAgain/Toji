@@ -8,6 +8,8 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class TwoFaced : DSingleSubclass, IHintSubclass, ICustomHintSubclass, IRandomSubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Двуликий";
 
         public override string Desc => "Ты можешь копировать поведение и внешнее строение мертвых существ";

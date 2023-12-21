@@ -8,6 +8,8 @@ namespace Toji.Classes.Subclasses.Guards.Group
 {
     public class Sniper : GuardGroupSubclass, IHintSubclass, IRandomSubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Снайпер";
 
         public override string Desc => "Очень точный пользователь винтовки, получивший её в целях усиления охраны";

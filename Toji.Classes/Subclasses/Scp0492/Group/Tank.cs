@@ -9,8 +9,6 @@ namespace Toji.Classes.Subclasses.Scp0492.Group
 {
     public class Tank : ZombieGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Танк";
 
         public override string Desc => "Очень крепкий и сильный зомби, способный выдержать множество атак";

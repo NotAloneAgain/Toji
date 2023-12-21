@@ -30,9 +30,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Enums\DoorProcessorType.cs" />
     <Compile Include="API\Extensions.cs" />
+    <Compile Include="API\Features\BaseDoorProcessor.cs" />
     <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="Processors\HumanDoorProcessor.cs" />
+    <Compile Include="Processors\ScpDoorProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

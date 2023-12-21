@@ -7,16 +7,14 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class Scp181 : DSingleSubclass, IHintSubclass, ICustomHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "SCP-181";
 
         public override string Desc => "Везение твой конек, являеться ли нарушение У.С. SCP-Объектов везением? Скоро узнаем";
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(3)
         {
-            new DodgeAbility(100, 36, 0.8f),
-            new SurviveAbility(6),
+            new DodgeAbility(89, 21, 0.77f),
+            new SurviveAbility(5),
             new DoorErrorAbility(4)
         };
 

@@ -9,6 +9,8 @@ namespace Toji.Classes.Subclasses.Scp0492.Single
 {
     public class Cursed : ZombieSingleSubclass, IHintSubclass, IRandomSubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Проклятый";
 
         public override string Desc => "Все его жертвы получают проклятье";

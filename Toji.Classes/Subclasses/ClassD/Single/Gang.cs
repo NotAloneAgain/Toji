@@ -9,8 +9,6 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class Gang : DSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Блатной";
 
         public override string Desc => "Уважаем и почитаем всем D-Персоналом";

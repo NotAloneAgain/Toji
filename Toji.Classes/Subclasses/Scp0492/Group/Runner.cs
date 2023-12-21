@@ -8,8 +8,6 @@ namespace Toji.Classes.Subclasses.Scp0492.Group
 {
     public class Runner : ZombieGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Бегун";
 
         public override string Desc => "Очень быстрый и ловкий зомби";

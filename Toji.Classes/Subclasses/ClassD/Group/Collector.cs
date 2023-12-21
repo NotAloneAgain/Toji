@@ -9,8 +9,6 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class Collector : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Коллекционер";
 
         public override string Desc => "Любитель подбирать порой странные и ненужные предметы";

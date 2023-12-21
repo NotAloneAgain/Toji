@@ -8,6 +8,8 @@ using PlayerRoles;
 using System.Linq;
 using Toji.ExiledAPI.Extensions;
 using Toji.RemoteKeycard.API;
+using Toji.RemoteKeycard.API.Enums;
+using Toji.RemoteKeycard.API.Features;
 
 namespace Toji.RemoteKeycard.Handlers
 {
@@ -15,29 +17,17 @@ namespace Toji.RemoteKeycard.Handlers
     {
         public void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            if (!ev.IsValid() || ev.IsAllowed && ev.Player.IsHuman || !ev.Door.IsKeycardDoor || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving || ev.Player.HasEffect<AmnesiaItems>())
+            if (!ev.IsValid() || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving)
             {
                 return;
             }
 
-            if (ev.Player.IsScp && ev.Door.IsLocked && ev.Player.Role.Type != RoleTypeId.Scp079)
-            {
-                ev.IsAllowed = !ev.Door.IsGate && ev.Door.DoorLockType is DoorLockType.Regular079 or DoorLockType.Lockdown079;
-
-                return;
-            }
-
-            if (ev.IsAllowed || ev.Door.IsLocked)
-            {
-                return;
-            }
-
-            ev.IsAllowed = (ev.Door.IsCheckpoint || ev.Door.Type is DoorType.CheckpointArmoryA or DoorType.CheckpointArmoryB) ? ev.Player.CheckPermissions(Interactables.Interobjects.DoorUtils.KeycardPermissions.Checkpoints) : ev.Player.CheckPermissions(ev.Door.RequiredPermissions.RequiredPermissions);
+            ev.IsAllowed = BaseDoorProcessor.Get(ev.Player.IsScp ? DoorProcessorType.Scp : DoorProcessorType.Human).ProcessDoor(ev.Door, ev.Player);
         }
 
         public void OnInteractingLocker(InteractingLockerEventArgs ev)
         {
-            if (ev.Player.HasEffect<AmnesiaItems>() || ev.IsAllowed || !ev.IsValid())
+            if (ev.IsAllowed || !ev.IsValid())
             {
                 return;
             }

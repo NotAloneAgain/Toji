@@ -9,8 +9,6 @@ namespace Toji.Classes.Subclasses.Scientists.Group
 {
     public class CandyMan : ScientistGroupSubclass, ILimitableGroup, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Любитель конфет";
 
         public override string Desc => "Сладкоежка, готовый на все, лишь бы получить побольше SCP-330";

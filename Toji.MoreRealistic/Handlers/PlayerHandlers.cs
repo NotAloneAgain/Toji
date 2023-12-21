@@ -2,6 +2,7 @@
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
+using PlayerRoles.PlayableScps.Scp939;
 using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
@@ -81,7 +82,7 @@ namespace Toji.MoreRealistic.Handlers
                 }
             }
 
-            if (ev.DamageHandler.Type == DamageType.Scp939)
+            if (ev.DamageHandler.Type == DamageType.Scp939 && ev.DamageHandler.Base is Scp939DamageHandler scpDamage && scpDamage.Scp939DamageType == Scp939DamageType.Claw)
             {
                 float duration = armor switch
                 {

@@ -12,8 +12,6 @@ namespace Toji.Classes.Subclasses.Chaos.Single
 {
     public class Juggernaut : ChaosSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Джаггернаут";
 
         public override RoleTypeId Role => RoleTypeId.ChaosRepressor;

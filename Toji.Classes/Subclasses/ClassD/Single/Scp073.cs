@@ -9,22 +9,20 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class Scp073 : DSingleSubclass, IHintSubclass, ICustomHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "SCP-073";
 
         public override string Desc => "Имеешь множество аномальных свойств, из-за чего тебя предпочитают не трогать";
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(2)
         {
-            new KnockAbility(90, 5.11f),
-            new ReflectionAbility(true, 0.346f)
+            new KnockAbility(90, 5.06f),
+            new ReflectionAbility(true, 0.296f)
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
-            new HurtMultiplayerCharacteristic(0.6f),
-            new ArtificalShieldCharacteristic(30, 50, -0.75f, 1, 5, true)
+            new HurtMultiplayerCharacteristic(0.64f),
+            new ArtificalShieldCharacteristic(30, 50, -0.63f, 1, 5, true)
         };
 
         public string HintText => string.Empty;

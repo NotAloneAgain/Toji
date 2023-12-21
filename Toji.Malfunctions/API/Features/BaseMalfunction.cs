@@ -52,7 +52,7 @@ namespace Toji.Malfunctions.API.Features
 
         protected virtual IEnumerator<float> _Coroutine()
         {
-            while (Round.InProgress)
+            while (Round.InProgress && !Warhead.IsDetonated)
             {
                 var minutes = Existance.TotalMinutes;
 

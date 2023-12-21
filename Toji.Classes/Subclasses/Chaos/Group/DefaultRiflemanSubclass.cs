@@ -9,6 +9,8 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 {
     public class DefaultRiflemanSubclass : ChaosGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Стрелок";
 
         public override RoleTypeId Role => RoleTypeId.ChaosRifleman;

@@ -14,8 +14,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Manager : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Менеджер Комплекса";
 
         public override string Desc => "Элитный управленец, годами управлявший комплексом";

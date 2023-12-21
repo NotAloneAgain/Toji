@@ -9,6 +9,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class Thief : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Грабитель";
 
         public override string Desc => "Грабил банки и частные дома, являешься международным экспертом во взломе и проникновении";

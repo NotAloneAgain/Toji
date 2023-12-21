@@ -12,7 +12,7 @@ namespace Toji.Hud.Handlers
                 return;
             }
 
-            ev.Player.Broadcast(8, $"<size=140%><b><color=#>Привет, {ev.Player.CustomName}!\nРады тебя видить, надеемся что ты задержишься у нас!</color></b></size>");
+            ev.Player.Broadcast(8, $"<size=140%><b><color=#068DA9>Привет, {ev.Player.CustomName}!\nРады тебя видить, надеемся что ты задержишься у нас!</color></b></size>");
         }
     }
 }

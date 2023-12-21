@@ -10,6 +10,8 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 {
     public class DefaultMarauderSubclass : ChaosGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Мародёр";
 
         public override RoleTypeId Role => RoleTypeId.ChaosMarauder;

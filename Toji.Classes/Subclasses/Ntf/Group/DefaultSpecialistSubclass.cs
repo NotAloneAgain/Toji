@@ -10,6 +10,8 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 {
     public class DefaultSpecialistSubclass : NtfGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Специалист";
 
         public override RoleTypeId Role => RoleTypeId.NtfSpecialist;

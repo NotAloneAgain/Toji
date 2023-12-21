@@ -11,6 +11,8 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Infected : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, INeedRole
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Зараженный";
 
         public override string Desc => "Он явно понимает, что его последние дни сочтены";

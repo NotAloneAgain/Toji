@@ -9,6 +9,8 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 {
     public class DefaultPrivateSubclass : NtfGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Рядовой";
 
         public override RoleTypeId Role => RoleTypeId.NtfPrivate;

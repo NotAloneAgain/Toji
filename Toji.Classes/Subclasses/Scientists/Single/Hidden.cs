@@ -10,6 +10,8 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Hidden : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, INeedRole
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Скрытный";
 
         public override string Desc => "Очень незаметная и скрытная персона, которая не любит лишнее внимание";

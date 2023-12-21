@@ -12,8 +12,6 @@ namespace Toji.Classes.Subclasses.Scientists.Group
 {
     public class Medic : ScientistGroupSubclass, ILimitableGroup, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Врач";
 
         public override string Desc => "Профессиональный врач, готовый работать со множеством ран";

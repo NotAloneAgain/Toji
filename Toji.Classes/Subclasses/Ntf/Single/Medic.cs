@@ -10,8 +10,6 @@ namespace Toji.Classes.Subclasses.Ntf.Single
 {
     public class Medic : NtfSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Медик";
 
         public override RoleTypeId Role => RoleTypeId.NtfSergeant;

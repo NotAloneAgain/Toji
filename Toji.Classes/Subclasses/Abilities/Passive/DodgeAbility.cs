@@ -27,12 +27,12 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnHurting(HurtingEventArgs ev)
         {
-            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || ev.DamageHandler.Type == DamageType.Warhead || !GetRandom())
+            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid() || !GetRandom() || ev.Amount <= 0)
             {
                 return;
             }
 
-            if (GetRandom(_fullyChance) && ev.DamageHandler.Type.IsValid())
+            if (GetRandom(_fullyChance))
             {
                 ev.Amount = 0;
             }

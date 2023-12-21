@@ -9,6 +9,8 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 {
     public class DefaultConscriptSubclass : ChaosGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Новобранец";
 
         public override RoleTypeId Role => RoleTypeId.ChaosConscript;

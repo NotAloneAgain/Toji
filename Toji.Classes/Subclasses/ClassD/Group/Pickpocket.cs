@@ -10,6 +10,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class Pickpocket : DGroupSubclass, IHintSubclass, IRandomSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Карманник";
 
         public override string Desc => "Давно увлекаешься воровством и заслуженно являешься любителем";

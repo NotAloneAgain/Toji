@@ -61,7 +61,7 @@ namespace Toji.Pocket.Handlers
 
         public void OnExitingEnvironmentalHazard(ExitingEnvironmentalHazardEventArgs ev)
         {
-            if (!ev.IsValid() || ev.Player.IsNoclipPermitted || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment || ev.Player.IsInPortal())
+            if (!ev.IsValid() || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment)
             {
                 return;
             }

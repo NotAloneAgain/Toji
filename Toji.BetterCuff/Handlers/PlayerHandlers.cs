@@ -13,7 +13,19 @@ namespace Toji.BetterCuff.Handlers
     {
         public void OnHurting(HurtingEventArgs ev)
         {
-            if (ev.Player == null || ev.Player.IsHost || ev.Player.IsDead || ev.Player.IsNPC || ev.Player.IsGodModeEnabled || !ev.Player.IsCuffed && ev.Player.Cuffer == null)
+            if (!ev.IsNotSelfDamage() || ev.Player.IsGodModeEnabled)
+            {
+                return;
+            }
+
+            if (ev.Player.Role.Type == RoleTypeId.ClassD && ev.Attacker.Role.Type == RoleTypeId.ClassD)
+            {
+                ev.IsAllowed = ev.Player.Items.Any(item => item.IsWeapon) && ev.Attacker.Items.Any(item => item.IsWeapon);
+
+                return;
+            }
+
+            if (!ev.Player.IsCuffed && ev.Player.Cuffer == null)
             {
                 return;
             }
@@ -23,7 +35,7 @@ namespace Toji.BetterCuff.Handlers
             var attackerFaction = ev.Attacker.GetFaction();
             var cufferFaction = cuffer.GetFaction();
 
-            if (ev.Attacker == null || ev.Attacker.IsHost || ev.Attacker.IsDead || ev.Attacker.IsNPC || attackerFaction != cufferFaction)
+            if (attackerFaction != cufferFaction)
             {
                 return;
             }

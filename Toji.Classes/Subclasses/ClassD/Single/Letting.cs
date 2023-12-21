@@ -8,8 +8,6 @@ namespace Toji.Classes.Subclasses.ClassD.Single
 {
     public class Letting : DSingleSubclass, IHintSubclass, IRandomSubclass, INeedSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Попущенный";
 
         public override string Desc => "Попущенный блатным, вынужден драить его камеру и туалеты";

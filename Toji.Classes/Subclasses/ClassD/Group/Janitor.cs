@@ -10,8 +10,6 @@ namespace Toji.Classes.Subclasses.ClassD.Group
 {
     public class Janitor : DGroupSubclass, IHintSubclass, ILimitableGroup, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Уборщик";
 
         public override string Desc => "Убирался в комплексе, но узнав о нарушении У.С. SCP-Объектов решил эвакуироваться";

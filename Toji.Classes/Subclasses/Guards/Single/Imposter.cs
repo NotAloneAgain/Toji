@@ -12,6 +12,8 @@ namespace Toji.Classes.Subclasses.Guards.Single
 {
     public class Imposter : GuardSingleSubclass, IHintSubclass, IRandomSubclass, IHurtController, IDamageController
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Предатель";
 
         public override string Desc => "Агент под кодовым именем 'Штирлиц' среди охраны комплекса, готовый к выводу лояльного D-Персонала";

@@ -11,6 +11,8 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 {
     public class DefaultRepressorSubclass : ChaosGroupSubclass, IPrioritySubclass
     {
+        public override bool ShowInfo => false;
+
         public override string Name => "Усмиритель";
 
         public override RoleTypeId Role => RoleTypeId.ChaosRepressor;

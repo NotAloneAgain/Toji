@@ -33,7 +33,7 @@ namespace Toji.Classes.Handlers
 
                 if (ev.Reason == SpawnReason.Escaped)
                 {
-                    System.Delegate action = subclass.OnEscaped;
+                    Delegate action = subclass.OnEscaped;
 
                     action.CallDelayed(default, ev.Player);
 
@@ -60,13 +60,15 @@ namespace Toji.Classes.Handlers
                     continue;
                 }
 
-                sub.DelayedAssign(ev.Player, 0.05f);
+                sub.DelayedAssign(ev.Player);
+
+                break;
             }
         }
 
         public void OnDestroying(DestroyingEventArgs ev)
         {
-            if (!ev.IsValid() || !ev.Player.TryGetSubclass(out var subclass))
+            if (!ev.IsValid(false) || !ev.Player.TryGetSubclass(out var subclass))
             {
                 return;
             }

@@ -14,8 +14,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
 {
     public class Engineer : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "Инженер";
 
         public override string Desc => "Ремонтировал старую камеру содержания SCP-173, но узнав о нарушении У.С. SCP-Объектов решил эвакуироваться";

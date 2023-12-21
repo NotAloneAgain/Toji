@@ -15,8 +15,6 @@ namespace Toji.Classes.Subclasses.Scp575
 {
     public class Scp575Subclass : SingleSubclass, IHintSubclass, IRoleInfo, IRandomSubclass
     {
-        public override bool ShowInfo => true;
-
         public override string Name => "SCP-575";
 
         public override RoleTypeId Role => RoleTypeId.Scp106;
@@ -81,7 +79,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             ev.IsAllowed = false;
             ev.Player.ShowHitMarker();
-            ev.Target.Hurt(15, DamageType.Scp106);
+            ev.Target.Hurt(5, DamageType.Scp106);
         }
     }
 }

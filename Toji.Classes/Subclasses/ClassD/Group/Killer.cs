@@ -13,6 +13,8 @@ namespace Toji.Classes.Subclasses.ClassD.Group
     {
         private RoomType _room;
 
+        public override bool ShowInfo => false;
+
         public override string Name => "Убийца";
 
         public override string Desc => "Неважно кого убить, тебе нужно больше смертей и крови";

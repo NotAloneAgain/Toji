@@ -7,13 +7,13 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
     {
         public override string Name => "Изоляция комнаты";
 
-        public override int MinDuration => 30;
+        public override int MinDuration => 15;
 
-        public override int MaxDuration => 60;
+        public override int MaxDuration => 40;
 
-        public override int Cooldown => 260;
+        public override int Cooldown => 280;
 
-        public override int Chance => 21;
+        public override int Chance => 19;
 
         public override void Activate(int duration)
         {
@@ -26,7 +26,8 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
             Map.Broadcast(12, $"<color=#780000><b>Внимание всем!\nПроизошла {Name.ToLower()} {TranslateZone(Value.Zone)}, подождите {GetSecondsString(duration)}</b></color>");
 
-            Value.Blackout(duration);
+            Value.LockDown(duration, DoorLockType.SpecialDoorFeature);
+            Value.TurnOffLights(duration);
 
             foreach (var player in Value.Players)
             {
@@ -46,7 +47,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
             do
             {
                 value = Room.Random();
-            } while (value == null || value.Zone == ZoneType.LightContainment && Map.IsLczDecontaminated || value.Zone == ZoneType.Surface);
+            } while (value == null || value.Zone == ZoneType.LightContainment && Map.IsLczDecontaminated || value.Zone is ZoneType.Surface or ZoneType.Entrance);
 
             return value;
         }
