@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exiled.Events.Handlers;
+using System;
 using Toji.Global;
 using Toji.NicknameFilters.Configs;
 using Toji.NicknameFilters.Handlers;
@@ -21,11 +22,15 @@ namespace Toji.NicknameFilters
         {
             _handlers = new(Config.BadWordsReplacer, Config.BadWordsKick, Config.Ads);
 
+            Player.Verified += _handlers.OnVerified;
+
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
+            Player.Verified -= _handlers.OnVerified;
+
             _handlers = null;
 
             base.OnDisabled();

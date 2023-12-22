@@ -20,7 +20,7 @@ namespace Toji.BetterCuff.Handlers
 
             if (ev.Player.Role.Type == RoleTypeId.ClassD && ev.Attacker.Role.Type == RoleTypeId.ClassD)
             {
-                ev.IsAllowed = ev.Player.Items.Any(item => item.IsWeapon) && ev.Attacker.Items.Any(item => item.IsWeapon);
+                ev.IsAllowed = ev.Player.Items.Any(item => item.IsWeapon) && ev.Attacker.Items.Any(item => item.IsWeapon) || ev.DamageHandler.Type == Exiled.API.Enums.DamageType.Explosion;
 
                 return;
             }

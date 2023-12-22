@@ -16,7 +16,7 @@ namespace Toji.Classes.Handlers
     {
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid(false))
+            if (!ev.IsAllowed || !ev.IsValid(false) || ev.SpawnFlags == RoleSpawnFlags.None && ev.Reason == SpawnReason.Revived)
             {
                 return;
             }
@@ -78,7 +78,7 @@ namespace Toji.Classes.Handlers
 
         public void OnHurting(HurtingEventArgs ev)
         {
-            if (ev == null || !ev.IsAllowed || !ev.IsValid() || ev.Amount <= 0)
+            if (ev == null || ev.DamageHandler == null || !ev.IsAllowed || !ev.IsValid() || ev.Amount <= 0)
             {
                 return;
             }
@@ -152,9 +152,9 @@ namespace Toji.Classes.Handlers
                     }
                 }
 
-                if (subclass.Abilities.Any())
+                if (attackerSubclass.Abilities.Any())
                 {
-                    foreach (var ability in subclass.Abilities)
+                    foreach (var ability in attackerSubclass.Abilities)
                     {
                         if (ability == null || ability is not IDamageController abilityController)
                         {
@@ -172,9 +172,9 @@ namespace Toji.Classes.Handlers
                     }
                 }
 
-                if (subclass.Characteristics.Any())
+                if (attackerSubclass.Characteristics.Any())
                 {
-                    foreach (var characteristic in subclass.Characteristics)
+                    foreach (var characteristic in attackerSubclass.Characteristics)
                     {
                         if (characteristic == null)
                         {

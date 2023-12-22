@@ -13,6 +13,8 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
         public override int Cooldown => 280;
 
+        public override int Delay => 260;
+
         public override int Chance => 19;
 
         public override void Activate(int duration)

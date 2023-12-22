@@ -39,7 +39,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             if (zone == ZoneType.Surface)
             {
-                result = "Ты не можешь активировать ярость на Поверхности!";
+                result = "Ты не можешь активировать способности на Поверхности!";
 
                 AddUse(player, DateTime.Now, false, result);
 
@@ -62,7 +62,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
                 if (!door.IsLocked)
                 {
-                    door.Lock(20, DoorLockType.AdminCommand);
+                    door.Lock(20, DoorLockType.Lockdown079);
                 }
             }
 

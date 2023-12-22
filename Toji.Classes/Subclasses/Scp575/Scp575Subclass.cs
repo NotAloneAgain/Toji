@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.DamageHandlers;
 using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Scp106;
 using PlayerRoles;
@@ -64,9 +65,9 @@ namespace Toji.Classes.Subclasses.Scp575
 
             if (activated == Generator.List.Count)
             {
-                Player.Kill(DamageType.Bleeding);
-
                 Revoke(Player);
+
+                Player.Kill(DamageType.Bleeding);
             }
         }
 
@@ -79,7 +80,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             ev.IsAllowed = false;
             ev.Player.ShowHitMarker();
-            ev.Target.Hurt(5, DamageType.Scp106);
+            ev.Target.Hurt(new CustomDamageHandler(ev.Player, ev.Target, 3, DamageType.Scp106));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Toji.Commands.Global
                 return CommandResultType.Fail;
             }
 
-            if (!player.TryGetSubclass(out var subclass) || subclass == null)
+            if (!player.TryGetSubclass(out var subclass))
             {
                 response = "Ты не имеешь подкласса!";
 
@@ -98,27 +98,24 @@ namespace Toji.Commands.Global
 
             var success = ability.Activate(player, out var result);
 
-            if (!success)
+            if (result is string str)
             {
-                if (result is int value)
+                response = str;
+            }
+            else if (result is int value)
+            {
+                response = $"Способность на перезарядке ещё {value.GetSecondsString()}.";
+            }
+            else
+            {
+                response = success switch
                 {
-                    response = $"Способность на перезарядке ещё {value.GetSecondsString()}.";
-                }
-                else if (result is string str)
-                {
-                    response = str;
-                }
-                else
-                {
-                    response = "Способность не удалось активировать.";
-                }
-
-                return CommandResultType.Fail;
+                    true => "Активация способности успешно выполнена!",
+                    false => "Способность не удалось активировать."
+                };
             }
 
-            response = "Активация способности выполнена!";
-
-            return CommandResultType.Success;
+            return success ? CommandResultType.Success : CommandResultType.Fail;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace Toji.Malfunctions.API.Features
 
         public abstract int Chance { get; }
 
+        public virtual int Delay { get; } = 0;
+
         public TimeSpan Existance => DateTime.Now - _activateTime;
 
         public void Start()
@@ -52,6 +54,11 @@ namespace Toji.Malfunctions.API.Features
 
         protected virtual IEnumerator<float> _Coroutine()
         {
+            if (Delay >= 0)
+            {
+                yield return Timing.WaitForSeconds(Delay);
+            }
+
             while (Round.InProgress && !Warhead.IsDetonated)
             {
                 var minutes = Existance.TotalMinutes;

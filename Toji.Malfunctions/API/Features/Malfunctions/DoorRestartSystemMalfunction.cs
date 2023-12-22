@@ -40,7 +40,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
 
                 door.Lock(duration, DoorLockType.SpecialDoorFeature);
 
-                door.Room.Blackout(0.15f);
+                door.Room.TurnOffLights(0.15f);
             }
         }
     }

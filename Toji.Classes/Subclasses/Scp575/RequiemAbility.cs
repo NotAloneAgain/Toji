@@ -69,7 +69,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             if (player.CurrentRoom.Zone == ZoneType.Surface)
             {
-                result = "Ты не можешь активировать ярость на Поверхности!";
+                result = "Ты не можешь активировать способности на Поверхности!";
 
                 AddUse(player, DateTime.Now, false, result);
 

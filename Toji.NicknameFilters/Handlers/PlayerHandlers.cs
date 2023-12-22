@@ -21,7 +21,7 @@ namespace Toji.NicknameFilters.Handlers
 
         public void OnVerified(VerifiedEventArgs ev)
         {
-            if (!ev.IsValid() || ev.Player.KickPower >= 250)
+            if (!ev.IsValid() || ev.Player.KickPower >= 250 || ev.Player.UserId == "76561199011540209@steam")
             {
                 return;
             }

@@ -26,19 +26,19 @@ namespace Toji.RemoteKeycard.Handlers
 
         public void OnInteractingDoor(InteractingDoorEventArgs ev)
         {
-            if (!ev.IsValid() || ev.IsAllowed && ev.Player.IsHuman || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving)
+            if (!ev.IsValid() || ev.IsAllowed && ev.Player.IsHuman || !ev.Door.IsKeycardDoor || ev.Door.Is(out BreakableDoor breakable) && breakable.IsDestroyed || ev.Door.IsMoving || ev.Player.HasEffect<AmnesiaItems>())
             {
                 return;
             }
 
             if (ev.Player.IsScp && ev.Door.IsLocked && ev.Player.Role.Type != RoleTypeId.Scp079)
             {
-                ev.IsAllowed = ev.Door.DoorLockType is DoorLockType.Regular079 or DoorLockType.Lockdown079;
+                ev.IsAllowed = !ev.Door.IsGate && ev.Door.DoorLockType is DoorLockType.Regular079 or DoorLockType.Lockdown079;
 
                 return;
             }
 
-            if (ev.IsAllowed || ev.Door.IsLocked || !ev.Door.AllowsScp106 || !ev.Door.IsKeycardDoor)
+            if (ev.IsAllowed || ev.Door.IsLocked)
             {
                 return;
             }

@@ -115,7 +115,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
             {
                 result = "Увы, у тебя не вышло!";
 
-                AddUse(player, DateTime.Now, false, result);
+                AddUse(player, DateTime.Now, true, result);
 
                 return false;
             }

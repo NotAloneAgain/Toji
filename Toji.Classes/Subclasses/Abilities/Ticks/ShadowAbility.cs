@@ -17,7 +17,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
         public override string Desc => "Твоя аура поглощает свет в комнате и наносит урон тем, кто не достал фонари";
 
-        public override Func<Player, bool> PlayerCondition => (Player ply) => ply != null && ply.IsAlive;
+        public override Func<Player, bool> PlayerCondition => (Player ply) => ply != null && ply.IsAlive && Has(ply);
 
         public override void OnEnabled(Player player)
         {
@@ -42,6 +42,13 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
             var room = player.CurrentRoom;
 
+            if (player.Position.y > 970)
+            {
+                player.Hurt(88, DamageType.Bleeding);
+
+                return;
+            }
+
             if (room == null)
             {
                 return;
@@ -49,7 +56,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
             if (room.Type == RoomType.Surface)
             {
-                player.Hurt(75, DamageType.Bleeding);
+                player.Hurt(88, DamageType.Bleeding);
 
                 return;
             }
@@ -72,7 +79,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                     continue;
                 }
 
-                if (ply.CurrentItem is ILightEmittingItem light && light.IsEmittingLight)
+                if (ply.CurrentItem.Base is ILightEmittingItem light && light.IsEmittingLight || ply.CurrentItem is Flashlight flash && flash.IsEmittingLight)
                 {
                     return;
                 }

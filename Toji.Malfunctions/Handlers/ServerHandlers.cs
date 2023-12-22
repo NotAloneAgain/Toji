@@ -30,7 +30,14 @@ namespace Toji.Malfunctions.Handlers
 
         private IEnumerator<float> _Timer()
         {
-            for (int i = 0; i < 4 && _allMalfunctions.Count > 0; i++)
+            var count = Player.List.Count;
+
+            if (count <= 0)
+            {
+                yield break;
+            }
+
+            for (int i = 0; i < count / 10 && _allMalfunctions.Count > 0; i++)
             {
                 yield return Timing.WaitForSeconds(15);
 

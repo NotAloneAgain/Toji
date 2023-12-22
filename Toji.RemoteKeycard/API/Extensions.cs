@@ -9,14 +9,14 @@ namespace Toji.RemoteKeycard.API
     {
         public static bool CheckPermissions(this Player player, KeycardPermissions perms)
         {
-            if (player.IsBypassModeEnabled || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.None)
+            if (player.IsBypassModeEnabled || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.None || perms == KeycardPermissions.ScpOverride && player.IsScp)
             {
                 return true;
             }
 
-            var items = player.Items.Distinct().Select(x => x.Base);
+            var items = player.Items.Select(x => x.Base);
 
-            for (var i = 0; i <= items.Count(); i++)
+            for (var i = 0; i < items.Count(); i++)
             {
                 InventorySystem.Items.ItemBase item = items.ElementAt(i);
 
