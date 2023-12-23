@@ -40,14 +40,14 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                 return;
             }
 
-            var room = player.CurrentRoom;
-
-            if (player.Position.y > 970)
+            if (player.Position.y is >= 970 and <= 1050)
             {
                 player.Hurt(88, DamageType.Bleeding);
 
                 return;
             }
+
+            var room = player.CurrentRoom;
 
             if (room == null)
             {

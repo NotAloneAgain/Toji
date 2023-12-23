@@ -25,7 +25,7 @@ namespace Toji.Classes.API.Features
 
         public sealed override bool Revoke(in Player player)
         {
-            if (!base.Revoke(player))
+            if (!base.Revoke(player) || Player == null)
             {
                 return false;
             }

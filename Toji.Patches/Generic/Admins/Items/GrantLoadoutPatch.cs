@@ -81,7 +81,6 @@ namespace Toji.Patches.Generic.Admins.Items
                 if (referenceHub2 != null)
                 {
                     InventoryItemProvider.ServerGrantLoadout(referenceHub2, roleBase.RoleTypeId, flag);
-                    AddLog(2, string.Format("{0} gave {1} the loadout of {2}.", sender.LogName, referenceHub2.LoggedNameFromRefHub(), roleBase.RoleTypeId), 1, false);
                     num++;
                 }
             }
@@ -91,23 +90,6 @@ namespace Toji.Patches.Generic.Admins.Items
             response = string.Format("Done! Given {0}'s loadout to {1} player{2}!", roleBase.RoleName, num, (num == 1) ? "" : "s");
 
             return true;
-        }
-
-        private static void AddLog(int module, string msg, int type, bool init = false)
-        {
-            var text = TimeBehaviour.Rfc3339Time();
-
-            var lockObject = ServerLogs.LockObject;
-
-            lock (lockObject)
-            {
-                ServerLogs.Queue.Enqueue(new(msg, ServerLogs.Txt[type], ServerLogs.Modulestxt[module], text));
-            }
-
-            if (init)
-                return;
-
-            ServerLogs._state = ServerLogs.LoggingState.Write;
         }
     }
 }

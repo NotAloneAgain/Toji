@@ -57,7 +57,7 @@ namespace Toji.Patches.Generic.Admins.Items
                 return false;
             }
 
-            ItemType[] items = __instance.ParseItems(array[0]).ToArray();
+            ItemType[] items = GiveCommand.ParseItems(array[0]).ToArray();
 
             if (items.Length == 0)
             {
@@ -119,7 +119,7 @@ namespace Toji.Patches.Generic.Admins.Items
                             if (blocked)
                                 continue;
 
-                            __instance.AddItem(hub, sender, item);
+                            GiveCommand.AddItem(hub, sender, item);
 
                             handled++;
 
@@ -157,7 +157,7 @@ namespace Toji.Patches.Generic.Admins.Items
                                 if (item is ItemType.ParticleDisruptor or ItemType.SCP268 or ItemType.MicroHID or ItemType.Jailbird or ItemType.GunCom45 or ItemType.SCP018)
                                     continue;
 
-                                __instance.AddItem(referenceHub, sender, item);
+                                GiveCommand.AddItem(referenceHub, sender, item);
                             }
                         }
                         catch (Exception ex)

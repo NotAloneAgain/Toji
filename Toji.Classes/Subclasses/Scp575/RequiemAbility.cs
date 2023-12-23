@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.DamageHandlers;
 using Exiled.Events.EventArgs.Player;
 using System;
 using System.Collections.Generic;
@@ -93,7 +94,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var ply in Player.List)
             {
-                ply.Hurt(amount, DamageType.Crushed);
+                new CustomDamageHandler(ply, player, amount, DamageType.Scp106).ApplyDamage(ply);
             }
 
             _souls[player] = 0;
