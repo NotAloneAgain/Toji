@@ -3,6 +3,7 @@ using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
@@ -14,6 +15,10 @@ namespace Toji.Classes.Handlers
 {
     internal sealed class PlayerHandlers
     {
+        private readonly List<string> _blacklist;
+
+        internal PlayerHandlers(List<string> blacklist) => _blacklist = blacklist;
+
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
             if (!ev.IsAllowed || !ev.IsValid(false) || ev.SpawnFlags == RoleSpawnFlags.None && ev.Reason == SpawnReason.Revived)
@@ -55,7 +60,7 @@ namespace Toji.Classes.Handlers
 
             foreach (var sub in subclasses)
             {
-                if (!sub.Can(ev.Player))
+                if (!sub.Can(ev.Player) || _blacklist.Contains(sub.Name))
                 {
                     continue;
                 }

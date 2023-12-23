@@ -36,7 +36,7 @@ namespace Toji.Classes
 
             _ragdoll = new();
             _server = new();
-            _player = new();
+            _player = new(Config.BlacklistedSubclasses);
 
             RagdollManager.OnRagdollRemoved += _ragdoll.OnRagdollRemoved;
             Player.SpawningRagdoll += _ragdoll.OnSpawningRagdoll;
