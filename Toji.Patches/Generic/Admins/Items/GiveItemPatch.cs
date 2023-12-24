@@ -16,9 +16,23 @@ namespace Toji.Patches.Generic.Admins.Items
     [HarmonyPatch(typeof(GiveCommand), nameof(GiveCommand.Execute))]
     public static class GiveItemPatch
     {
+        private static readonly HashSet<ItemType> _banned;
         private static readonly Dictionary<string, int> _usings;
 
-        static GiveItemPatch() => _usings = new();
+        static GiveItemPatch()
+        {
+            _banned = new()
+            {
+                ItemType.ParticleDisruptor,
+                ItemType.SCP268,
+                ItemType.MicroHID,
+                ItemType.Jailbird,
+                ItemType.GunCom45,
+                ItemType.SCP018,
+                ItemType.Tape,
+            };
+            _usings = new();
+        }
 
         private static bool Prefix(GiveCommand __instance, ArraySegment<string> arguments, ICommandSender sender, out string response, ref bool __result)
         {
@@ -154,7 +168,7 @@ namespace Toji.Patches.Generic.Admins.Items
                         {
                             foreach (ItemType item in items)
                             {
-                                if (item is ItemType.ParticleDisruptor or ItemType.SCP268 or ItemType.MicroHID or ItemType.Jailbird or ItemType.GunCom45 or ItemType.SCP018)
+                                if (_banned.Contains(item))
                                     continue;
 
                                 GiveCommand.AddItem(referenceHub, sender, item);

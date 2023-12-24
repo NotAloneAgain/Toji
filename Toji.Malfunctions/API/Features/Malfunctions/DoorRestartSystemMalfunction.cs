@@ -8,9 +8,9 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
     {
         public override string Name => "Перезапуск системы удаленного управления дверьми";
 
-        public override int MinDuration => 5;
+        public override int MinDuration => 8;
 
-        public override int MaxDuration => 15;
+        public override int MaxDuration => 20;
 
         public override int Cooldown => 240;
 
@@ -19,6 +19,11 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         public override void Activate(int duration)
         {
             base.Activate(duration);
+
+            if (Warhead.IsInProgress)
+            {
+                return;
+            }
 
             var zone = SelectZone();
 

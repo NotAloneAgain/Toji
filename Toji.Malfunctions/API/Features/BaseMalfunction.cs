@@ -13,6 +13,8 @@ namespace Toji.Malfunctions.API.Features
         private protected DateTime _activateTime;
         private CoroutineHandle _coroutine;
 
+        public static bool IsAnyActive { get; private set; }
+
         public abstract string Name { get; }
 
         public abstract int MinDuration { get; }
@@ -63,10 +65,12 @@ namespace Toji.Malfunctions.API.Features
             {
                 var minutes = Existance.TotalMinutes;
 
-                if (Loader.Random.Next(0, 100) < Chance + minutes)
+                if (Loader.Random.Next(0, 100) < Chance + minutes && !IsAnyActive)
                 {
-                    var min = Mathf.Clamp(MinDuration + (int)(minutes * 2), MinDuration, MaxDuration - 20);
-                    var max = Mathf.Clamp(MaxDuration + (int)(minutes * 3), MinDuration + 20, MaxDuration);
+                    IsAnyActive = true;
+
+                    var min = Mathf.Clamp(MinDuration + (int)(minutes * 2), MinDuration, MaxDuration - 1);
+                    var max = Mathf.Clamp(MaxDuration + (int)(minutes * 3), min + 1, MaxDuration);
 
                     var duration = Loader.Random.Next(min, max);
 
@@ -75,6 +79,8 @@ namespace Toji.Malfunctions.API.Features
                     Activate(duration);
 
                     yield return Timing.WaitForSeconds(duration);
+
+                    IsAnyActive = false;
 
                     Unsubscribe();
 

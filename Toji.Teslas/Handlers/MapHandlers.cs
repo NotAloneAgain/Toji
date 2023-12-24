@@ -34,7 +34,7 @@ namespace Toji.Teslas.Handlers
         {
             var count = TeslaGateController.Singleton.TeslaGates.Count;
 
-            if (count > 2)
+            if (count > 3)
             {
                 int offset = 1;
 
@@ -62,13 +62,19 @@ namespace Toji.Teslas.Handlers
 
                         Vector3 spawnPos = pos + rot * forward;
 
-                        if (Physics.OverlapBox(spawnPos, Vector3.one, invertedRotation).Length > 0 || rot is { y: >= 0.7f, w: >= 0.7f })
+                        var obj = Object.Instantiate(Prefab, spawnPos, invertedRotation).gameObject;
+
+                        NetworkServer.Spawn(obj);
+
+                        Bounds bounds = obj.GetComponent<Renderer>().bounds;
+
+                        Vector3 rightPart = obj.transform.position + obj.transform.right * bounds.extents.x;
+                        Vector3 leftPart = obj.transform.position - obj.transform.right * bounds.extents.x;
+
+                        if (Physics.Linecast(rightPart, leftPart))
                         {
-                            invertedRotation = Quaternion.Euler(Vector3.up * -90);
+                            obj.transform.rotation = Quaternion.Euler(Vector3.up * -90);
                         }
-
-                        NetworkServer.Spawn(Object.Instantiate(Prefab, spawnPos, invertedRotation).gameObject);
-
                     }
                     catch (System.Exception ex)
                     {
@@ -78,7 +84,7 @@ namespace Toji.Teslas.Handlers
                     tesla.Delete();
 
                     offset++;
-                } while (count - offset > 2);
+                } while (count - offset > 3);
             }
         }
     }

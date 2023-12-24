@@ -1,4 +1,5 @@
-﻿using Exiled.Events.EventArgs.Player;
+﻿using Exiled.API.Enums;
+using Exiled.Events.EventArgs.Player;
 using System;
 using Toji.Classes.API.Features.Abilities;
 using Toji.Classes.API.Interfaces;
@@ -23,7 +24,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnHurt(HurtingEventArgs ev)
         {
-            if (!ev.IsNotSelfDamage() || !IsEnabled || ev.Attacker.IsGodModeEnabled || !ev.DamageHandler.Type.IsValid() || ev.Amount <= 0)
+            if (!ev.IsNotSelfDamage() || !IsEnabled || ev.Attacker.IsGodModeEnabled || !ev.DamageHandler.Type.IsValid() || ev.DamageHandler.Type == DamageType.Explosion || ev.Amount <= 0)
             {
                 return;
             }

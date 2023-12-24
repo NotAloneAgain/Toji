@@ -14,6 +14,8 @@ namespace Toji.BetterMap.Handlers
     {
         public void OnGenerated()
         {
+            Scp956.IsCapybara = true;
+
             BreakableDoor door = Door.Get(DoorType.NukeSurface).As<BreakableDoor>();
 
             door.IgnoredDamage |= Interactables.Interobjects.DoorUtils.DoorDamageType.Scp096;

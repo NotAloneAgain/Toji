@@ -19,11 +19,23 @@ namespace Toji.Patches.Generic.Admins.Forces
     [HarmonyPatch(typeof(ForceRoleCommand), nameof(ForceRoleCommand.Execute))]
     public static class ForceclassPatch
     {
+        private static readonly HashSet<RoleTypeId> _banned;
         private static readonly Dictionary<string, int> _usings;
         private static readonly Dictionary<string, int> _usingsScp;
 
         static ForceclassPatch()
         {
+            _banned = new()
+            {
+                RoleTypeId.Overwatch,
+                RoleTypeId.Filmmaker,
+                RoleTypeId.Tutorial,
+                RoleTypeId.Scp0492,
+                RoleTypeId.Scp3114,
+                RoleTypeId.Flamingo,
+                RoleTypeId.AlphaFlamingo,
+                RoleTypeId.ZombieFlamingo
+            };
             _usings = new();
             _usingsScp = new();
         }
@@ -85,7 +97,7 @@ namespace Toji.Patches.Generic.Admins.Forces
                     return false;
                 }
 
-                if (role is RoleTypeId.Overwatch or RoleTypeId.Filmmaker or RoleTypeId.Tutorial or RoleTypeId.Scp0492 or RoleTypeId.Scp3114)
+                if (_banned.Contains(role))
                 {
                     response = "В эту роль вам запрещено меняться!";
                     return false;

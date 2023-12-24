@@ -21,7 +21,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
         {
             base.Activate(duration);
 
-            if (Value == null)
+            if (Value == null || Warhead.IsInProgress)
             {
                 return;
             }

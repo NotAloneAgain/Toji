@@ -44,6 +44,7 @@
     <Compile Include="API\Features\Malfunctions\DoorRestartSystemMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\GateMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\LiftMalfunction.cs" />
+    <Compile Include="API\Features\Malfunctions\CapyMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\RoomIsolationMalfunction.cs" />
     <Compile Include="API\Features\Malfunctions\ZoneLightMalfunction.cs" />
     <Compile Include="API\Features\ObjectMalfunction.cs" />
