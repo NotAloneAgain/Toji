@@ -1,14 +1,16 @@
 ﻿using PlayerRoles;
 using System.Collections.Generic;
+using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
+using Toji.Classes.API.Features.Relations;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
 using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.Scientists.Single
 {
-    public class Hidden : ScientistSingleSubclass, IHintSubclass, IRandomSubclass, INeedRole
+    public class Hidden : ScientistSingleSubclass, IHintSubclass, IRandomSubclass
     {
         public override bool ShowInfo => false;
 
@@ -21,6 +23,11 @@ namespace Toji.Classes.Subclasses.Scientists.Single
             new HideAbility(100, 15),
         };
 
+        public override List<BaseRelation> Relations { get; } = new List<BaseRelation>(1)
+        {
+            new RoleRelation(RelationType.Required, RoleTypeId.Scp939)
+        };
+
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)
         {
             new InventoryCharacteristic(new List<Slot>(2)
@@ -29,8 +36,6 @@ namespace Toji.Classes.Subclasses.Scientists.Single
                 new StaticSlot(ItemType.Painkillers),
             })
         };
-
-        public RoleTypeId NeedRole => RoleTypeId.Scp939;
 
         public int Chance => 15;
     }

@@ -1,12 +1,14 @@
 ﻿using PlayerRoles;
 using System.Collections.Generic;
+using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.Relations;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
 
 namespace Toji.Classes.Subclasses.Ntf.Single
 {
-    public class Technical : NtfSingleSubclass, IHintSubclass, IRandomSubclass, INeedRole
+    public class Technical : NtfSingleSubclass, IHintSubclass, IRandomSubclass
     {
         public override string Name => "Технический специалист";
 
@@ -22,7 +24,10 @@ namespace Toji.Classes.Subclasses.Ntf.Single
             new DisableAbility(200),
         };
 
-        public RoleTypeId NeedRole => RoleTypeId.Scp079;
+        public override List<BaseRelation> Relations { get; } = new List<BaseRelation>(1)
+        {
+            new RoleRelation(RelationType.Required, RoleTypeId.Scp079)
+        };
 
         public int Chance => 12;
     }

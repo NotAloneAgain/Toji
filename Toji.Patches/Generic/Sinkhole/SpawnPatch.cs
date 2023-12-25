@@ -73,19 +73,19 @@ namespace Toji.Patches.Generic.Sinkhole
 
             if (_spawned == 1)
             {
-                var rooms = RoomIdentifier.AllRoomIdentifiers.Where(room => room.Zone == MapGeneration.FacilityZone.Entrance && room.name.IndexOf("EZ_Crossing", System.StringComparison.OrdinalIgnoreCase) >= 0);
+                var rooms = RoomIdentifier.AllRoomIdentifiers.Where(room => room.Zone == FacilityZone.Entrance && room.name.IndexOf("EZ_Crossing", System.StringComparison.OrdinalIgnoreCase) >= 0);
 
                 var room = rooms.ElementAt(Random.Range(0, rooms.Count()));
 
                 NetworkServer.UnSpawn(sinkhole.gameObject);
 
-                var result = room.transform.position - Vector3.up * 0.11f;
+                var result = room.transform.position - Vector3.up * 0.12f;
 
                 sinkhole.transform.position = result;
                 position = result;
 
-                sinkhole.MaxDistance *= 0.75f;
-                sinkhole.transform.localScale *= 0.825f;
+                sinkhole.MaxDistance *= 0.6f;
+                sinkhole.transform.localScale *= 0.7f;
 
                 NetworkServer.Spawn(sinkhole.gameObject);
             }
@@ -96,8 +96,6 @@ namespace Toji.Patches.Generic.Sinkhole
             Console.AddDebugLog("MAPGEN", "Spawning hazard: \"" + sinkhole.gameObject.name + "\"", MessageImportance.LessImportant, true);
 
             Printer.Info($"Spawning hazard: \"{sinkhole.gameObject.name}\", round is{(RoundStart.RoundStarted ? " started." : "n't started.")}");
-
-            typeof(PlayerRoleManager).GetEvents().FirstOrDefault(ev => ev.Name == "OnRoleChanged")?.AddEventHandler(null, sinkhole.OnRoleChanged);
         }
 
         public static void Reset()

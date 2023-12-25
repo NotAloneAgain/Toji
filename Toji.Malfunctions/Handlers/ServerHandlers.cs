@@ -39,7 +39,7 @@ namespace Toji.Malfunctions.Handlers
 
             for (int i = 0; i < count / 10 && _allMalfunctions.Count > 0; i++)
             {
-                yield return Timing.WaitForSeconds(15);
+                yield return Timing.WaitForSeconds(Loader.Random.Next(10, 22));
 
                 var malfunction = _allMalfunctions.GetRandomValue();
 

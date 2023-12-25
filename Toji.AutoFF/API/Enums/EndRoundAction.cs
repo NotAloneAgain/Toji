@@ -5,6 +5,7 @@
         ForceAllToScps,
         ForceAllToNtf,
         ForceAllToChaos,
+        ForceAllToFlamingos,
         TeleportAndHorse,
         TeleportAndLazer,
         TeleportAndCum,

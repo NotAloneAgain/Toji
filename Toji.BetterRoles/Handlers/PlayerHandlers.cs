@@ -7,6 +7,7 @@ using MEC;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
 using System.Collections.Generic;
+using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
 namespace Toji.BetterRoles.Handlers
@@ -15,14 +16,23 @@ namespace Toji.BetterRoles.Handlers
     {
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
-            if (!ev.IsAllowed || ev.Player.IsHost || ev.Player.IsNPC)
+            if (!ev.IsAllowed || !ev.IsValid(false))
             {
                 return;
             }
 
+            ev.Player.IsUsingStamina = true;
+
             if (ev.NewRole == RoleTypeId.Scp079)
             {
                 Timing.RunCoroutine(OnChangingToScp079(ev.Player));
+
+                return;
+            }
+
+            if (ev.NewRole.IsFlamingo())
+            {
+                Timing.RunCoroutine(OnChangingToFlamingo(ev.Player, ev.NewRole == RoleTypeId.AlphaFlamingo));
 
                 return;
             }
@@ -91,12 +101,23 @@ namespace Toji.BetterRoles.Handlers
             lost._ghostlightLockoutDuration = 15;
         }
 
+        private IEnumerator<float> OnChangingToFlamingo(Player player, bool isAlpha)
+        {
+            yield return Timing.WaitForSeconds(0.0003f);
+
+            player.MaxHealth = isAlpha ? 550 : 400;
+            player.Health = isAlpha ? 550 : 400;
+            player.EnableEffect(EffectType.MovementBoost, 8, 0);
+            player.AddItem(ItemType.ArmorHeavy);
+            player.IsUsingStamina = false;
+        }
+
         private IEnumerator<float> OnChangingToScp3114(Player player)
         {
             yield return Timing.WaitForSeconds(0.0003f);
 
-            player.MaxHealth = 1250;
-            player.Health = 1250;
+            player.MaxHealth = 1100;
+            player.Health = 1100;
 
             var transform = Door.Get(DoorType.Scp173Gate).GameObject.transform;
 

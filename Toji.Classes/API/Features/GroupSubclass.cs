@@ -7,13 +7,13 @@ namespace Toji.Classes.API.Features
 {
     public abstract class GroupSubclass : BaseSubclass, IGroup
     {
-        public GroupSubclass() => Players = new(Server.MaxPlayerCount);
+        public GroupSubclass() => Players = new(this is not ILimitableGroup group ? Server.MaxPlayerCount : group.Max);
 
         public HashSet<Player> Players { get; }
 
         public override bool Has(in Player player) => base.Has(player) && Players.Contains(player);
 
-        public override bool Can(in Player player) => base.Can(player) && (this is not ILimitableGroup group || group.Players.Count <= group.Max);
+        public override bool Can(in Player player) => base.Can(player) && (this is not ILimitableGroup group || Players.Count <= group.Max);
 
         public sealed override bool Assign(in Player player)
         {

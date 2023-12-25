@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.Relations;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
 using Toji.Classes.Subclasses.Abilities.Passive;
@@ -17,6 +19,11 @@ namespace Toji.Classes.Subclasses.ClassD.Single
         {
             new KnockAbility(90, 5.06f),
             new ReflectionAbility(true, 0.296f)
+        };
+
+        public override List<BaseRelation> Relations { get; } = new List<BaseRelation>(1)
+        {
+            new SubclassRelation(RelationType.Not, GetInstance(typeof(Scp181)))
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(2)

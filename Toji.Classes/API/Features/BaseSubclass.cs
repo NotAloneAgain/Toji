@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Toji.Classes.API.Enums;
 using Toji.Classes.API.Extensions;
+using Toji.Classes.API.Features.Relations;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Characteristics;
 using Toji.Global;
@@ -17,7 +19,7 @@ namespace Toji.Classes.API.Features
     {
         private static readonly Dictionary<RoleTypeId, List<BaseSubclass>> _roleToSubclasses;
         private static readonly SortedSet<BaseSubclass> _subclasses;
-        private static readonly HashSet<Player> _players;
+        private static readonly HashSet<string> _players;
         private bool _subscribed;
 
         static BaseSubclass()
@@ -44,6 +46,10 @@ namespace Toji.Classes.API.Features
         public static IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>> RoleToSubclasses => _roleToSubclasses.ToDictionary(pair => pair.Key, pair => (IReadOnlyCollection<BaseSubclass>)pair.Value.AsReadOnly());
 
         public static IReadOnlyCollection<BaseSubclass> ReadOnlyCollection => _subclasses;
+
+        public static BaseSubclass GetInstance(System.Type type) => ReadOnlyCollection.FirstOrDefault(sub => sub.GetType() == type);
+
+        public static TSubclass GetInstance<TSubclass>(System.Type type) where TSubclass : BaseSubclass => GetInstance(type) as TSubclass;
 
         public static BaseSubclass Get(Player player) => player == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
 
@@ -117,7 +123,9 @@ namespace Toji.Classes.API.Features
             return subclasses != null && subclasses.Any();
         }
 
-        public static bool Contains(Player player) => _players.Contains(player);
+        public static bool Contains(Player player) => _players.Contains(player.UserId);
+
+        public static void Clear() => _players.Clear();
 
         public bool IsGroup => this.IsGroupSubclass();
 
@@ -137,13 +145,15 @@ namespace Toji.Classes.API.Features
 
         public virtual List<BaseAbility> Abilities { get; } = new List<BaseAbility>(0);
 
+        public virtual List<BaseRelation> Relations { get; } = new List<BaseRelation>(0);
+
         public virtual List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(0);
 
         public virtual bool ShowInfo { get; } = true;
 
-        public virtual bool Has(in Player player) => player != null && !player.IsHost;
+        public virtual bool Has(in Player player) => player != null && !player.IsHost && Contains(player);
 
-        public virtual bool Can(in Player player) => player != null && !player.IsHost && !Contains(player) && CheckLimited(player) && CheckNeeds() && CheckRandom() && CheckDate();
+        public virtual bool Can(in Player player) => player != null && !player.IsHost && !Contains(player) && CheckLimited(player) && CheckRelations() && CheckRandom() && CheckDate();
 
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
@@ -158,6 +168,8 @@ namespace Toji.Classes.API.Features
             {
                 return false;
             }
+
+            _players.Add(player.UserId);
 
             player.SendConsoleMessage(BuildConsoleMessage(player), "yellow");
 
@@ -174,25 +186,23 @@ namespace Toji.Classes.API.Features
                 LazySubscribe();
             }
 
-            _players.Add(player);
-
             return true;
         }
 
         public virtual bool Revoke(in Player player)
         {
-            if (!Has(player))
+            if (!Contains(player) || TryGet(player, out var sub) && sub != this)
             {
                 return false;
             }
+
+            _players.Remove(player.UserId);
 
             SendDeathCassie();
 
             SendDeathBroadcast();
 
             Update(player, false);
-
-            _players.Remove(player);
 
             return true;
         }
@@ -316,10 +326,6 @@ namespace Toji.Classes.API.Features
 
             if (Abilities.Any() && withAbility)
             {
-                player.SendConsoleMessage("Активация некоторых способностей происходит с помощью команды .ability", "green");
-                player.SendConsoleMessage("Если активируемых способностей много пиши .ability [Номер]", "green");
-                player.SendConsoleMessage("Помни что отсчет способностей начинается с 0.", "green");
-
                 foreach (var ability in Abilities)
                 {
                     ability.OnEnabled(player);
@@ -408,6 +414,10 @@ namespace Toji.Classes.API.Features
             {
                 builder.Append("\n\t\tТип: Одиночный.");
             }
+            else
+            {
+                builder.Append("\n\t\tТип: Базовый.");
+            }
 
             if (this is IRandomSubclass random)
             {
@@ -448,6 +458,16 @@ namespace Toji.Classes.API.Features
                 }
             }
 
+            if (Relations.Any())
+            {
+                builder.Append("\n\t\tОтношения:");
+
+                foreach (var relation in Relations)
+                {
+                    builder.Append($"\n\t\t\t{(relation.Type == RelationType.Required ? "Требуется" : "Не должно быть")}: {relation.Desc}.");
+                }
+            }
+
             if (Abilities.Any())
             {
                 builder.Append("\n\t\tСпособности:");
@@ -455,16 +475,6 @@ namespace Toji.Classes.API.Features
                 foreach (var ability in Abilities)
                 {
                     builder.Append($"\n\t\t\t{ability.Type} | {ability.Name}: {ability.Desc}.");
-                }
-            }
-
-            if (this is ICommandsSubclass commands)
-            {
-                builder.Append("\n\t\tКоманды:");
-
-                foreach (var command in commands.Commands)
-                {
-                    builder.Append($"\n\t\t\t{command.Key}: {command.Value}.");
                 }
             }
 
@@ -481,21 +491,21 @@ namespace Toji.Classes.API.Features
             return true;
         }
 
-        private bool CheckNeeds()
+        private bool CheckRelations()
         {
-            if (this is INeedRole needRole && Player.List.All(ply => ply.Role.Type != needRole.NeedRole))
+            if (!Relations.Any())
             {
-                return false;
+                return true;
             }
 
-            if (this is INeedSubclass needSubclass)
+            foreach (var relation in Relations)
             {
-                var subclass = ReadOnlyCollection.FirstOrDefault(sub => sub.GetType() == needSubclass.Needed);
-
-                if (subclass != null && Player.List.All(ply => !subclass.Has(ply)))
+                if (relation.Check())
                 {
-                    return false;
+                    continue;
                 }
+
+                return false;
             }
 
             return true;

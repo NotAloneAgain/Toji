@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Enums;
+using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Server;
@@ -38,7 +39,7 @@ namespace Toji.AutoFF.Handlers
         {
             Server.FriendlyFire = true;
 
-            if (_roundAction.ToString().Contains("Force") && Player.List.Count > 32)
+            if (_roundAction.ToString().Contains("Force") && Player.List.Count > 35)
             {
                 return;
             }
@@ -90,6 +91,21 @@ namespace Toji.AutoFF.Handlers
                                 2 => RoleTypeId.ChaosMarauder,
                                 1 => RoleTypeId.ChaosConscript,
                                 _ => RoleTypeId.ChaosRepressor
+                            }, RoleSpawnFlags.UseSpawnpoint);
+
+                            player.DisableAllEffects();
+                        }
+
+                        break;
+                    }
+                case EndRoundAction.ForceAllToFlamingos:
+                    {
+                        foreach (var player in Player.List)
+                        {
+                            player.Role.Set(Random.Range(0, 2) switch
+                            {
+                                1 => RoleTypeId.AlphaFlamingo,
+                                _ => RoleTypeId.Flamingo
                             }, RoleSpawnFlags.UseSpawnpoint);
 
                             player.DisableAllEffects();
@@ -151,13 +167,13 @@ namespace Toji.AutoFF.Handlers
                 }
 
                 door.ChangeLock(DoorLockType.AdminCommand);
-                door.IsOpen = true;
+                door.IsOpen = !door.IsGate && !door.IsCheckpoint;
             }
         }
 
-        private void TeleportPlayers(ZoneType zone, ItemType item)
+        private void TeleportPlayers(ZoneType zone, ItemType item = ItemType.None)
         {
-            var rooms = Room.List.Where(room => room != null && room.Zone == zone).ToList();
+            var rooms = Room.Get(zone);
 
             foreach (Player player in Player.List)
             {
@@ -168,9 +184,12 @@ namespace Toji.AutoFF.Handlers
 
                 player.ClearInventory();
 
-                player.CurrentItem = player.AddItem(item);
+                if (item != ItemType.None)
+                {
+                    player.CurrentItem = player.AddItem(item);
+                }
 
-                player.Teleport(rooms[Random.Range(0, rooms.Count)].GetSafePosition() + Vector3.up);
+                player.Teleport(rooms.GetRandomValue().GetSafePosition() + Vector3.up);
             }
         }
     }

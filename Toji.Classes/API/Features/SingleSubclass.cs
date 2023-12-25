@@ -13,7 +13,7 @@ namespace Toji.Classes.API.Features
 
         public sealed override bool Assign(in Player player)
         {
-            if (!base.Assign(player) || Player != null)
+            if (Player != null || !base.Assign(player))
             {
                 return false;
             }
@@ -25,7 +25,7 @@ namespace Toji.Classes.API.Features
 
         public sealed override bool Revoke(in Player player)
         {
-            if (!base.Revoke(player) || Player == null)
+            if (Player == null || !base.Revoke(player))
             {
                 return false;
             }

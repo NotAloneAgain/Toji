@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Features;
 using Toji.Classes.API.Extensions;
+using Toji.Classes.API.Features;
 
 namespace Toji.Classes.Handlers
 {
@@ -16,6 +17,8 @@ namespace Toji.Classes.Handlers
 
                 subclass.Revoke(player);
             }
+
+            BaseSubclass.Clear();
         }
     }
 }

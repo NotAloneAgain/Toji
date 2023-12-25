@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Exiled.API.Features.Pools;
 using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Player;
 using MEC;
@@ -16,6 +17,17 @@ namespace Toji.LeaveReplacer.Handlers
 {
     internal sealed class PlayerHandlers
     {
+        private IEnumerable<RoleTypeId> _roles;
+
+        internal PlayerHandlers() => _roles = new List<RoleTypeId>(5)
+        {
+            RoleTypeId.ClassD,
+            RoleTypeId.Scientist,
+            RoleTypeId.FacilityGuard,
+            RoleTypeId.NtfPrivate,
+            RoleTypeId.ChaosRifleman
+        };
+
         public void OnDestroying(DestroyingEventArgs ev)
         {
             if (!ev.IsValid() || !ev.Player.IsScp)
@@ -23,10 +35,8 @@ namespace Toji.LeaveReplacer.Handlers
                 return;
             }
 
-            var role = ev.Player.Role.Type;
             var subclass = ev.Player.GetSubclass();
-
-            var player = SelectPlayer(GetRolesQueue(RoleTypeId.ClassD, RoleTypeId.Scientist, RoleTypeId.FacilityGuard, RoleTypeId.NtfPrivate, RoleTypeId.ChaosRifleman));
+            var player = SelectPlayer();
 
             if (player == null)
             {
@@ -48,7 +58,7 @@ namespace Toji.LeaveReplacer.Handlers
             }
         }
 
-        private Queue<RoleTypeId> GetRolesQueue(params RoleTypeId[] roles) => new(roles);
+        private Queue<RoleTypeId> GetRolesQueue() => QueuePool<RoleTypeId>.Pool.Get(_roles);
 
         private IEnumerator<float> _Replace(Player player, Player target)
         {
@@ -90,9 +100,9 @@ namespace Toji.LeaveReplacer.Handlers
             player.Health = health;
         }
 
-        private Player SelectPlayer(Queue<RoleTypeId> roles)
+        private Player SelectPlayer()
         {
-            var queue = roles.Copy();
+            var queue = GetRolesQueue();
 
             while (queue.Count > 0)
             {
@@ -106,9 +116,13 @@ namespace Toji.LeaveReplacer.Handlers
                 }
             }
 
+            QueuePool<RoleTypeId>.Pool.Return(queue);
+
+            queue = GetRolesQueue();
+
             while (queue.Count > 0)
             {
-                var role = roles.Dequeue();
+                var role = queue.Dequeue();
 
                 Player player = FindPlayer(role, false);
 

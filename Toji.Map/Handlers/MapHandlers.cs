@@ -29,9 +29,14 @@ namespace Toji.BetterMap.Handlers
             {
                 NetworkServer.UnSpawn(generator.GameObject);
 
-                generator.Transform.localScale *= 0.88f;
+                generator.Transform.localScale *= 0.8f;
 
                 NetworkServer.Spawn(generator.GameObject);
+            }
+
+            foreach (var lift in Lift.List)
+            {
+                lift.AnimationTime *= 0.81f;
             }
         }
 
