@@ -29,7 +29,7 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
                 return;
             }
 
-            Map.Broadcast(12, $"<color=#780000><b>В комплексе обнаружено КАПИБАРА! Заведено {Name.ToLower()} для расследования</b></color>");
+            Map.Broadcast(12, $"<color=#780000><b>В комплексе обнаружена КАПИБАРА! Заведено {Name.ToLower()} для расследования</b></color>");
 
             Scp956.SpawnBehindTarget(players.GetRandomValue());
         }
