@@ -45,8 +45,10 @@
     <Compile Include="ExiledAPI\Extensions\EventExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\FlagsExtensions.cs" />
     <Compile Include="ExiledAPI\Extensions\PlayerExtensions.cs" />
-    <Compile Include="Global\ArrayExtensions.cs" />
+    <Compile Include="Global\CollectionExtensions.cs" />
     <Compile Include="Global\DictionaryExtensions.cs" />
+    <Compile Include="Global\GameObjectExtensions.cs" />
+    <Compile Include="Global\LockerExtensions.cs" />
     <Compile Include="Global\ParseExtensions.cs" />
     <Compile Include="Global\Range.cs" />
     <Compile Include="Global\Swap.cs" />

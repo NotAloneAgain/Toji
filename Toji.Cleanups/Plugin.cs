@@ -30,6 +30,7 @@ namespace Toji.Cleanups
             CreateCleanups();
 
             Map.PlacingBulletHole += _map.OnPlacingBulletHole;
+            Map.SpawningItem += _map.OnSpawningItem;
 
             Player.SpawningRagdoll += _player.OnSpawningRagdoll;
 
@@ -46,6 +47,7 @@ namespace Toji.Cleanups
 
             Player.SpawningRagdoll -= _player.OnSpawningRagdoll;
 
+            Map.SpawningItem -= _map.OnSpawningItem;
             Map.PlacingBulletHole -= _map.OnPlacingBulletHole;
 
             DestroyCleanups();

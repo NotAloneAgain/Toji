@@ -1,26 +1,49 @@
-﻿using Exiled.API.Features;
-using Interactables.Interobjects.DoorUtils;
-using InventorySystem.Items.Keycards;
+﻿using Exiled.API.Enums;
+using Exiled.API.Features;
+using Exiled.API.Features.Items;
+using Exiled.API.Features.Pools;
+using MapGeneration.Distributors;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using Toji.Global;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 namespace Toji.RemoteKeycard.API
 {
     public static class Extensions
     {
-        public static bool CheckPermissions(this Player player, KeycardPermissions perms)
+        public static List<Keycard> GetKeycards(this Player player)
         {
-            if (player.IsBypassModeEnabled || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.None || perms == KeycardPermissions.ScpOverride && player.IsScp)
+            List<Keycard> result = new(8);
+
+            foreach (var item in player.Items)
+            {
+                if (item == null || item.Category != ItemCategory.Keycard || item is not Keycard keycard)
+                {
+                    continue;
+                }
+
+                result.Add(keycard);
+            }
+
+            return result;
+        }
+
+        public static bool CheckPermissions(this Player player, KeycardPermissions perms, bool checkAll = false)
+        {
+            if (player.IsBypassModeEnabled || (int)perms <= 0 || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.None || perms == KeycardPermissions.ScpOverride && player.IsScp)
             {
                 return true;
             }
 
-            var items = player.Items.Select(x => x.Base);
+            var keycards = player.GetKeycards().DistinctWhere((Keycard first, Keycard second) => first.Type == second.Type && first.Permissions == second.Permissions);
 
-            for (var i = 0; i < items.Count(); i++)
+            Func<KeycardPermissions, KeycardPermissions, bool> func = checkAll ? HasAllFlagsFast : HasFlagFast;
+
+            foreach (var keycard in keycards)
             {
-                InventorySystem.Items.ItemBase item = items.ElementAt(i);
-
-                if (item.Category != ItemCategory.Keycard || item is not KeycardItem card || !card.Permissions.HasFlagFast(perms))
+                if (keycard == null || keycard.Permissions == KeycardPermissions.None || !func(keycard.Permissions, perms))
                 {
                     continue;
                 }
@@ -29,6 +52,29 @@ namespace Toji.RemoteKeycard.API
             }
 
             return false;
+        }
+
+        public static bool CheckPermissions(this Player player, Locker locker, LockerChamber chamber)
+        {
+            bool hasAccess = player.CheckPermissions(locker.GetPermissions(chamber), true);
+            bool hasChkp = player.CheckPermissions(KeycardPermissions.Checkpoints);
+            bool hasCont = player.CheckPermissions(KeycardPermissions.Checkpoints);
+
+            return hasAccess || !chamber.HasDanger() && hasChkp && hasCont;
+        }
+
+        public static bool HasFlagFast(this KeycardPermissions perm, KeycardPermissions other)
+        {
+            var value = perm & other;
+
+            return value != 0 || value == other;
+        }
+
+        public static bool HasAllFlagsFast(this KeycardPermissions perm, KeycardPermissions other)
+        {
+            var value = perm & other;
+
+            return value == 0;
         }
     }
 }

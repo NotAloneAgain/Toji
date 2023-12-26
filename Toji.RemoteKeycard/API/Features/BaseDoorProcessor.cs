@@ -31,33 +31,22 @@ namespace Toji.RemoteKeycard.API.Features
 
         public bool ProcessDoor(Door door, Player player)
         {
-            if (door == null || door.IsLocked && !door.AllowsScp106)
+            if (door == null || door.IsLocked && !door.AllowsScp106 || player.IsCuffed || player.HasEffect<SeveredHands>())
             {
                 return false;
             }
 
-            bool keycard = !player.IsCuffed && !player.HasEffect<SeveredHands>();
-
-            if (door.IsKeycardDoor)
-            {
-                keycard = keycard && ProcessKeycard(door, player);
-            }
-            else
-            {
-                keycard = keycard && ProcessNotKeycard(door, player);
-            }
-
             if (door is Gate gate)
             {
-                return ProcessGate(gate, player) && keycard;
+                return ProcessGate(gate, player);
             }
 
-            if (door.Type is DoorType.CheckpointArmoryA or DoorType.CheckpointArmoryB or DoorType.CheckpointEzHczA or DoorType.CheckpointEzHczB or DoorType.CheckpointLczA or DoorType.CheckpointLczB)
+            if (door.IsPartOfCheckpoint || door.Type is DoorType.CheckpointArmoryA or DoorType.CheckpointArmoryB or DoorType.CheckpointEzHczA or DoorType.CheckpointEzHczB or DoorType.CheckpointLczA or DoorType.CheckpointLczB)
             {
-                return ProcessCheckpoint(door, player) && keycard;
+                return ProcessCheckpoint(door, player);
             }
 
-            return keycard;
+            return door.IsKeycardDoor ? ProcessKeycard(door, player) : ProcessNotKeycard(door, player);
         }
 
         protected abstract bool ProcessGate(Gate gate, Player player);

@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using PlayerRoles;
+using Toji.RemoteKeycard.API;
 using Toji.RemoteKeycard.API.Enums;
 using Toji.RemoteKeycard.API.Features;
 
@@ -13,11 +14,6 @@ namespace Toji.RemoteKeycard.Processors
 
         protected override bool ProcessCheckpoint(Door door, Player player)
         {
-            if (player.Role.Type == RoleTypeId.Scp079)
-            {
-                return true;
-            }
-
             if (door.IsLocked)
             {
                 return door.DoorLockType switch
@@ -32,11 +28,6 @@ namespace Toji.RemoteKeycard.Processors
 
         protected override bool ProcessGate(Gate gate, Player player)
         {
-            if (player.Role.Type == RoleTypeId.Scp079)
-            {
-                return true;
-            }
-
             if (gate.IsLocked)
             {
                 return gate.DoorLockType switch
@@ -46,16 +37,11 @@ namespace Toji.RemoteKeycard.Processors
                 };
             }
 
-            return gate.RequiredPermissions == null || gate.RequiredPermissions.RequiredPermissions == Interactables.Interobjects.DoorUtils.KeycardPermissions.None;
+            return player.Role.Type == RoleTypeId.Scp079 || gate.RequiredPermissions == null || player.CheckPermissions(gate.KeycardPermissions);
         }
 
         protected override bool ProcessKeycard(Door door, Player player)
         {
-            if (player.Role.Type == RoleTypeId.Scp079)
-            {
-                return true;
-            }
-
             if (door.IsLocked)
             {
                 return door.DoorLockType switch
@@ -65,16 +51,11 @@ namespace Toji.RemoteKeycard.Processors
                 };
             }
 
-            return false;
+            return player.Role.Type == RoleTypeId.Scp079 || player.CheckPermissions(door.KeycardPermissions);
         }
 
         protected override bool ProcessNotKeycard(Door door, Player player)
         {
-            if (player.Role.Type == RoleTypeId.Scp079)
-            {
-                return true;
-            }
-
             if (door.IsLocked)
             {
                 return door.DoorLockType switch
