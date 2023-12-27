@@ -31,7 +31,7 @@ namespace Toji.BetterMap.Handlers
                 NetworkServer.UnSpawn(generator.GameObject);
 
                 generator.Transform.localScale *= 0.8f;
-                generator.Transform.localPosition += Vector3.up * 0.3f;
+                generator.Transform.localPosition += Vector3.up * 1.6f;
 
                 NetworkServer.Spawn(generator.GameObject);
             }
