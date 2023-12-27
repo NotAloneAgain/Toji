@@ -28,7 +28,7 @@ namespace Toji.RemoteKeycard.Handlers
                 return;
             }
 
-            ev.IsAllowed = (ev.Player.IsScp ? (BaseDoorProcessor)_scp : _human).ProcessDoor(ev.Door, ev.Player);
+            ev.IsAllowed = (ev.Player.IsScp ? (BasePermissionProcessor)_scp : _human).ProcessDoor(ev.Door, ev.Player);
         }
 
         public void OnInteractingLocker(InteractingLockerEventArgs ev)
@@ -38,7 +38,7 @@ namespace Toji.RemoteKeycard.Handlers
                 return;
             }
 
-            ev.IsAllowed = ev.Chamber.CanInteract && ev.Player.CheckPermissions(ev.Locker, ev.Chamber);
+            ev.IsAllowed = ev.Chamber.CanInteract && _human.ProcessLocker(ev.Locker, ev.Chamber, ev.Player);
         }
 
         public void OnUnlockingGenerator(UnlockingGeneratorEventArgs ev)

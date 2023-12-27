@@ -33,7 +33,7 @@
   <ItemGroup>
     <Compile Include="API\Enums\DoorProcessorType.cs" />
     <Compile Include="API\Extensions.cs" />
-    <Compile Include="API\Features\BaseDoorProcessor.cs" />
+    <Compile Include="API\Features\BasePermissionProcessor.cs" />
     <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Processors\HumanDoorProcessor.cs" />

@@ -128,9 +128,7 @@ namespace Toji.Patches.Generic.Admins.Items
 
                         try
                         {
-                            var blocked = type is ItemType.ParticleDisruptor or ItemType.SCP268 or ItemType.MicroHID or ItemType.Jailbird or ItemType.GunCom45 or ItemType.SCP018;
-
-                            if (blocked)
+                            if (_banned.Contains(item))
                                 continue;
 
                             GiveCommand.AddItem(hub, sender, item);
@@ -168,9 +166,6 @@ namespace Toji.Patches.Generic.Admins.Items
                         {
                             foreach (ItemType item in items)
                             {
-                                if (_banned.Contains(item))
-                                    continue;
-
                                 GiveCommand.AddItem(referenceHub, sender, item);
                             }
                         }

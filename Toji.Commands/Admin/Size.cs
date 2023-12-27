@@ -15,6 +15,14 @@ namespace Marine.Commands.Commands
 
         public override List<CommandType> Types { get; set; } = new List<CommandType>(2) { CommandType.RemoteAdmin, CommandType.ServerConsole };
 
+        public override Dictionary<int, string> Syntax { get; set; } = new Dictionary<int, string>()
+        {
+            { 1, "[ЧИСЛО]" },
+            { 2, "[ИГРОКИ] [ЧИСЛО]" },
+            { 3, "[ВЕКТОР]" },
+            { 4, "[ИГРОКИ] [ВЕКТОР]" },
+        };
+
         public override string[] Aliases { get; set; } = new string[1] { "scale" };
 
         public override CommandPermission Permission { get; set; } = new(true, new HashSet<string>()

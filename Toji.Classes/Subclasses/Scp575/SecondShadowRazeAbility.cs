@@ -73,7 +73,7 @@ namespace Toji.Classes.Subclasses.Scp575
                     continue;
                 }
 
-                new CustomDamageHandler(ply, player, 15, DamageType.Scp106).ApplyDamage(ply);
+                ply.Hurt(15);
             }
 
             AddUse(player, DateTime.Now, true, result);

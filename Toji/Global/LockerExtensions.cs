@@ -22,6 +22,6 @@ namespace Toji.Global
             _ => KeycardPermissions.None,
         };
 
-        public static bool HasDanger(this LockerChamber chamber) => chamber.AcceptableItems.Any(item => item.IsWeapon());
+        public static bool HasDanger(this LockerChamber chamber, bool checkGrenades = false) => chamber.AcceptableItems.Any(item => item.IsWeapon() || checkGrenades && item.IsGrenade());
     }
 }

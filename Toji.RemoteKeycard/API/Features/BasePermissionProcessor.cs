@@ -2,30 +2,32 @@
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
+using MapGeneration.Distributors;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.ExiledAPI.Extensions;
+using Toji.Global;
 using Toji.RemoteKeycard.API.Enums;
 
 namespace Toji.RemoteKeycard.API.Features
 {
-    public abstract class BaseDoorProcessor
+    public abstract class BasePermissionProcessor
     {
-        private static List<BaseDoorProcessor> _processors;
+        private static List<BasePermissionProcessor> _processors;
 
-        static BaseDoorProcessor()
+        static BasePermissionProcessor()
         {
-            _processors = new List<BaseDoorProcessor>(10);
+            _processors = new List<BasePermissionProcessor>(10);
         }
 
-        public BaseDoorProcessor()
+        public BasePermissionProcessor()
         {
             _processors.Add(this);
         }
 
-        public static IReadOnlyCollection<BaseDoorProcessor> ReadOnlyCollection => _processors.AsReadOnly();
+        public static IReadOnlyCollection<BasePermissionProcessor> ReadOnlyCollection => _processors.AsReadOnly();
 
-        public static BaseDoorProcessor Get(DoorProcessorType type) => ReadOnlyCollection.FirstOrDefault(processor => processor.Type == type);
+        public static BasePermissionProcessor Get(DoorProcessorType type) => ReadOnlyCollection.FirstOrDefault(processor => processor.Type == type);
 
         public abstract DoorProcessorType Type { get; }
 
@@ -47,6 +49,20 @@ namespace Toji.RemoteKeycard.API.Features
             }
 
             return door.IsKeycardDoor ? ProcessKeycard(door, player) : ProcessNotKeycard(door, player);
+        }
+
+        public bool ProcessLocker(Locker locker, LockerChamber chamber, Player player)
+        {
+            bool hasAccess = player.CheckPermissions(locker.GetPermissions(chamber));
+
+            return hasAccess || locker.StructureType switch
+            {
+                StructureType.ScpPedestal => player.CheckPermissions(KeycardPermissions.Checkpoints) && player.CheckPermissions(KeycardPermissions.ContainmentLevelTwo),
+                StructureType.StandardLocker => !chamber.HasDanger(true) && player.CheckPermissions(KeycardPermissions.ArmoryLevelOne),
+                StructureType.LargeGunLocker => !chamber.HasDanger(true) && player.CheckPermissions(KeycardPermissions.ArmoryLevelOne),
+                StructureType.SmallWallCabinet => !chamber.HasDanger(true) && player.CheckPermissions(KeycardPermissions.ArmoryLevelOne),
+                _ => false,
+            };
         }
 
         protected abstract bool ProcessGate(Gate gate, Player player);

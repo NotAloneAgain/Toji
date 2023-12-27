@@ -40,6 +40,7 @@
     <Compile Include="Admin\Ball.cs" />
     <Compile Include="Admin\DropItem.cs" />
     <Compile Include="Admin\DropRagdoll.cs" />
+    <Compile Include="Admin\Gravity.cs" />
     <Compile Include="Admin\GiveSubclass.cs" />
     <Compile Include="Admin\Grenade.cs" />
     <Compile Include="Admin\Size.cs" />

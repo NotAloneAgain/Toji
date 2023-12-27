@@ -7,6 +7,7 @@ using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Toji.BetterMap.Handlers
 {
@@ -30,13 +31,9 @@ namespace Toji.BetterMap.Handlers
                 NetworkServer.UnSpawn(generator.GameObject);
 
                 generator.Transform.localScale *= 0.8f;
+                generator.Transform.localPosition += Vector3.up * 0.3f;
 
                 NetworkServer.Spawn(generator.GameObject);
-            }
-
-            foreach (var lift in Lift.List)
-            {
-                lift.AnimationTime *= 0.81f;
             }
         }
 

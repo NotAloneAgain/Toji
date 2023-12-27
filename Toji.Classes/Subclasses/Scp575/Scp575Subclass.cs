@@ -80,7 +80,8 @@ namespace Toji.Classes.Subclasses.Scp575
 
             ev.IsAllowed = false;
             ev.Player.ShowHitMarker();
-            new CustomDamageHandler(ev.Target, ev.Player, 0.88f, DamageType.Scp106).ApplyDamage(ev.Target);
+            ev.Target.Hurt(2);
+            ev.Scp106.Attack?.SendCooldown(0.5f);
         }
     }
 }

@@ -94,7 +94,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var ply in Player.List)
             {
-                new CustomDamageHandler(ply, player, amount, DamageType.Scp106).ApplyDamage(ply);
+                ply.Hurt(amount);
             }
 
             _souls[player] = 0;

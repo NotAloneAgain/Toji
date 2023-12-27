@@ -56,7 +56,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
             if (room.Type == RoomType.Surface)
             {
-                player.Hurt(88, DamageType.Bleeding);
+                player.Hurt(88);
 
                 return;
             }
@@ -91,7 +91,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                     percent /= 4;
                 }
 
-                ply.Hurt(new CustomDamageHandler(ply, player, ply.MaxHealth * (percent / 100), DamageType.Scp106));
+                ply.Hurt(ply.MaxHealth * (percent / 100));
             }
         }
     }

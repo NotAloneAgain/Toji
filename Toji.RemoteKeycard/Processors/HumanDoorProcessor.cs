@@ -7,7 +7,7 @@ using Toji.RemoteKeycard.API.Features;
 
 namespace Toji.RemoteKeycard.Processors
 {
-    public class HumanDoorProcessor : BaseDoorProcessor
+    public class HumanDoorProcessor : BasePermissionProcessor
     {
         public override DoorProcessorType Type => DoorProcessorType.Human;
 

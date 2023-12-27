@@ -8,7 +8,7 @@ using Toji.RemoteKeycard.API.Features;
 
 namespace Toji.RemoteKeycard.Processors
 {
-    public class ScpDoorProcessor : BaseDoorProcessor
+    public class ScpDoorProcessor : BasePermissionProcessor
     {
         public override DoorProcessorType Type => DoorProcessorType.Scp;
 

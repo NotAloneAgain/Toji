@@ -30,20 +30,18 @@ namespace Toji.RemoteKeycard.API
             return result;
         }
 
-        public static bool CheckPermissions(this Player player, KeycardPermissions perms, bool checkAll = false)
+        public static bool CheckPermissions(this Player player, KeycardPermissions perms)
         {
-            if (player.IsBypassModeEnabled || (int)perms <= 0 || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.None || perms == KeycardPermissions.ScpOverride && player.IsScp)
+            if (player.IsBypassModeEnabled || (int)perms <= 0 || player.HasItem(ItemType.KeycardO5) || perms == KeycardPermissions.ScpOverride && player.IsScp)
             {
                 return true;
             }
 
             var keycards = player.GetKeycards().DistinctWhere((Keycard first, Keycard second) => first.Type == second.Type && first.Permissions == second.Permissions);
 
-            Func<KeycardPermissions, KeycardPermissions, bool> func = checkAll ? HasAllFlagsFast : HasFlagFast;
-
             foreach (var keycard in keycards)
             {
-                if (keycard == null || keycard.Permissions == KeycardPermissions.None || !func(keycard.Permissions, perms))
+                if (keycard == null || (int)keycard.Permissions <= 0 || !keycard.Permissions.HasFlagFast(perms))
                 {
                     continue;
                 }
@@ -54,27 +52,11 @@ namespace Toji.RemoteKeycard.API
             return false;
         }
 
-        public static bool CheckPermissions(this Player player, Locker locker, LockerChamber chamber)
-        {
-            bool hasAccess = player.CheckPermissions(locker.GetPermissions(chamber), true);
-            bool hasChkp = player.CheckPermissions(KeycardPermissions.Checkpoints);
-            bool hasCont = player.CheckPermissions(KeycardPermissions.Checkpoints);
-
-            return hasAccess || !chamber.HasDanger() && hasChkp && hasCont;
-        }
-
         public static bool HasFlagFast(this KeycardPermissions perm, KeycardPermissions other)
         {
             var value = perm & other;
 
             return value != 0 || value == other;
-        }
-
-        public static bool HasAllFlagsFast(this KeycardPermissions perm, KeycardPermissions other)
-        {
-            var value = perm & other;
-
-            return value == 0;
         }
     }
 }
