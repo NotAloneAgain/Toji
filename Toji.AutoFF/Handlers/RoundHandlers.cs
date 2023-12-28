@@ -59,7 +59,9 @@ namespace Toji.AutoFF.Handlers
                                 _ => RoleTypeId.Scp3114
                             });
 
-                            player.EnableEffect(EffectType.MovementBoost, 255, 255);
+                            player.EnableEffect(EffectType.MovementBoost, 255);
+
+                            player.IsGodModeEnabled = true;
                         }
 
                         break;
@@ -109,7 +111,18 @@ namespace Toji.AutoFF.Handlers
                             }, RoleSpawnFlags.UseSpawnpoint);
 
                             player.DisableAllEffects();
+
+                            player.EnableEffect(EffectType.MovementBoost, 255);
+
+                            player.IsGodModeEnabled = true;
                         }
+
+                        TeleportPlayers(Random.Range(0, 3) switch
+                        {
+                            2 => ZoneType.HeavyContainment,
+                            1 => ZoneType.HeavyContainment,
+                            _ => ZoneType.Entrance
+                        });
 
                         break;
                     }
@@ -147,9 +160,11 @@ namespace Toji.AutoFF.Handlers
                         {
                             player.Role.Set(RoleTypeId.Tutorial, RoleSpawnFlags.AssignInventory);
 
+                            player.IsGodModeEnabled = true;
+
                             player.RandomTeleport(typeof(Door));
 
-                            player.EnableEffect(EffectType.MovementBoost, 255, 255);
+                            player.EnableEffect(EffectType.MovementBoost, 255);
                         }
 
                         break;
@@ -167,7 +182,7 @@ namespace Toji.AutoFF.Handlers
                 }
 
                 door.ChangeLock(DoorLockType.AdminCommand);
-                door.IsOpen = !door.IsGate && !door.IsCheckpoint;
+                door.IsOpen = !door.IsGate && !door.IsCheckpoint && !door.IsElevator;
             }
         }
 

@@ -321,27 +321,27 @@ namespace Toji.Classes.API.Features
 
         internal protected void CreateInfo(in Player ply)
         {
-            ply.CustomInfo = $"{ply.CustomName}{(string.IsNullOrEmpty(ply.CustomInfo) ? string.Empty : $"\n{ply.CustomInfo}")}\n{GetRoleInfo(ply)}";
+            ply.CustomInfo = $"{ply.CustomName}{(string.IsNullOrEmpty(ply.CustomInfo) ? string.Empty : $"\n{ply.CustomInfo}")}\n{GetRoleInfo()}";
             ply.InfoArea &= ~(PlayerInfoArea.Role | PlayerInfoArea.Nickname);
         }
 
         internal protected void DestroyInfo(in Player ply)
         {
-            ply.CustomInfo = ply.CustomInfo.Replace(ply.CustomName, string.Empty).Replace("\n", string.Empty).Replace(GetRoleInfo(ply), string.Empty);
+            ply.CustomInfo = ply.CustomInfo.Replace(ply.CustomName, string.Empty).Replace("\n", string.Empty).Replace(GetRoleInfo(), string.Empty);
             ply.InfoArea |= PlayerInfoArea.Role | PlayerInfoArea.Nickname;
         }
 
-        protected string GetRoleInfo(in Player ply)
+        protected string GetRoleInfo()
         {
             if (this is IRoleInfo info)
             {
                 return info.RoleInfo;
             }
 
-            return ply.Role.Team switch
+            return PlayerRolesUtils.GetTeam(SpawnRules.Model) switch
             {
-                Team.SCPs => $"{ply.Role.Type.Translate()} - {Name}",
-                Team.FoundationForces => ply.Role.Type == RoleTypeId.FacilityGuard ? $"Охранник Комплекса - {Name}" : $"Девятихвостая Лиса - {Name}",
+                Team.SCPs => $"{SpawnRules.Model.Translate()} - {Name}",
+                Team.FoundationForces => SpawnRules.Model == RoleTypeId.FacilityGuard ? $"Охранник Комплекса - {Name}" : $"Девятихвостая Лиса - {Name}",
                 Team.ChaosInsurgency => $"Повстанец Хаоса - {Name}",
                 _ => Name,
             };
