@@ -2,7 +2,7 @@
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
-using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.Characteristics;
 using Toji.Global;
 using UnityEngine;
 

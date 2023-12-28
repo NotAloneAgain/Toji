@@ -7,12 +7,12 @@ namespace Toji.Hud.Handlers
     {
         public void OnAddingTarget(AddingTargetEventArgs ev)
         {
-            if (!ev.IsValid() || !ev.IsLooking)
+            if (!ev.IsValid() || !ev.IsLooking || !ev.IsAllowed)
             {
                 return;
             }
 
-            ev.Player.ShowHint("<line-height=90%><voffset=4.5em><size=88%><color=#7E1717>Вы посмотрели на SCP-096, кажется это конец...</color></size></voffset>", 6);
+            ev.Target.ShowHint("<line-height=90%><voffset=4.5em><size=88%><color=#7E1717>Вы посмотрели на SCP-096, кажется это конец...</color></size></voffset>", 6);
         }
     }
 }

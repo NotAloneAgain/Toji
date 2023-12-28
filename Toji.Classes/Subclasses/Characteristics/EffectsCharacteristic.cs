@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.Characteristics;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {

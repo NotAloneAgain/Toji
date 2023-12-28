@@ -13,7 +13,7 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 
         public override string Name => "Рядовой";
 
-        public override RoleTypeId Role => RoleTypeId.NtfPrivate;
+        public override RoleTypeId Model => RoleTypeId.NtfPrivate;
 
         public override string Desc => "Стандартный рядовой девятихвостой лисы";
 

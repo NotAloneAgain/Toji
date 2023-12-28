@@ -1,7 +1,7 @@
 ﻿using Exiled.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
-using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.Characteristics;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {

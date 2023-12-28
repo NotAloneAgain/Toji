@@ -8,6 +8,7 @@ using System.Text;
 using Toji.Classes.API.Enums;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features.Relations;
+using Toji.Classes.API.Features.SpawnRules;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Characteristics;
 using Toji.Global;
@@ -17,14 +18,12 @@ namespace Toji.Classes.API.Features
 {
     public abstract class BaseSubclass : System.IDisposable
     {
-        private static readonly Dictionary<RoleTypeId, List<BaseSubclass>> _roleToSubclasses;
         private static readonly SortedSet<BaseSubclass> _subclasses;
         private static readonly HashSet<string> _players;
         private bool _subscribed;
 
         static BaseSubclass()
         {
-            _roleToSubclasses = new Dictionary<RoleTypeId, List<BaseSubclass>>(50);
             _subclasses = new SortedSet<BaseSubclass>(new PriorityComparer());
             _players = new(Server.MaxPlayerCount);
         }
@@ -32,18 +31,7 @@ namespace Toji.Classes.API.Features
         public BaseSubclass()
         {
             _subclasses.Add(this);
-
-            if (!_roleToSubclasses.ContainsKey(Role))
-            {
-                _roleToSubclasses.Add(Role, new List<BaseSubclass> { this });
-
-                return;
-            }
-
-            _roleToSubclasses[Role].Add(this);
         }
-
-        public static IReadOnlyDictionary<RoleTypeId, IReadOnlyCollection<BaseSubclass>> RoleToSubclasses => _roleToSubclasses.ToDictionary(pair => pair.Key, pair => (IReadOnlyCollection<BaseSubclass>)pair.Value.AsReadOnly());
 
         public static IReadOnlyCollection<BaseSubclass> ReadOnlyCollection => _subclasses;
 
@@ -63,7 +51,7 @@ namespace Toji.Classes.API.Features
 
         public static TSubclass Get<TSubclass>(in string str) where TSubclass : BaseSubclass => string.IsNullOrEmpty(str) ? null : Get(str) as TSubclass;
 
-        public static IEnumerable<BaseSubclass> Get(RoleTypeId role) => RoleToSubclasses.ContainsKey(role) ? RoleToSubclasses[role] : null;
+        public static IEnumerable<BaseSubclass> Get(RoleTypeId role) => ReadOnlyCollection.Where(sub => sub.SpawnRules.Model == role || sub.SpawnRules is TeamSpawnRules team && team.Check(role));
 
         public static IEnumerable<TSubclass> Get<TSubclass>(RoleTypeId role) where TSubclass : BaseSubclass => Get(role).Select(sub => sub as TSubclass);
 
@@ -139,7 +127,7 @@ namespace Toji.Classes.API.Features
 
         public abstract string Desc { get; }
 
-        public abstract RoleTypeId Role { get; }
+        public abstract BaseSpawnRules SpawnRules { get; }
 
         public virtual List<string> Tags { get; } = new List<string>(0);
 
@@ -155,8 +143,14 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Can(in Player player) => player != null && !player.IsHost && !Contains(player) && CheckLimited(player) && CheckRelations() && CheckRandom() && CheckDate();
 
+        public virtual bool Add(Player player) => _players.Add(player.UserId);
+
+        public virtual bool Remove(Player player) => _players.Remove(player.UserId);
+
         public bool DelayedAssign(in Player player, float delay = 0.0005f)
         {
+            Add(player);
+
             System.Delegate action = Assign;
 
             return action.CallDelayedWithResult<bool>(delay, player);
@@ -166,16 +160,14 @@ namespace Toji.Classes.API.Features
         {
             if (TryGet(player, out _) || !player.IsAlive || Contains(player))
             {
+                Remove(player);
+
                 return false;
             }
 
-            _players.Add(player.UserId);
+            Add(player);
 
             player.SendConsoleMessage(BuildConsoleMessage(player), "yellow");
-
-            SendSpawnCassie();
-
-            SendWarningBroadcast();
 
             ShowHint(player);
 
@@ -196,11 +188,7 @@ namespace Toji.Classes.API.Features
                 return false;
             }
 
-            _players.Remove(player.UserId);
-
-            SendDeathCassie();
-
-            SendDeathBroadcast();
+            Remove(player);
 
             Update(player, false);
 
@@ -219,45 +207,13 @@ namespace Toji.Classes.API.Features
             }
         }
 
-        public void SendSpawnCassie()
-        {
-            if (this is ICassieSubclass cassie && !string.IsNullOrEmpty(cassie.SpawnAnnouncement))
-            {
-                Cassie.MessageTranslated(cassie.SpawnAnnouncement, cassie.SpawnSubtitles);
-            }
-        }
-
-        public void SendDeathCassie()
-        {
-            if (this is ICassieSubclass cassie && !string.IsNullOrEmpty(cassie.DeathAnnouncement))
-            {
-                Cassie.MessageTranslated(cassie.DeathAnnouncement, cassie.DeathSubtitles);
-            }
-        }
-
-        public void SendWarningBroadcast()
-        {
-            if (this is IBroadcastSubclass broadcast && !string.IsNullOrEmpty(broadcast.WarningText))
-            {
-                Map.Broadcast(10, broadcast.WarningText);
-            }
-        }
-
-        public void SendDeathBroadcast()
-        {
-            if (this is IBroadcastSubclass broadcast && !string.IsNullOrEmpty(broadcast.DeathText))
-            {
-                Map.Broadcast(10, broadcast.DeathText);
-            }
-        }
-
         public void ShowHint(Player player)
         {
             if (this is IHintSubclass)
             {
                 ICustomHintSubclass customHint = this as ICustomHintSubclass;
 
-                string color = string.IsNullOrEmpty(customHint?.HintColor) ? Role.GetColor().ToHex() : customHint.HintColor;
+                string color = string.IsNullOrEmpty(customHint?.HintColor) ? SpawnRules.Model.GetColor().ToHex() : customHint.HintColor;
                 string text = string.IsNullOrEmpty(customHint?.HintText) ? $"<line-height=95%><size=95%><voffset=-18em><color={color}>Ты - {Name}!\n{Desc}.</color></size></voffset>" : customHint.HintText;
 
                 player.ShowHint(text, 10);
@@ -280,8 +236,6 @@ namespace Toji.Classes.API.Features
             {
                 sub.Unsubscribe();
             }
-
-            _roleToSubclasses[Role].Remove(this);
 
             _subclasses.Remove(this);
         }

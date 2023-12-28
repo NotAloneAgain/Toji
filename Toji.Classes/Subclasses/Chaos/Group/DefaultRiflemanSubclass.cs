@@ -13,7 +13,7 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 
         public override string Name => "Стрелок";
 
-        public override RoleTypeId Role => RoleTypeId.ChaosRifleman;
+        public override RoleTypeId Model => RoleTypeId.ChaosRifleman;
 
         public override string Desc => "Стандартный стрелок повстанцев хаоса";
 

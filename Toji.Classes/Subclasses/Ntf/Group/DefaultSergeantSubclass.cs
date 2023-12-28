@@ -14,7 +14,7 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 
         public override string Name => "Сержант";
 
-        public override RoleTypeId Role => RoleTypeId.NtfSergeant;
+        public override RoleTypeId Model => RoleTypeId.NtfSergeant;
 
         public override string Desc => "Стандартный сержант девятихвостой лисы";
 

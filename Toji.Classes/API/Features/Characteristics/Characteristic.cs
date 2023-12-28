@@ -1,4 +1,4 @@
-﻿namespace Toji.Classes.API.Features
+﻿namespace Toji.Classes.API.Features.Characteristics
 {
     public abstract class Characteristic<TValue> : BaseCharacteristic
     {

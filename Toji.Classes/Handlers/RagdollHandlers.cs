@@ -3,6 +3,7 @@ using Exiled.Events.EventArgs.Player;
 using PlayerRoles.Ragdolls;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.SpawnRules;
 using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Handlers
@@ -33,7 +34,7 @@ namespace Toji.Classes.Handlers
 
         public void OnSpawnedRagdoll(SpawnedRagdollEventArgs ev)
         {
-            if (!ev.IsValid() || !ev.Player.TryGetSubclass(out var subclass) || ev.Ragdoll == null || ev.Ragdoll.Role != subclass.Role)
+            if (!ev.IsValid() || !ev.Player.TryGetSubclass(out var subclass) || ev.Ragdoll == null)
             {
                 return;
             }

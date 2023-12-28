@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.Subclasses;
 using Toji.Classes.API.Interfaces;
 using Toji.Commands.API.Enums;
 using Toji.Commands.API.Features;

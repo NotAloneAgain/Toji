@@ -12,9 +12,9 @@ namespace Toji.Classes.Subclasses.Ntf.Single
     {
         public override string Name => "Технический специалист";
 
-        public override RoleTypeId Role => RoleTypeId.NtfSergeant;
+        public override string Desc => "Технический специалист, готовый бороться за комплекс против SCP-079";
 
-        public override string Desc => "Белый хакер, программист и просто человек увлекающийся IT";
+        public override RoleTypeId Model => RoleTypeId.NtfSergeant;
 
         public override List<string> Tags { get; } = new List<string>(1) { "Shadow" };
 

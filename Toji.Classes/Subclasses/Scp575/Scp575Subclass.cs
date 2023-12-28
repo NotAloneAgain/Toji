@@ -1,12 +1,13 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using Exiled.API.Features.DamageHandlers;
 using Exiled.Events.EventArgs.Map;
 using Exiled.Events.EventArgs.Scp106;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.SpawnRules;
+using Toji.Classes.API.Features.Subclasses;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Abilities.Ticks;
@@ -18,7 +19,7 @@ namespace Toji.Classes.Subclasses.Scp575
     {
         public override string Name => "SCP-575";
 
-        public override RoleTypeId Role => RoleTypeId.Scp106;
+        public override BaseSpawnRules SpawnRules { get; } = new TeamSpawnRules(Team.SCPs);
 
         public override string Desc => "Прячется в ночи и ищет свою добычу, которая не сможет отогнать от себя мрак";
 

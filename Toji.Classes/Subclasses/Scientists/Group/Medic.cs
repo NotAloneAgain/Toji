@@ -47,7 +47,7 @@ namespace Toji.Classes.Subclasses.Scientists.Group
 
         protected internal override void OnEscaped(in Player player)
         {
-            if (!TryGet("Медик", out var subclass) || subclass.Role != RoleTypeId.NtfSergeant || player.Role != RoleTypeId.NtfSpecialist || !subclass.Can(player))
+            if (!TryGet("Медик", out var subclass) || !subclass.Can(player))
             {
                 base.OnEscaped(player);
 

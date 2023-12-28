@@ -14,7 +14,7 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 
         public override string Name => "Специалист";
 
-        public override RoleTypeId Role => RoleTypeId.NtfSpecialist;
+        public override RoleTypeId Model => RoleTypeId.NtfSpecialist;
 
         public override string Desc => "Стандартный специалист девятихвостой лисы";
 

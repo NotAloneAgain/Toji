@@ -65,6 +65,8 @@ namespace Toji.Classes.Handlers
                     continue;
                 }
 
+                ev.NewRole = sub.SpawnRules.Model;
+
                 sub.DelayedAssign(ev.Player);
 
                 break;

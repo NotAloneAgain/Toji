@@ -1,6 +1,6 @@
 ﻿using Toji.Classes.API.Enums;
 
-namespace Toji.Classes.API.Features
+namespace Toji.Classes.API.Features.Relations
 {
     public abstract class Relation<TTarget> : BaseRelation
     {
