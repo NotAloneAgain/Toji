@@ -39,7 +39,7 @@ namespace Toji.Classes.API.Features
 
         public static TSubclass GetInstance<TSubclass>(System.Type type) where TSubclass : BaseSubclass => GetInstance(type) as TSubclass;
 
-        public static BaseSubclass Get(Player player) => player == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
+        public static BaseSubclass Get(Player player) => player == null || !Contains(player) ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Has(player));
 
         public static BaseSubclass Get(Ragdoll ragdoll) => ragdoll == null ? null : ReadOnlyCollection.FirstOrDefault(sub => sub.Owners.Contains(ragdoll));
 
@@ -101,7 +101,7 @@ namespace Toji.Classes.API.Features
         {
             subclasses = Get(role);
 
-            return subclasses != null && subclasses.Any();
+            return subclasses != null && subclasses.Any(sub => sub != null);
         }
 
         public static bool TryGet<TSubclass>(RoleTypeId role, out IEnumerable<TSubclass> subclasses) where TSubclass : BaseSubclass
@@ -158,7 +158,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Assign(in Player player)
         {
-            if (TryGet(player, out _) || !player.IsAlive || Contains(player))
+            if (TryGet(player, out var sub) && sub != this || !player.IsAlive)
             {
                 Remove(player);
 
@@ -341,7 +341,7 @@ namespace Toji.Classes.API.Features
             return ply.Role.Team switch
             {
                 Team.SCPs => $"{ply.Role.Type.Translate()} - {Name}",
-                Team.FoundationForces => $"Девятихвостая Лиса - {Name}",
+                Team.FoundationForces => ply.Role.Type == RoleTypeId.FacilityGuard ? $"Охранник Комплекса - {Name}" : $"Девятихвостая Лиса - {Name}",
                 Team.ChaosInsurgency => $"Повстанец Хаоса - {Name}",
                 _ => Name,
             };

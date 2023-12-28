@@ -60,7 +60,7 @@ namespace Toji.Classes.Handlers
 
             foreach (var sub in subclasses)
             {
-                if (!sub.Can(ev.Player) || _blacklist.Contains(sub.Name))
+                if (sub == null || !sub.Can(ev.Player) || _blacklist.Contains(sub.Name))
                 {
                     continue;
                 }
