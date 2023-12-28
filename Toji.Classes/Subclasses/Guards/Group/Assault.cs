@@ -27,7 +27,7 @@ namespace Toji.Classes.Subclasses.Guards.Group
                 new StaticSlot(ItemType.KeycardGuard),
                 new RandomSlot(new Dictionary<ItemType, int>(2)
                 {
-                    { ItemType.GunFRMG0, 40 },
+                    { ItemType.GunFRMG0, 43 },
                     { ItemType.GunFSP9, 100 },
                 }),
                 new RandomSlot(new Dictionary<ItemType, int>(2)

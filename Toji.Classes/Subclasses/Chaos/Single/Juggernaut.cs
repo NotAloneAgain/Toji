@@ -14,6 +14,8 @@ namespace Toji.Classes.Subclasses.Chaos.Single
     {
         public override string Name => "Джаггернаут";
 
+        public override RoleTypeId Model => RoleTypeId.ChaosRepressor;
+
         public override string Desc => "Усиленный результатами тренировок и экспериментов боец";
 
         public override List<string> Tags { get; } = new List<string>(1) { "Shadow" };

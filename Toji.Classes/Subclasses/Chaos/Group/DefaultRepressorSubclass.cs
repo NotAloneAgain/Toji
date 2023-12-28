@@ -3,6 +3,7 @@ using PlayerRoles;
 using System.Collections.Generic;
 using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.SpawnRules;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
 
@@ -14,9 +15,9 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 
         public override string Name => "Усмиритель";
 
-        public override RoleTypeId Model => RoleTypeId.ChaosRepressor;
-
         public override string Desc => "Стандартный усмиритель повстанцев хаоса";
+
+        public sealed override BaseSpawnRules SpawnRules { get; } = new RoleSpawnRules(RoleTypeId.ChaosRepressor);
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
@@ -26,6 +27,6 @@ namespace Toji.Classes.Subclasses.Chaos.Group
             })
         };
 
-        public LoadPriority Priority => LoadPriority.Last;
+        public LoadPriority Priority => LoadPriority.Lowest;
     }
 }

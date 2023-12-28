@@ -14,15 +14,15 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 
         public override string Name => "Капитан";
 
-        public override RoleTypeId Model => RoleTypeId.NtfCaptain;
-
         public override string Desc => "Стандартный капитан девятихвостой лисы";
+
+        public sealed override BaseSpawnRules SpawnRules { get; } = new RoleSpawnRules(RoleTypeId.NtfCaptain);
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
             new KnockAbility(100, 5)
         };
 
-        public LoadPriority Priority => LoadPriority.Last;
+        public LoadPriority Priority => LoadPriority.Lowest;
     }
 }

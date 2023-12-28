@@ -155,7 +155,6 @@
     <Compile Include="Subclasses\Characteristics\HealthCharacteristic.cs" />
     <Compile Include="Configs\Config.cs" />
     <Compile Include="Handlers\PlayerHandlers.cs" />
-    <Compile Include="Patches\Scp049\DoctorAttackPatch.cs" />
     <Compile Include="Patches\Scp939\DoorSoundPatch.cs" />
     <Compile Include="Patches\Scp939\FootstepSoundPatch.cs" />
     <Compile Include="Patches\Scp939\FootstepSoundProcessPatch.cs" />

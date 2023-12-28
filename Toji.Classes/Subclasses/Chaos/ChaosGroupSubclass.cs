@@ -9,7 +9,7 @@ namespace Toji.Classes.Subclasses.Chaos
     {
         private TeamSpawnRules _rules;
 
-        public abstract RoleTypeId Model { get; }
+        public virtual RoleTypeId Model { get; }
 
         public override BaseSpawnRules SpawnRules => _rules ??= new TeamSpawnRules(Team.ChaosInsurgency, Model);
     }

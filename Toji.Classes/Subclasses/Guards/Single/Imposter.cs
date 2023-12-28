@@ -30,7 +30,7 @@ namespace Toji.Classes.Subclasses.Guards.Single
             new EffectsCharacteristic(EffectType.Asphyxiated)
         };
 
-        public int Chance => 10;
+        public int Chance => 11;
 
         public void OnDamage(HurtingEventArgs ev)
         {

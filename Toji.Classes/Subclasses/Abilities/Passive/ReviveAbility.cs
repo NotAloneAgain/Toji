@@ -29,7 +29,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnDying(DyingEventArgs ev)
         {
-            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || !ev.DamageHandler.Type.IsValid() || ev.Player.Role.Type != _target)
+            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || ev.DamageHandler.Type.IsStupid() || ev.Player.Role.Type != _target)
             {
                 return;
             }

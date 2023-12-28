@@ -41,7 +41,7 @@ namespace Toji.Classes.Subclasses.Scientists.Group
             })
         };
 
-        public int Chance => 16;
+        public int Chance => 18;
 
         public int Max => 3;
 

@@ -19,7 +19,7 @@ namespace Toji.Classes.Subclasses.Scp575
     {
         public override string Name => "SCP-575";
 
-        public override BaseSpawnRules SpawnRules { get; } = new TeamSpawnRules(Team.SCPs);
+        public override BaseSpawnRules SpawnRules { get; } = new TeamSpawnRules(Team.SCPs, RoleTypeId.Scp106);
 
         public override string Desc => "Прячется в ночи и ищет свою добычу, которая не сможет отогнать от себя мрак";
 

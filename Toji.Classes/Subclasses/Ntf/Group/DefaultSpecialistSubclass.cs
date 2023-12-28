@@ -3,6 +3,7 @@ using PlayerRoles;
 using System.Collections.Generic;
 using Toji.Classes.API.Enums;
 using Toji.Classes.API.Features;
+using Toji.Classes.API.Features.SpawnRules;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Abilities.Active;
 
@@ -14,9 +15,9 @@ namespace Toji.Classes.Subclasses.Ntf.Group
 
         public override string Name => "Специалист";
 
-        public override RoleTypeId Model => RoleTypeId.NtfSpecialist;
-
         public override string Desc => "Стандартный специалист девятихвостой лисы";
+
+        public sealed override BaseSpawnRules SpawnRules { get; } = new RoleSpawnRules(RoleTypeId.NtfSpecialist);
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
@@ -28,6 +29,6 @@ namespace Toji.Classes.Subclasses.Ntf.Group
             })
         };
 
-        public LoadPriority Priority => LoadPriority.Last;
+        public LoadPriority Priority => LoadPriority.Lowest;
     }
 }

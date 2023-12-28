@@ -25,7 +25,7 @@ namespace Toji.Classes.Subclasses.Guards.Group
             })
         };
 
-        public int Chance => 18;
+        public int Chance => 20;
 
         public int Max => 2;
     }

@@ -15,9 +15,9 @@ namespace Toji.Classes.Subclasses.Chaos.Group
 
         public override string Name => "Мародёр";
 
-        public override RoleTypeId Model => RoleTypeId.ChaosMarauder;
-
         public override string Desc => "Стандартный мародёр повстанцев хаоса";
+
+        public sealed override BaseSpawnRules SpawnRules { get; } = new RoleSpawnRules(RoleTypeId.ChaosMarauder);
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
@@ -29,6 +29,6 @@ namespace Toji.Classes.Subclasses.Chaos.Group
             })
         };
 
-        public LoadPriority Priority => LoadPriority.Last;
+        public LoadPriority Priority => LoadPriority.Lowest;
     }
 }

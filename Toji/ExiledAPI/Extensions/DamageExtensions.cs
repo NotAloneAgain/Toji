@@ -14,5 +14,13 @@ namespace Toji.ExiledAPI.Extensions
             or DamageType.Scp3114 or DamageType.Explosion or DamageType.Scp1507 => true,
             _ => false
         };
+
+        public static bool IsStupid(this DamageType type) => type switch
+        {
+            DamageType.Unknown or DamageType.Falldown or DamageType.Warhead
+            or DamageType.Decontamination or DamageType.Scp207 or DamageType.PocketDimension
+            or DamageType.SeveredHands => true,
+            _ => false,
+        };
     }
 }
