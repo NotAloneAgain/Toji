@@ -56,7 +56,7 @@ namespace Toji.RemoteKeycard.API
         {
             var value = perm & other;
 
-            return value != 0 || value == other;
+            return value == other;
         }
     }
 }

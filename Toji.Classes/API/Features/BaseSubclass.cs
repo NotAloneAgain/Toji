@@ -160,8 +160,6 @@ namespace Toji.Classes.API.Features
         {
             if (TryGet(player, out var sub) && sub != this || !player.IsAlive)
             {
-                Remove(player);
-
                 return false;
             }
 
@@ -183,7 +181,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Revoke(in Player player)
         {
-            if (!Contains(player) || TryGet(player, out var sub) && sub != this)
+            if (!Contains(player) || !Has(player))
             {
                 return false;
             }

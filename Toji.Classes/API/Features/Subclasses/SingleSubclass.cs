@@ -35,7 +35,7 @@ namespace Toji.Classes.API.Features.Subclasses
 
         public override bool Can(in Player player) => base.Can(player) && Player == null;
 
-        public sealed override bool Assign(in Player player) => Player == null && base.Assign(player);
+        public sealed override bool Assign(in Player player) => base.Assign(player);
 
         public sealed override bool Revoke(in Player player)
         {
