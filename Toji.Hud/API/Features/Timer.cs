@@ -3,7 +3,7 @@ using MEC;
 using System;
 using System.Collections.Generic;
 
-namespace Toji.Hud.API.API
+namespace Toji.Hud.API.Features
 {
     public abstract class Timer
     {
@@ -41,15 +41,13 @@ namespace Toji.Hud.API.API
 
         protected IEnumerator<float> _Coroutine(Player player)
         {
-            var component = player.GetUserInterface();
-
             while (Conditions(player))
             {
-                yield return Timing.WaitForSeconds(0.1f);
+                yield return Timing.WaitForSeconds(Constants.UpdateTime);
 
                 try
                 {
-                    Iteration(player, component);
+                    Iteration(player, player.GetUserInterface());
                 }
                 catch (Exception err)
                 {

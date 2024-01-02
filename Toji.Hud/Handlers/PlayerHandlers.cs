@@ -3,6 +3,7 @@ using Exiled.Events.EventArgs.Player;
 using MEC;
 using System.Collections.Generic;
 using Toji.ExiledAPI.Extensions;
+using Toji.Hud.API.Features;
 using Toji.Hud.Timers;
 
 namespace Toji.Hud.Handlers
@@ -30,10 +31,15 @@ namespace Toji.Hud.Handlers
 
         private IEnumerator<float> _AdaptiveShower(Player player)
         {
-            yield return Timing.WaitUntilTrue(() => Round.InProgress);
-
-            while (Round.IsStarted)
+            while (true)
             {
+                yield return Timing.WaitForSeconds(Constants.UpdateTime);
+
+                if (Round.IsLobby)
+                {
+                    continue;
+                }
+
                 if (player.IsDead)
                 {
                     yield return Timing.WaitUntilDone(_respawnTimer.Start(player));
@@ -44,8 +50,6 @@ namespace Toji.Hud.Handlers
                 {
 
                 }
-
-                yield return Timing.WaitForSeconds(1);
             }
         }
     }

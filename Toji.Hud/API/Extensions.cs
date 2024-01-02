@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Features;
 using MEC;
-using Toji.Hud.API.API;
+using Toji.Hud.API.Features;
 
 namespace Toji.Hud.API
 {
@@ -8,19 +8,13 @@ namespace Toji.Hud.API
     {
         public static UserInterface GetUserInterface(this Player player)
         {
-            if (UserInterface.TryGet(player, out var ui))
+            if (player.GameObject.TryGetComponent<UserInterface>(out var ui))
             {
-                ui.Awake();
-
                 return ui;
             }
             else
             {
-                ui = new UserInterface(player);
-
-                ui.Awake();
-
-                return ui;
+                return player.GameObject.AddComponent<UserInterface>();
             }
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Toji.Hud.API.Enums;
 
-namespace Toji.Hud.API.API
+namespace Toji.Hud.API.Features
 {
     public class UserHint
     {
@@ -13,9 +13,6 @@ namespace Toji.Hud.API.API
             _original = text;
             Duration = duration;
             Position = position;
-
-            Start = DateTime.MinValue;
-            End = DateTime.MinValue;
 
             Variables = new(10);
         }
@@ -40,11 +37,9 @@ namespace Toji.Hud.API.API
             set => _original = value;
         }
 
-        public float Duration { get; set; }
+        public float Duration { get; }
 
-        public DateTime Start { get; set; }
-
-        public DateTime End { get; set; }
+        public float Time { get; set; } = 0;
 
         public void AddVariable(string name, string result) => Variables.Add(name, () => result);
 

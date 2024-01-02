@@ -3,48 +3,61 @@ using PlayerRoles;
 using System;
 using System.Linq;
 using Toji.Global;
-using Toji.Hud.API.API;
 using Toji.Hud.API.Enums;
+using Toji.Hud.API.Features;
 using UnityEngine;
 
 namespace Toji.Hud.Timers
 {
     public class RespawnTimer : Timer
     {
+        private UserHint _afterCenterHint;
+        private UserHint _topHint;
+
         public override string Tag => "RespawnTimer";
 
         public override Func<Player, bool> Conditions => (Player player) => base.Conditions(player) && player.IsDead;
 
         protected override void Iteration(Player player, UserInterface component)
         {
-            component.Add(Tag, BuildTopHint());
-            component.Add(Tag, BuildCenterHint());
+            component.Add("RespawnTimer-Top", BuildTopHint());
+            component.Add("RespawnTimer-Center", BuildCenterHint());
         }
 
         private UserHint BuildTopHint()
         {
-            var hint = new UserHint("<b><color=#068DA9>До следующего спавна: %time%\nОжидается: %squad%</color></b>", 0.5f, HintPosition.Top);
+            if (_topHint == null)
+            {
+                var hint = new UserHint("<b><color=#068DA9>До следующего спавна: %time%\nОжидается: %squad%</color></b>", 1, HintPosition.Top);
 
-            hint.AddVariable("time", ParseTime);
+                hint.AddVariable("time", ParseTime);
 
-            hint.AddVariable("squad", ParseTeam);
+                hint.AddVariable("squad", ParseTeam);
 
-            return hint;
+                _topHint = hint;
+            }
+
+            return _topHint;
         }
 
         private UserHint BuildCenterHint()
         {
-            var hint = new UserHint("\n\n\n<align=left>Наблюдает: %died%\nС начала раунда прошло: %round%</align>\n<align=right>Альфа-Боеголовка: %warhead%\nГенераторы: %generators%</align>", 0.5f, HintPosition.Center);
+            if (_afterCenterHint == null)
+            {
+                var hint = new UserHint("<i><size=75%><align=left>Наблюдает: %died%</align><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><align=right>Генераторы: %generators%</align></size></i>", 1, HintPosition.Bottom);
 
-            hint.AddVariable("died", ParseSpectators);
+                hint.AddVariable("died", ParseSpectators);
 
-            hint.AddVariable("round", ParseRoundTime);
+                hint.AddVariable("round", ParseRoundTime);
 
-            hint.AddVariable("warhead", ParseWarhead);
+                hint.AddVariable("warhead", ParseWarhead);
 
-            hint.AddVariable("generators", ParseGenerators);
+                hint.AddVariable("generators", ParseGenerators);
 
-            return hint;
+                _afterCenterHint = hint;
+            }
+
+            return _afterCenterHint;
         }
 
         private string ParseTime()

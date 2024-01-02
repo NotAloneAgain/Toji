@@ -5,81 +5,23 @@ using MEC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Toji.Hud.API.Enums;
+using UnityEngine;
 
-namespace Toji.Hud.API.API
+namespace Toji.Hud.API.Features
 {
-    public class UserInterface
+    public class UserInterface : MonoBehaviour
     {
-        private const string HintSkeleton = "<voffset=8.5em><line-height=95%><size=95%>[Top][AfterTop][Center][AfterCenter]";
-        private const float HintsUpdateTime = 0.1f;
-        private const int CenterLinesPadding = 9;
-        private const int TopLinesPadding = 16;
-
-        private static List<(string Tag, UserHint Hint)> _globalHints;
-        private static List<UserInterface> _interfaces;
-
-        static UserInterface()
-        {
-            _globalHints = new (100);
-            _interfaces = new(100);
-        }
-
         private List<(string Tag, UserHint Hint)> _hints;
+        private HintEffect[] _effects;
         private Player _player;
-        private bool _started;
-
-        public UserInterface()
-        {
-            _hints = new();
-
-            _interfaces.Add(this);
-        }
-
-        public UserInterface(Player player) : this() => _player = player;
-
-        public static UserInterface Get(Player player) => _interfaces.Find(ui => ui.Owner == player);
-
-        public static bool TryGet(Player player, out UserInterface ui) => (ui = Get(player)) != null;
-
-        public static void AddGlobal(string tag, UserHint hint, bool isInstant = false)
-        {
-            if (isInstant)
-            {
-                _globalHints.Insert(0, (tag, hint));
-            }
-            else
-            {
-                _globalHints.Add((tag, hint));
-            }
-        }
-
-        public static bool RemoveGlobal(string tag)
-        {
-            var data = _globalHints.Find(data => data.Tag.Equals(tag, StringComparison.OrdinalIgnoreCase));
-
-            return _globalHints.Remove(data);
-        }
-
-        public static void ClearGlobal() => _globalHints.Clear();
 
         public Player Owner => _player;
 
-        public void Awake()
-        {
-            if (_started)
-            {
-                return;
-            }
-
-            _started = true;
-
-            Timing.RunCoroutine(_Update());
-        }
-
         public void Add(string tag, UserHint hint)
         {
+            hint.Time = 0;
+
             for (var index = 0; index < _hints.Count; index++)
             {
                 var data = _hints[index];
@@ -99,6 +41,8 @@ namespace Toji.Hud.API.API
 
         public void AddInstant(string tag, UserHint hint)
         {
+            hint.Time = 0;
+
             for (var index = 0; index < _hints.Count; index++)
             {
                 var data = _hints[index];
@@ -114,22 +58,40 @@ namespace Toji.Hud.API.API
             _hints.Insert(0, (tag, hint));
         }
 
-        public (string Tag, UserHint Hint) GetData(string tag) => _hints.Find(data => data.Tag.Equals(tag, StringComparison.OrdinalIgnoreCase));
-
         public bool Remove(string tag)
         {
-            var data = GetData(tag);
+            var data = _hints.Find(data => data.Tag.Equals(tag, StringComparison.OrdinalIgnoreCase));
 
             return _hints.Remove(data);
         }
 
         public void Clear() => _hints.Clear();
 
+        private void Awake()
+        {
+            _hints = [];
+
+            _effects = [HintEffectPresets.PulseAlpha(0.74f, 1, 1)];
+
+            _player = Player.Dictionary[gameObject];
+        }
+
+        private void Start() => Timing.RunCoroutine(_Update());
+
         private IEnumerator<float> _Update()
         {
-            while (Owner != null && !Owner.IsHost && Owner.IsConnected && !Owner.IsNPC)
+            while (true)
             {
-                yield return Timing.WaitForSeconds(HintsUpdateTime);
+                yield return Timing.WaitForSeconds(Constants.UpdateTime);
+
+                if (gameObject == null || Owner == null || Owner.IsHost || !Owner.IsConnected || Owner.IsNPC)
+                {
+                    Destroy(this);
+
+                    Owner.ShowHint(string.Empty, 0);
+
+                    yield break;
+                }
 
                 var hints = GetAllHints();
 
@@ -138,7 +100,7 @@ namespace Toji.Hud.API.API
                     continue;
                 }
 
-                string nextHintText = HintSkeleton;
+                string nextHintText = Constants.HintSkeleton;
 
                 int top = 0;
                 int center = 0;
@@ -146,6 +108,8 @@ namespace Toji.Hud.API.API
 
                 foreach (var hint in hints)
                 {
+                    hint.Time += Constants.UpdateTime;
+
                     switch (hint.Position)
                     {
                         case HintPosition.Top:
@@ -199,51 +163,26 @@ namespace Toji.Hud.API.API
                 }
 
                 nextHintText = nextHintText.Replace("[Top]", string.Empty)
-                    .Replace("[AfterTop]", GetNewLines(center + top, TopLinesPadding))
+                    .Replace("[AfterTop]", GetNewLines(center + top, Constants.TopLinesPadding))
                     .Replace("[Center]", string.Empty)
-                    .Replace("[AfterCenter]", GetNewLines(bottom, CenterLinesPadding));
+                    .Replace("[AfterCenter]", GetNewLines(bottom, Constants.CenterLinesPadding));
 
                 _player.HintDisplay.Show(new TextHint(nextHintText,
                 [
                     new StringHintParameter(nextHintText)
-                ],
-                [
-                    HintEffectPresets.PulseAlpha(0.74f, 1, 1)
-                ], HintsUpdateTime * 8));
+                ], _effects));
 
                 hints.Clear();
 
                 ListPool<UserHint>.Pool.Return(hints);
             }
-
-            Clear();
         }
 
         private List<UserHint> GetAllHints()
         {
             var hints = ListPool<UserHint>.Pool.Get(100);
 
-            for (var i = 0; i < _globalHints.Count; i++)
-            {
-                (string Tag, UserHint Hint) data = _globalHints[i];
-
-                var hint = data.Hint;
-
-                if (hint.Start == DateTime.MinValue)
-                {
-                    hint.Start = DateTime.Now;
-                    hint.End = DateTime.Now.AddSeconds(hint.Duration);
-                }
-
-                if (DateTime.Now >= hint.End)
-                {
-                    _globalHints.Remove(data);
-
-                    continue;
-                }
-
-                hints.Add(hint);
-            }
+            _hints.RemoveAll(x => x.Hint.Time > x.Hint.Duration);
 
             for (var i = 0; i < _hints.Count; i++)
             {
@@ -251,25 +190,12 @@ namespace Toji.Hud.API.API
 
                 var hint = data.Hint;
 
-                if (hint.Start == DateTime.MinValue)
-                {
-                    hint.Start = DateTime.Now;
-                    hint.End = DateTime.Now.AddSeconds(hint.Duration);
-                }
-
-                if (DateTime.Now >= hint.End)
-                {
-                    _hints.Remove(data);
-
-                    continue;
-                }
-
                 hints.Add(hint);
             }
 
             return hints;
         }
 
-        private static string GetNewLines(int currentLinesCount, int needLinesCount) => new('\n', needLinesCount - currentLinesCount);
+        private static string GetNewLines(int currentLinesCount, int needLinesCount) => new ('\n', needLinesCount - currentLinesCount);
     }
 }

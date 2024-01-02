@@ -38,9 +38,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\API\Timer.cs" />
-    <Compile Include="API\API\UserHint.cs" />
-    <Compile Include="API\API\UserInterface.cs" />
+    <Compile Include="API\Features\Constants.cs" />
+    <Compile Include="API\Features\Timer.cs" />
+    <Compile Include="API\Features\UserHint.cs" />
+    <Compile Include="API\Features\UserInterface.cs" />
     <Compile Include="API\Enums\HintPosition.cs" />
     <Compile Include="API\Extensions.cs" />
     <Compile Include="Handlers\PlayerHandlers.cs" />
