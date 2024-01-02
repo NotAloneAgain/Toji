@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using MEC;
 using Toji.Hud.API.API;
 
 namespace Toji.Hud.API
@@ -9,11 +10,17 @@ namespace Toji.Hud.API
         {
             if (UserInterface.TryGet(player, out var ui))
             {
+                ui.Awake();
+
                 return ui;
             }
             else
             {
-                return new UserInterface(player);
+                ui = new UserInterface(player);
+
+                ui.Awake();
+
+                return ui;
             }
         }
     }

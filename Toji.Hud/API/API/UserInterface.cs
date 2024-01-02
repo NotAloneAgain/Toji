@@ -12,7 +12,7 @@ namespace Toji.Hud.API.API
 {
     public class UserInterface
     {
-        private const string HintSkeleton = "<voffset=8.5em><line-height=95%>[Top][AfterTop][Center][AfterCenter]";
+        private const string HintSkeleton = "<voffset=8.5em><line-height=95%><size=95%>[Top][AfterTop][Center][AfterCenter]";
         private const float HintsUpdateTime = 0.1f;
         private const int CenterLinesPadding = 9;
         private const int TopLinesPadding = 16;
@@ -28,14 +28,13 @@ namespace Toji.Hud.API.API
 
         private List<(string Tag, UserHint Hint)> _hints;
         private Player _player;
+        private bool _started;
 
         public UserInterface()
         {
             _hints = new();
 
             _interfaces.Add(this);
-
-            Timing.RunCoroutine(_Update());
         }
 
         public UserInterface(Player player) : this() => _player = player;
@@ -66,6 +65,18 @@ namespace Toji.Hud.API.API
         public static void ClearGlobal() => _globalHints.Clear();
 
         public Player Owner => _player;
+
+        public void Awake()
+        {
+            if (_started)
+            {
+                return;
+            }
+
+            _started = true;
+
+            Timing.RunCoroutine(_Update());
+        }
 
         public void Add(string tag, UserHint hint)
         {
@@ -124,8 +135,6 @@ namespace Toji.Hud.API.API
 
                 if (hints.IsEmpty())
                 {
-                    yield return Timing.WaitUntilTrue(() => !GetAllHints().IsEmpty());
-
                     continue;
                 }
 
@@ -199,8 +208,8 @@ namespace Toji.Hud.API.API
                     new StringHintParameter(nextHintText)
                 ],
                 [
-                    HintEffectPresets.PulseAlpha(0.734f, 1, 1)
-                ], HintsUpdateTime * 5));
+                    HintEffectPresets.PulseAlpha(0.74f, 1, 1)
+                ], HintsUpdateTime * 8));
 
                 hints.Clear();
 
@@ -220,6 +229,12 @@ namespace Toji.Hud.API.API
 
                 var hint = data.Hint;
 
+                if (hint.Start == DateTime.MinValue)
+                {
+                    hint.Start = DateTime.Now;
+                    hint.End = DateTime.Now.AddSeconds(hint.Duration);
+                }
+
                 if (DateTime.Now >= hint.End)
                 {
                     _globalHints.Remove(data);
@@ -228,12 +243,6 @@ namespace Toji.Hud.API.API
                 }
 
                 hints.Add(hint);
-
-                if (hint.Start == DateTime.MinValue)
-                {
-                    hint.Start = DateTime.Now;
-                    hint.End = DateTime.Now.AddSeconds(hint.Duration);
-                }
             }
 
             for (var i = 0; i < _hints.Count; i++)
@@ -241,6 +250,12 @@ namespace Toji.Hud.API.API
                 (string Tag, UserHint Hint) data = _hints[i];
 
                 var hint = data.Hint;
+
+                if (hint.Start == DateTime.MinValue)
+                {
+                    hint.Start = DateTime.Now;
+                    hint.End = DateTime.Now.AddSeconds(hint.Duration);
+                }
 
                 if (DateTime.Now >= hint.End)
                 {
@@ -250,12 +265,6 @@ namespace Toji.Hud.API.API
                 }
 
                 hints.Add(hint);
-
-                if (hint.Start == DateTime.MinValue)
-                {
-                    hint.Start = DateTime.Now;
-                    hint.End = DateTime.Now.AddSeconds(hint.Duration);
-                }
             }
 
             return hints;

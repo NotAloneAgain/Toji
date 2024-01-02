@@ -17,6 +17,11 @@ namespace Toji.Hud.API.API
 
         public CoroutineHandle Start(Player player)
         {
+            if (_coroutine.ContainsKey(player))
+            {
+                return default;
+            }
+
             var coroutine = Timing.RunCoroutine(_Coroutine(player));
 
             _coroutine.Add(player, coroutine);
@@ -40,14 +45,19 @@ namespace Toji.Hud.API.API
 
             while (Conditions(player))
             {
-                component.Clear();
+                yield return Timing.WaitForSeconds(0.1f);
 
-                component.AddInstant(Tag, BuildHint(player));
-
-                yield return Timing.WaitForSeconds(0.5f);
+                try
+                {
+                    Iteration(player, component);
+                }
+                catch (Exception err)
+                {
+                    Log.Error(err);
+                }
             }
         }
 
-        protected abstract UserHint BuildHint(Player player);
+        protected abstract void Iteration(Player player, UserInterface component);
     }
 }

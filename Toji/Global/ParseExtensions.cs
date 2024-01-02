@@ -38,6 +38,22 @@ namespace Toji.Global
             return $"{minutesInt} {minutesString}";
         }
 
+        public static string GetPlayersString(this int players)
+        {
+            var playersInt = players;
+
+            var playersString = playersInt switch
+            {
+                int n when n % 100 is >= 11 and <= 14 => "игроков",
+                int n when n % 10 == 1 => "игрок",
+                int n when n % 10 is >= 2 and <= 4 => "игрока",
+                _ => "игроков"
+            };
+
+            return $"{playersInt} {playersString}";
+        }
+
+
         public static string ToPrefix(this string str)
         {
             if (str.StartsWith("Toji."))
