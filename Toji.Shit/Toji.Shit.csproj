@@ -93,10 +93,6 @@
       <Project>{b1ae826c-aad1-4752-bf73-9611a9cb9b60}</Project>
       <Name>Toji.MoreRealistic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Toji.MySQL\Toji.MySQL.csproj">
-      <Project>{656a302e-734c-44e7-af13-a68095a97d6c}</Project>
-      <Name>Toji.MySQL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Toji.NicknameFilters\Toji.NicknameFilters.csproj">
       <Project>{75b8e577-a8bc-4f0f-91af-5b93837843f4}</Project>
       <Name>Toji.NicknameFilters</Name>
@@ -120,14 +116,6 @@
     <ProjectReference Include="..\Toji.ScpSwap\Toji.ScpSwap.csproj">
       <Project>{252881df-8ce0-4270-8649-ab3ee35e2767}</Project>
       <Name>Toji.ScpSwap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Toji.Statistics\Toji.Statistics.csproj">
-      <Project>{ba0107c6-9556-4470-9dec-5ee8308a9631}</Project>
-      <Name>Toji.Statistics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Toji.Sync\Toji.Sync.csproj">
-      <Project>{700e868a-5db8-45dd-aaa3-61c263f771a2}</Project>
-      <Name>Toji.Sync</Name>
     </ProjectReference>
     <ProjectReference Include="..\Toji.Teslas\Toji.Teslas.csproj">
       <Project>{ab2e7fc2-35fc-4079-8aec-169e306022de}</Project>
