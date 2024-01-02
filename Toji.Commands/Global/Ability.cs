@@ -21,30 +21,9 @@ namespace Toji.Commands.Global
             { 1, "[Номер]" }
         };
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(1) { CommandType.PlayerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.PlayerConsole ];
 
-        public override CommandPermission Permission { get; set; } = new(false);
-
-        public override bool ParseSyntax(List<string> input, int count, out List<object> output)
-        {
-            output = new List<object>();
-
-            if (count != 1)
-            {
-                output.Add(0);
-
-                return true;
-            }
-
-            if (!int.TryParse(input[0], out var number))
-            {
-                return false;
-            }
-
-            output.Add(number);
-
-            return true;
-        }
+        public override CommandPermission Permission { get; set; } = new ();
 
         public override CommandResultType Handle(List<object> arguments, Player player, out string response)
         {
@@ -116,6 +95,27 @@ namespace Toji.Commands.Global
             }
 
             return success ? CommandResultType.Success : CommandResultType.Fail;
+        }
+
+        public override bool ParseSyntax(List<string> input, int count, out List<object> output)
+        {
+            output = [];
+
+            if (count != 1)
+            {
+                output.Add(0);
+
+                return true;
+            }
+
+            if (!int.TryParse(input[0], out var number))
+            {
+                return false;
+            }
+
+            output.Add(number);
+
+            return true;
         }
     }
 }

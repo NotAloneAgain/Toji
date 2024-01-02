@@ -16,22 +16,18 @@ namespace Marine.Commands.Commands
 
         public override string Description { get; set; } = "Команда для выдачи подкласса.";
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(2) { CommandType.RemoteAdmin, CommandType.ServerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.RemoteAdmin, CommandType.ServerConsole ];
 
         public override Dictionary<int, string> Syntax { get; set; } = new Dictionary<int, string>()
         {
             { 2, "[ИГРОК] [ПОДКЛАСС]" },
         };
 
-        public override CommandPermission Permission { get; set; } = new()
-        {
-            IsLimited = true,
-            Groups = new HashSet<string>()
-            {
-                "adm",
-                "modt",
-            }
-        };
+        public override CommandPermission Permission { get; set; } = new(true, [
+
+            "adm",
+            "modt"
+        ], new(0));
 
         public override CommandResultType Handle(List<object> arguments, Player player, out string response)
         {
@@ -80,7 +76,7 @@ namespace Marine.Commands.Commands
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
-            output = new();
+            output = [];
 
             if (!TryParsePlayers(input[0], out List<Player> players))
             {

@@ -4,10 +4,8 @@ using Toji.Classes.API.Features.Spawnpoints;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class SpawnpointCharacteristic : Characteristic<BaseSpawnpoint>
+    public class SpawnpointCharacteristic(BaseSpawnpoint value) : Characteristic<BaseSpawnpoint>(value)
     {
-        public SpawnpointCharacteristic(BaseSpawnpoint value) : base(value) { }
-
         public override string Name => "Свое место появления";
 
         public override string GetDesc(Player player = null) => $"Вы появляетесь в {Value.PointType}";

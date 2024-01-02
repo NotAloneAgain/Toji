@@ -9,22 +9,11 @@ using Toji.Global;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class AmogusAbility : CooldownAbility
+    public class AmogusAbility(uint cooldown, RoleTypeId target, RoleTypeId role, ItemType item = ItemType.None) : CooldownAbility(cooldown)
     {
-        private RoleTypeId _target;
-        private RoleTypeId _role;
-        private ItemType _item;
-
-        public AmogusAbility(uint cooldown, RoleTypeId target, RoleTypeId role, ItemType item = ItemType.None) : base(cooldown)
-        {
-            _target = target;
-            _role = role;
-            _item = item;
-        }
-
         public override string Name => "Переодевание";
 
-        public override string Desc => $"Ты можешь {(_target.IsHuman() ? "переодеться" : "превратиться")} в {_target.Translate()}, являясь {_role.Translate()}";
+        public override string Desc => $"Ты можешь {(target.IsHuman() ? "переодеться" : "превратиться")} в {target.Translate()}, являясь {role.Translate()}";
 
         public override bool Activate(Player player, out object result)
         {
@@ -35,9 +24,9 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            if (player.Role.Type != _role)
+            if (player.Role.Type != role)
             {
-                result = $"Ты должен быть {_role.Translate()}";
+                result = $"Ты должен быть {role.Translate()}";
 
                 return false;
             }
@@ -49,24 +38,24 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            player.Role.Set(_target, SpawnReason.Revived, RoleSpawnFlags.None);
+            player.Role.Set(target, SpawnReason.Revived, RoleSpawnFlags.None);
 
             player.DisableAllEffects();
 
-            if (!_target.IsHuman())
+            if (!target.IsHuman())
             {
                 player.DropAllWithoutKeycard();
             }
 
-            if (_item != ItemType.None)
+            if (item != ItemType.None)
             {
                 if (player.IsInventoryFull)
                 {
-                    Pickup.CreateAndSpawn(_item, player.Position, player.Rotation, player);
+                    Pickup.CreateAndSpawn(item, player.Position, player.Rotation, player);
                 }
                 else
                 {
-                    player.AddItem(_item);
+                    player.AddItem(item);
                 }
             }
 

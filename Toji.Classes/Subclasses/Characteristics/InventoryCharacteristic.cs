@@ -6,10 +6,8 @@ using Toji.Classes.API.Features.Inventory;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class InventoryCharacteristic : Characteristic<List<Slot>>
+    public class InventoryCharacteristic(List<Slot> value) : Characteristic<List<Slot>>(value)
     {
-        public InventoryCharacteristic(List<Slot> value) : base(value) { }
-
         public override string Name => "Свой инвентарь";
 
         public override void OnEnabled(Player player)

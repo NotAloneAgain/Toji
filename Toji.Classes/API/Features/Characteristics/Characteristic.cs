@@ -1,12 +1,7 @@
 ﻿namespace Toji.Classes.API.Features.Characteristics
 {
-    public abstract class Characteristic<TValue> : BaseCharacteristic
+    public abstract class Characteristic<TValue>(TValue value) : BaseCharacteristic()
     {
-        public Characteristic(TValue value) : base()
-        {
-            Value = value;
-        }
-
-        public TValue Value { get; protected internal set; }
+        public TValue Value { get; protected internal set; } = value;
     }
 }

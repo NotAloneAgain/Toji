@@ -6,17 +6,11 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features.Abilities
 {
-    public abstract class CooldownAbility : ActiveAbility, ISubscribable
+    public abstract class CooldownAbility(uint cooldown) : ActiveAbility, ISubscribable
     {
-        private List<AbilityUse> _lastUsed;
+        private List<AbilityUse> _lastUsed = new(200);
 
-        public CooldownAbility(uint cooldown)
-        {
-            _lastUsed = new List<AbilityUse>(200);
-            Cooldown = cooldown;
-        }
-
-        public uint Cooldown { get; internal set; }
+        public uint Cooldown { get; internal set; } = cooldown;
 
         public override bool Activate(Player player, out object result)
         {

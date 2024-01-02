@@ -5,10 +5,8 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class HackAbility : CooldownAbility
+    public class HackAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        public HackAbility(uint cooldown) : base(cooldown) { }
-
         public override string Name => "Взлом дверей";
 
         public override string Desc => "Ты можешь взламывать двери";

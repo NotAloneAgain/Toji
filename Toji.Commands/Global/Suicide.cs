@@ -17,16 +17,13 @@ namespace Toji.Commands.Global
             { 0, string.Empty }
         };
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(1) { CommandType.PlayerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.PlayerConsole ];
 
-        public override CommandPermission Permission { get; set; } = new()
-        {
-            IsLimited = false,
-        };
+        public override CommandPermission Permission { get; set; } = new();
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
-            output = new List<object>();
+            output = [];
 
             return true;
         }

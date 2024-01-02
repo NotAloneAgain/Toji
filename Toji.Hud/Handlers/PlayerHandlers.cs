@@ -46,10 +46,6 @@ namespace Toji.Hud.Handlers
 
                     _respawnTimer.End(player);
                 }
-                else
-                {
-
-                }
             }
         }
     }

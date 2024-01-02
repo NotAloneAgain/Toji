@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features.Spawnpoints
 {
-    public class RoleSpawnpoint : BaseSpawnpoint
+    public class RoleSpawnpoint(RoleTypeId role) : BaseSpawnpoint
     {
-        public RoleSpawnpoint(RoleTypeId role) => Type = role;
-
-        public RoleTypeId Type { get; init; }
+        public RoleTypeId Type { get; init; } = role;
 
         public sealed override Vector3 Position => Type.GetRandomSpawnLocation().Position;
     }

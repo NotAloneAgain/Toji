@@ -3,22 +3,13 @@ using Toji.Classes.API.Features.Characteristics;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class ArtificalShieldCharacteristic : Characteristic<float>
+    public class ArtificalShieldCharacteristic(float value) : Characteristic<float>(value)
     {
-        private bool _persistent;
-        private float _efficacy;
-        private float _sustain;
-        private float _limit;
-        private float _decay;
-
-        public ArtificalShieldCharacteristic(float value) : base(value)
-        {
-            _limit = 75;
-            _decay = 1.2f;
-            _efficacy = 0.7f;
-            _sustain = 0;
-            _persistent = false;
-        }
+        private bool _persistent = false;
+        private float _efficacy = 0.7f;
+        private float _sustain = 0;
+        private float _limit = 75;
+        private float _decay = 1.2f;
 
         public ArtificalShieldCharacteristic(float value, float limit, float decay, float efficacy, float sustain, bool persistent) : this(value)
         {

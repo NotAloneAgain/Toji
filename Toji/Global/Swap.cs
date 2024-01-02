@@ -9,8 +9,8 @@ namespace Toji.Global
 
         public static ushort SwapDuration { get; set; } = 90;
 
-        public static List<RoleTypeId> AllowedScps { get; set; } = new(8)
-        {
+        public static List<RoleTypeId> AllowedScps { get; set; } = [
+
             RoleTypeId.Scp096,
             RoleTypeId.Scp049,
             RoleTypeId.Scp173,
@@ -18,7 +18,7 @@ namespace Toji.Global
             RoleTypeId.Scp106,
             RoleTypeId.Scp079,
             RoleTypeId.Scp3114
-        };
+        ];
 
         public static Dictionary<RoleTypeId, int> Slots { get; set; } = new(8)
         {

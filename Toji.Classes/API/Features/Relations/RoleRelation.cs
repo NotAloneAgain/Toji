@@ -7,10 +7,8 @@ using Toji.Global;
 
 namespace Toji.Classes.API.Features.Relations
 {
-    public class RoleRelation : PlayerRelation<RoleTypeId>
+    public class RoleRelation(RelationType type, RoleTypeId target) : PlayerRelation<RoleTypeId>(type, target)
     {
-        public RoleRelation(RelationType type, RoleTypeId target) : base(type, target) { }
-
         public override string Desc => $"Для получения подкласса должен быть {Target.Translate()}";
 
         public override Func<RoleTypeId, bool> CheckAllPlayers => (RoleTypeId role) => Player.List.Any(ply => ply.Role.Type == role);

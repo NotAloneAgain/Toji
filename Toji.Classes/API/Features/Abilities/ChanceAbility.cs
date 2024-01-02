@@ -2,11 +2,9 @@
 
 namespace Toji.Classes.API.Features.Abilities
 {
-    public abstract class ChanceAbility : PassiveAbility
+    public abstract class ChanceAbility(int chance) : PassiveAbility
     {
-        public ChanceAbility(int chance) => Chance = chance;
-
-        public int Chance { get; }
+        public int Chance { get; } = chance;
 
         public bool GetRandom() => GetRandom(Chance);
 

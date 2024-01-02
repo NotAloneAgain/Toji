@@ -2,12 +2,8 @@
 
 namespace Toji.Classes.API.Features.Spawnpoints
 {
-    public class StaticSpawnpoint : BaseSpawnpoint
+    public class StaticSpawnpoint(Vector3 pos) : BaseSpawnpoint()
     {
-        private Vector3 _pos;
-
-        public StaticSpawnpoint(Vector3 pos) : base() => _pos = pos;
-
-        public override Vector3 Position => _pos;
+        public override Vector3 Position => pos;
     }
 }

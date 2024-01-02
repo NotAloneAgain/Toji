@@ -4,25 +4,15 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features.Inventory
 {
-    public class RandomSlot : Slot
+    public class RandomSlot(IDictionary<ItemType, int> items) : Slot
     {
-        private readonly IDictionary<ItemType, int> _items;
+        public RandomSlot(params KeyValuePair<ItemType, int>[] pairs) : this(pairs.ToDictionary(pair => pair.Key, pair => pair.Value)) { }
 
-        public RandomSlot(IDictionary<ItemType, int> items) => _items = items;
-
-        public RandomSlot(params KeyValuePair<ItemType, int>[] pairs)
-        {
-            _items = pairs.ToDictionary(pair => pair.Key, pair => pair.Value);
-        }
-
-        public RandomSlot(IEnumerable<KeyValuePair<ItemType, int>> pairs)
-        {
-            _items = pairs.ToDictionary(pair => pair.Key, pair => pair.Value);
-        }
+        public RandomSlot(IEnumerable<KeyValuePair<ItemType, int>> pairs) : this(pairs.ToDictionary(pair => pair.Key, pair => pair.Value)) { }
 
         public override ItemType GetItem()
         {
-            foreach (var item in _items)
+            foreach (var item in items)
             {
                 if (Random.Range(0, 100) >= item.Value)
                 {

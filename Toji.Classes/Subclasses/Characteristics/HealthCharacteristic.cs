@@ -5,7 +5,7 @@ using Toji.Classes.API.Features.Characteristics;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class HealthCharacteristic : Characteristic<float>
+    public class HealthCharacteristic(float value) : Characteristic<float>(value)
     {
         private static Dictionary<RoleTypeId, int> _defaultValues;
 
@@ -36,8 +36,6 @@ namespace Toji.Classes.Subclasses.Characteristics
                 { RoleTypeId.Spectator, 100 },
                 { RoleTypeId.CustomRole, 100 },
             };
-
-        public HealthCharacteristic(float value) : base(value) { }
 
         public override string Name => "Измененное количество здоровья";
 

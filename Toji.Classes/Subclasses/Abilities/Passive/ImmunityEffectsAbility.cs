@@ -8,12 +8,8 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class ImmunityEffectsAbility : PassiveAbility
+    public class ImmunityEffectsAbility(HashSet<EffectType> blockedEffects) : PassiveAbility
     {
-        private HashSet<EffectType> _blockedEffects;
-
-        public ImmunityEffectsAbility(HashSet<EffectType> blockedEffects) => _blockedEffects = blockedEffects;
-
         public ImmunityEffectsAbility(params EffectType[] effects) : this(effects.ToHashSet()) { }
 
         public override string Name => "Иммунитет";
@@ -31,7 +27,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            ev.IsAllowed = !_blockedEffects.Contains(ev.Effect.GetEffectType());
+            ev.IsAllowed = !blockedEffects.Contains(ev.Effect.GetEffectType());
         }
     }
 }

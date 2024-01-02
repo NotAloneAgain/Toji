@@ -7,20 +7,11 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class ReflectionAbility : PassiveAbility, IHurtController
+    public class ReflectionAbility(bool includeScp, float multiplayer) : PassiveAbility, IHurtController
     {
-        private bool _includeScp;
-        private float _multiplayer;
-
-        public ReflectionAbility(bool includeScp, float multiplayer)
-        {
-            _includeScp = includeScp;
-            _multiplayer = multiplayer;
-        }
-
         public override string Name => "Отражение урона";
 
-        public override string Desc => $"Ты отражаешь {Math.Round(_multiplayer * 100, 1)}% урона в атакующего{(_includeScp ? string.Empty : ", если он не SCP-Объект")}";
+        public override string Desc => $"Ты отражаешь {Math.Round(multiplayer * 100, 1)}% урона в атакующего{(includeScp ? string.Empty : ", если он не SCP-Объект")}";
 
         public void OnHurt(HurtingEventArgs ev)
         {
@@ -29,12 +20,12 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            if (ev.Attacker.IsScp && !_includeScp)
+            if (ev.Attacker.IsScp && !includeScp)
             {
                 return;
             }
 
-            var amount = ev.Attacker.IsScp ? 50 : ev.Amount * _multiplayer;
+            var amount = ev.Attacker.IsScp ? 50 : ev.Amount * multiplayer;
 
             ev.Attacker.Hurt(ev.Player, amount, ev.DamageHandler.Type, default);
         }

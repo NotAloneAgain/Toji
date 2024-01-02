@@ -3,16 +3,10 @@ using Toji.Commands.API.Enums;
 
 namespace Toji.Commands.API.Features
 {
-    public class CommandUse
+    public class CommandUse(DateTime time, CommandResultType result)
     {
-        public CommandUse(DateTime time, CommandResultType result)
-        {
-            Time = time;
-            Result = result;
-        }
+        public DateTime Time { get; set; } = time;
 
-        public DateTime Time { get; set; }
-
-        public CommandResultType Result { get; set; }
+        public CommandResultType Result { get; set; } = result;
     }
 }

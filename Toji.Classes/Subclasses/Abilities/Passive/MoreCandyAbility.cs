@@ -5,15 +5,11 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class MoreCandyAbility : PassiveAbility
+    public class MoreCandyAbility(int maxUsages) : PassiveAbility
     {
-        private int _maxUsages;
-
-        public MoreCandyAbility(int maxUsages) => _maxUsages = maxUsages;
-
         public override string Name => "Больше конфет?";
 
-        public override string Desc => $"Ты можешь взять до {_maxUsages + 1} конфет SCP-330";
+        public override string Desc => $"Ты можешь взять до {maxUsages + 1} конфет SCP-330";
 
         public override void Subscribe() => Scp330.InteractingScp330 += OnInteractingScp330;
 
@@ -26,7 +22,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            ev.ShouldSever = ev.UsageCount > _maxUsages;
+            ev.ShouldSever = ev.UsageCount > maxUsages;
 
             if (ev.ShouldSever)
             {

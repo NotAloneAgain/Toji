@@ -1,5 +1,4 @@
-﻿using CustomPlayerEffects;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using MEC;
@@ -11,36 +10,33 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class ScalingAbility : PassiveAbility, IDamageController
+    public class ScalingAbility(int health, int damage, float vampire, byte movement) : PassiveAbility, IDamageController
     {
-        private Dictionary<string, ScalingStats> _stats;
+        public override string Name => "Усиление";
 
-        public ScalingAbility()
-        {
-            _stats = new(Server.MaxPlayerCount);
-        }
+        public override string Desc => "Каждая новая смерть приносит вам усиление";
 
-        public override string Name => "Ярость";
+        public int Health { get; set; }
 
-        public override string Desc => "С каждым убитым ярость и желание крови укрепляется";
+        public int Damage { get; set; }
+
+        public float Vampire { get; set; }
+
+        public byte Movement { get; set; }
 
         public override void OnEnabled(Player player)
         {
             base.OnEnabled(player);
 
-            _stats.Add(player.UserId, new ScalingStats(350, 20, 0.25f, 2));
+            Health = health;
+            Damage = damage;
+            Vampire = vampire;
+            Movement = movement;
 
-            player.Health = 350;
-            player.MaxHealth = 350;
+            player.Health = Health;
+            player.MaxHealth = Health;
 
             Timing.RunCoroutine(_UpdateValues(player));
-        }
-
-        public override void OnDisabled(Player player)
-        {
-            base.OnDisabled(player);
-
-            _stats.Remove(player.UserId);
         }
 
         public override void Subscribe() => Exiled.Events.Handlers.Player.Died += OnDied;
@@ -54,66 +50,39 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            var stats = _stats[ev.Attacker.UserId];
-
-            stats.Damage = Mathf.Clamp(stats.Damage + 10, 20, 150);
-            stats.Health = Mathf.Clamp(stats.Health + 50, 350, 1400);
-            stats.Vampire = Mathf.Clamp(stats.Vampire + 0.025f, 0.25f, 0.425f);
-            stats.Movement = (byte)Mathf.Clamp(stats.Movement + 2, 2, 40);
-
-            _stats[ev.Attacker.UserId] = stats;
+            Damage = Mathf.Clamp(Damage + 10, 20, 120);
+            Health = Mathf.Clamp(Health + 50, 350, 1600);
+            Vampire = Mathf.Clamp(Vampire + 0.025f, 0.25f, 0.45f);
+            Movement = (byte)Mathf.Clamp(Movement + 2, 2, 50);
         }
 
         public void OnDamage(HurtingEventArgs ev)
         {
-            if (!Has(ev.Player) || !ev.IsAllowed || !IsEnabled || !_stats.TryGetValue(ev.Attacker.UserId, out var stats))
+            if (!Has(ev.Player) || !ev.IsAllowed || !IsEnabled)
             {
                 return;
             }
 
-            ev.Amount = stats.Damage;
-            ev.Attacker.Heal(ev.Amount * stats.Vampire);
+            ev.Amount = Damage;
+            ev.Attacker.Heal(ev.Amount * Vampire);
         }
 
         private IEnumerator<float> _UpdateValues(Player player)
         {
-            var boost = player.GetEffect(EffectType.MovementBoost) as MovementBoost;
-
             while ((player?.IsAlive ?? false) && Has(player))
             {
-                var stats = _stats[player.UserId];
-
-                if (player.MaxHealth < stats.Health)
+                if (player.MaxHealth < Health)
                 {
-                    var value = player.MaxHealth - stats.Health;
+                    var value = player.MaxHealth - Health;
 
-                    player.MaxHealth = stats.Health;
+                    player.MaxHealth = Health;
                     player.Heal(value);
                 }
 
-                boost.ServerSetState(stats.Movement, 0, false);
+                player.EnableEffect(EffectType.MovementBoost, Movement, 0, false);
 
                 yield return Timing.WaitForSeconds(1);
             }
-        }
-
-        struct ScalingStats
-        {
-            public ScalingStats(int health, int damage, float vampire, byte movement)
-            {
-                Health = health;
-                Damage = damage;
-                Vampire = vampire;
-                Movement = movement;
-            }
-
-            public int Health { get; set; }
-
-            public int Damage { get; set; }
-
-            public float Vampire { get; set; }
-
-            public byte Movement { get; set; }
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Toji.Classes.Subclasses.Abilities.Active
         public RepairDoorAbility(uint cooldown) : base(cooldown)
         {
             _distance = 5;
-            _ignoredDoors = new HashSet<DoorType>()
-            {
+            _ignoredDoors = [
+
                 DoorType.CheckpointArmoryA,
                 DoorType.CheckpointArmoryB,
                 DoorType.LczArmory,
@@ -26,7 +26,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 DoorType.Scp049Armory,
                 DoorType.HID,
                 DoorType.Intercom
-            };
+            ];
         }
 
         public RepairDoorAbility(uint cooldown, float distance) : this(cooldown)

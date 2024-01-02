@@ -8,20 +8,11 @@ using Toji.Global;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class ReviveAbility : PassiveAbility
+    public class ReviveAbility(RoleTypeId role, RoleTypeId target) : PassiveAbility
     {
-        private RoleTypeId _target;
-        private RoleTypeId _role;
-
-        public ReviveAbility(RoleTypeId role, RoleTypeId target)
-        {
-            _target = target;
-            _role = role;
-        }
-
         public override string Name => "Возрождение";
 
-        public override string Desc => $"После смерти ты станешь {_role.Translate()}";
+        public override string Desc => $"После смерти ты станешь {role.Translate()}";
 
         public override void Subscribe() => Player.Dying += OnDying;
 
@@ -29,16 +20,16 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private void OnDying(DyingEventArgs ev)
         {
-            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || ev.DamageHandler.Type.IsStupid() || ev.Player.Role.Type != _target)
+            if (!ev.IsValid() || !IsEnabled || !ev.IsAllowed || !Has(ev.Player) || ev.DamageHandler.Type.IsStupid() || ev.Player.Role.Type != target)
             {
                 return;
             }
 
             ev.IsAllowed = false;
 
-            ev.Player.Role.Set(_role, SpawnReason.Revived, RoleSpawnFlags.None);
+            ev.Player.Role.Set(role, SpawnReason.Revived, RoleSpawnFlags.None);
 
-            if (!_role.IsHuman() && !ev.Player.IsInventoryEmpty)
+            if (!role.IsHuman() && !ev.Player.IsInventoryEmpty)
             {
                 ev.Player.DropAllWithoutKeycard();
             }

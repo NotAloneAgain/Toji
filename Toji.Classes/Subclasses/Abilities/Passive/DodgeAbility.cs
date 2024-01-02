@@ -6,20 +6,11 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class DodgeAbility : ChanceAbility
+    public class DodgeAbility(int chance, int fullyChance, float defaultHurt) : ChanceAbility(chance)
     {
-        private int _fullyChance;
-        private float _defaultHurt;
-
-        public DodgeAbility(int chance, int fullyChance, float defaultHurt) : base(chance)
-        {
-            _fullyChance = fullyChance;
-            _defaultHurt = defaultHurt;
-        }
-
         public override string Name => "Уклонение";
 
-        public override string Desc => $"Ты можешь уклониться от атаки с шансом {Chance}%, смягчив на {100 - _defaultHurt * 100}% ({100 - _fullyChance}%) или вовсе не получив ({_fullyChance}%) урон";
+        public override string Desc => $"Ты можешь уклониться от атаки с шансом {Chance}%, смягчив на {100 - defaultHurt * 100}% ({100 - fullyChance}%) или вовсе не получив ({fullyChance}%) урон";
 
         public override void Subscribe() => Player.Hurting += OnHurting;
 
@@ -32,13 +23,13 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
                 return;
             }
 
-            if (GetRandom(_fullyChance))
+            if (GetRandom(fullyChance))
             {
                 ev.Amount = 0;
             }
             else
             {
-                ev.Amount *= _defaultHurt;
+                ev.Amount *= defaultHurt;
             }
         }
     }

@@ -3,10 +3,8 @@ using Toji.Classes.API.Enums;
 
 namespace Toji.Classes.API.Features.Relations
 {
-    public class ChanceRelation : Relation<int>
+    public class ChanceRelation(RelationType type, int target) : Relation<int>(type, target)
     {
-        public ChanceRelation(RelationType type, int target) : base(type, target) { }
-
         public override string Desc => "";
 
         public void Activate(BaseSubclass subclass)

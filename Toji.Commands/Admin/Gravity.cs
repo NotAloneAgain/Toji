@@ -16,7 +16,7 @@ namespace Marine.Commands.Commands
 
         public override string Description { get; set; } = "Команда для смены гравитации.";
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(2) { CommandType.RemoteAdmin, CommandType.ServerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.RemoteAdmin, CommandType.ServerConsole ];
 
         public override Dictionary<int, string> Syntax { get; set; } = new Dictionary<int, string>()
         {
@@ -26,11 +26,11 @@ namespace Marine.Commands.Commands
         public override CommandPermission Permission { get; set; } = new()
         {
             IsLimited = true,
-            Groups = new HashSet<string>()
-            {
+            Groups = [
+
                 "adm",
                 "modt",
-            }
+            ]
         };
 
         public override CommandResultType Handle(List<object> arguments, Player player, out string response)
@@ -46,7 +46,7 @@ namespace Marine.Commands.Commands
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
-            output = new();
+            output = [];
 
             if (count == 3)
             {

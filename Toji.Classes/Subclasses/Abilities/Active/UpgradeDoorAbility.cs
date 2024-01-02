@@ -9,34 +9,23 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class UpgradeDoorAbility : CooldownAbility
+    public class UpgradeDoorAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        private float _distance;
-        private HashSet<DoorType> _ignoredDoors;
+        private float _distance = 5;
+        private HashSet<DoorType> _ignoredDoors = [
 
-        public UpgradeDoorAbility(uint cooldown) : base(cooldown)
-        {
-            _distance = 5;
-            _ignoredDoors = new HashSet<DoorType>()
-            {
-                DoorType.CheckpointArmoryA,
-                DoorType.CheckpointArmoryB,
-                DoorType.LczArmory,
-                DoorType.HczArmory,
-                DoorType.Scp049Armory,
-                DoorType.HID,
-                DoorType.Intercom
-            };
-        }
+            DoorType.CheckpointArmoryA,
+            DoorType.CheckpointArmoryB,
+            DoorType.LczArmory,
+            DoorType.HczArmory,
+            DoorType.Scp049Armory,
+            DoorType.HID,
+            DoorType.Intercom
+        ];
 
         public UpgradeDoorAbility(uint cooldown, float distance) : this(cooldown)
         {
             _distance = distance;
-        }
-
-        public UpgradeDoorAbility(uint cooldown, float distance, HashSet<DoorType> ignoredDoors) : this(cooldown, distance)
-        {
-            _ignoredDoors = ignoredDoors;
         }
 
         public override string Name => "Улучшение дверей";

@@ -1,11 +1,7 @@
 ﻿namespace Toji.Classes.API.Features.Inventory
 {
-    public class StaticSlot : Slot
+    public class StaticSlot(ItemType item) : Slot
     {
-        private readonly ItemType _item;
-
-        public StaticSlot(ItemType item) => _item = item;
-
-        public override ItemType GetItem() => _item;
+        public override ItemType GetItem() => item;
     }
 }

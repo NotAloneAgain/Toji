@@ -6,11 +6,9 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features.Spawnpoints
 {
-    public class RoomSpawnpoint : BaseSpawnpoint
+    public class RoomSpawnpoint(RoomType room) : BaseSpawnpoint
     {
-        public RoomSpawnpoint(RoomType room) => Type = room;
-
-        public RoomType Type { get; init; }
+        public RoomType Type { get; init; } = room;
 
         public sealed override Vector3 Position => Room.Get(room => room.Type == Type).GetRandomValue().GetSafePosition() + Vector3.up * 2;
     }

@@ -13,6 +13,7 @@ namespace Toji.Hud.API.Features
     public class UserInterface : MonoBehaviour
     {
         private List<(string Tag, UserHint Hint)> _hints;
+        private CoroutineHandle _coroutine;
         private Player _player;
 
         public Player Owner => _player;
@@ -73,7 +74,19 @@ namespace Toji.Hud.API.Features
             _player = Player.Dictionary[gameObject];
         }
 
-        private void Start() => Timing.RunCoroutine(_Update());
+        private void Start() => _coroutine = Timing.RunCoroutine(_Update());
+
+        private void OnDestroy()
+        {
+            Owner.ShowHint(string.Empty, 0);
+
+            if (_coroutine.IsRunning)
+            {
+                Timing.KillCoroutines(_coroutine);
+            }
+
+            _coroutine = default;
+        }
 
         private IEnumerator<float> _Update()
         {
@@ -84,8 +97,6 @@ namespace Toji.Hud.API.Features
                 if (gameObject == null || Owner == null || Owner.IsHost || !Owner.IsConnected || Owner.IsNPC)
                 {
                     Destroy(this);
-
-                    Owner.ShowHint(string.Empty, 0);
 
                     yield break;
                 }

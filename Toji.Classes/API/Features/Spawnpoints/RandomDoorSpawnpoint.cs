@@ -6,17 +6,13 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features.Spawnpoints
 {
-    public class RandomDoorSpawnpoint : RandomSpawnpoint
+    public class RandomDoorSpawnpoint(IEnumerable<DoorType> doors) : RandomSpawnpoint
     {
-        private IEnumerable<DoorType> _doors;
-
-        public RandomDoorSpawnpoint(IEnumerable<DoorType> doors) => _doors = doors;
-
-        public RandomDoorSpawnpoint(params DoorType[] doors) => _doors = doors;
+        public RandomDoorSpawnpoint(params DoorType[] doors) : this((IEnumerable<DoorType>)doors) { }
 
         public override Vector3 SelectRandom()
         {
-            var type = _doors.GetRandomValue();
+            var type = doors.GetRandomValue();
 
             var door = Door.Get(door => door.Type == type).GetRandomValue();
 

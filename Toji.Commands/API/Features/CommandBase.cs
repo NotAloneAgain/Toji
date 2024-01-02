@@ -164,14 +164,14 @@ namespace Toji.Commands.API.Features
             {
                 case "all":
                     {
-                        result = Player.List.ToList();
+                        result = [.. Player.List];
 
                         break;
                     }
                 case "0":
                 case "me":
                     {
-                        result = new List<Player>(1) { };
+                        result = new List<Player>(1);
 
                         break;
                     }

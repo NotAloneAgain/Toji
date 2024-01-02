@@ -6,24 +6,22 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class TradeAbility : CooldownAbility
+    public class TradeAbility(uint cooldown) : CooldownAbility(cooldown)
     {
         private static readonly HashSet<ItemType> _blocked;
 
-        static TradeAbility() => _blocked = new HashSet<ItemType>()
-            {
-                ItemType.None,
-                ItemType.Ammo12gauge,
-                ItemType.Ammo44cal,
-                ItemType.Ammo556x45,
-                ItemType.Ammo762x39,
-                ItemType.Ammo9x19,
-                ItemType.ArmorCombat,
-                ItemType.ArmorHeavy,
-                ItemType.ArmorLight
-            };
+        static TradeAbility() => _blocked = [
 
-        public TradeAbility(uint cooldown) : base(cooldown) { }
+            ItemType.None,
+            ItemType.Ammo12gauge,
+            ItemType.Ammo44cal,
+            ItemType.Ammo556x45,
+            ItemType.Ammo762x39,
+            ItemType.Ammo9x19,
+            ItemType.ArmorCombat,
+            ItemType.ArmorHeavy,
+            ItemType.ArmorLight
+        ];
 
         public override string Name => "Обмен";
 

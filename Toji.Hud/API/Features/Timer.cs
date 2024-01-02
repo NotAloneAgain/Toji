@@ -36,6 +36,8 @@ namespace Toji.Hud.API.Features
                 Timing.KillCoroutines(coroutine);
 
                 _coroutine.Remove(player);
+
+                UnityEngine.Object.Destroy(player.GetUserInterface());
             }
         }
 

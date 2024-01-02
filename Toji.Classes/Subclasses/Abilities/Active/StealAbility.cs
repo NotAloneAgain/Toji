@@ -8,39 +8,26 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class StealAbility : CooldownAbility
+    public class StealAbility(uint cooldown, bool held, int failure, int detected, float distance) : CooldownAbility(cooldown)
     {
         private const string StealFailed = "<line-height=95%><size=95%><voffset=-20em><color=#BC5D58>Вы услышали как что-то шуршит в ваших карманах... {0} выглядит подозрительным...</color></size></voffset>";
 
-        private HashSet<ItemType> _banned;
-        private float _distance;
-        private int _detected;
-        private int _failure;
-        private bool _held;
+        private HashSet<ItemType> _banned = [
 
-        public StealAbility(uint cooldown, bool held, int failure, int detected, float distance) : base(cooldown)
-        {
-            _banned = new HashSet<ItemType>(13)
-            {
-                 ItemType.ParticleDisruptor,
-                 ItemType.MicroHID,
-                 ItemType.GunLogicer,
-                 ItemType.ArmorCombat,
-                 ItemType.ArmorHeavy,
-                 ItemType.ArmorLight,
-                 ItemType.GunShotgun,
-                 ItemType.GunCom45,
-                 ItemType.GunFSP9,
-                 ItemType.GunE11SR,
-                 ItemType.GunCrossvec,
-                 ItemType.SCP244a,
-                 ItemType.SCP244b,
-            };
-            _detected = detected;
-            _distance = distance;
-            _failure = failure;
-            _held = held;
-        }
+            ItemType.ParticleDisruptor,
+            ItemType.MicroHID,
+            ItemType.GunLogicer,
+            ItemType.ArmorCombat,
+            ItemType.ArmorHeavy,
+            ItemType.ArmorLight,
+            ItemType.GunShotgun,
+            ItemType.GunCom45,
+            ItemType.GunFSP9,
+            ItemType.GunE11SR,
+            ItemType.GunCrossvec,
+            ItemType.SCP244a,
+            ItemType.SCP244b,
+        ];
 
         public StealAbility(uint cooldown, bool held, int failure, int detected, float distance, IEnumerable<ItemType> items) : this(cooldown, held, failure, detected, distance)
         {
@@ -49,13 +36,13 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
         public override string Name => "Воровство";
 
-        public override string Desc => $"Ты можешь попытаться {(_held ? "отобрать" : "украсть")} случайный предмет у игрока, на которого смотришь";
+        public override string Desc => $"Ты можешь попытаться {(held ? "отобрать" : "украсть")} случайный предмет у игрока, на которого смотришь";
 
         public override void OnEnabled(Player player)
         {
             base.OnEnabled(player);
 
-            player.SendConsoleMessage($"Ты не сможешь {(_held ? "отобрать" : "украсть")} предметы: {string.Join(", ", _banned.Select(x => x.ToString()))}", "red");
+            player.SendConsoleMessage($"Ты не сможешь {(held ? "отобрать" : "украсть")} предметы: {string.Join(", ", _banned.Select(x => x.ToString()))}", "red");
         }
 
         public override bool Activate(Player player, out object result)
@@ -69,14 +56,14 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             if (player.IsCuffed)
             {
-                result = $"Ты не можешь {(_held ? "отбирать" : "воровать")} предметы, будучи связанным.";
+                result = $"Ты не можешь {(held ? "отбирать" : "воровать")} предметы, будучи связанным.";
 
                 AddUse(player, System.DateTime.Now, false, result);
 
                 return false;
             }
 
-            var target = player.GetFromView(_distance);
+            var target = player.GetFromView(distance);
 
             if (target == null || target.IsHost || target.IsNPC || target.IsTutorial || target.UserId == player.UserId)
             {
@@ -105,7 +92,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            IEnumerable<ItemType> items = target.Items.Where(item => item != null && (_held || item != target.CurrentItem) && !_banned.Contains(item.Type)).Select(x => x.Type).Distinct();
+            IEnumerable<ItemType> items = target.Items.Where(item => item != null && (held || item != target.CurrentItem) && !_banned.Contains(item.Type)).Select(x => x.Type).Distinct();
 
             if (items.Count() == 0)
             {
@@ -120,7 +107,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             ItemType targetItem = items.ElementAt(Random.Range(0, items.Count()));
 
-            if (Random.Range(0, 100) <= _failure)
+            if (Random.Range(0, 100) <= failure)
             {
                 result = $"Тебе не удалось украсть {targetItem}...";
 
@@ -140,7 +127,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
             target.RemoveItem(target.Items.First(item => item.Type == targetItem));
 
-            if (Random.Range(0, 100) <= _detected)
+            if (Random.Range(0, 100) <= detected)
             {
                 target.ShowHint(string.Format(StealFailed, player.CustomName), 6);
 

@@ -13,7 +13,7 @@ namespace Marine.Commands.Commands
 
         public override string Description { get; set; } = "Команда для изменения размера.";
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(2) { CommandType.RemoteAdmin, CommandType.ServerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.RemoteAdmin, CommandType.ServerConsole ];
 
         public override Dictionary<int, string> Syntax { get; set; } = new Dictionary<int, string>()
         {
@@ -23,14 +23,14 @@ namespace Marine.Commands.Commands
             { 4, "[ИГРОКИ] [ВЕКТОР]" },
         };
 
-        public override string[] Aliases { get; set; } = new string[1] { "scale" };
+        public override string[] Aliases { get; set; } = [ "scale" ];
 
-        public override CommandPermission Permission { get; set; } = new(true, new HashSet<string>()
-        {
+        public override CommandPermission Permission { get; set; } = new(true, [
+
             "adm",
             "modt",
             "ceo"
-        }, new HashSet<string>(0));
+        ], new(0));
 
         public override int Cooldown { get; set; } = 3;
 
@@ -71,7 +71,7 @@ namespace Marine.Commands.Commands
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
-            output = new();
+            output = [];
 
             if (count == 1)
             {

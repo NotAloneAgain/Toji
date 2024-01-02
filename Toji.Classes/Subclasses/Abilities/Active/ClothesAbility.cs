@@ -13,21 +13,16 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class ClothesAbility : CooldownAbility
+    public class ClothesAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        private Dictionary<Player, BaseSubclass> _copiedSubclasses;
+        private Dictionary<Player, BaseSubclass> _copiedSubclasses = new(50);
         private HashSet<RoleTypeId> _ignoredRoles;
         private bool _fullCopy;
 
-        public ClothesAbility(uint cooldown) : base(cooldown)
-        {
-            _copiedSubclasses = new(50);
-        }
-
         public ClothesAbility(uint cooldown, bool fullCopy) : this(cooldown)
         {
-            _ignoredRoles = new HashSet<RoleTypeId>()
-            {
+            _ignoredRoles = [
+
                 RoleTypeId.Overwatch,
                 RoleTypeId.Filmmaker,
                 RoleTypeId.Scp3114,
@@ -35,7 +30,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 RoleTypeId.CustomRole,
                 RoleTypeId.Scp079,
                 RoleTypeId.Scp0492,
-            };
+            ];
 
             _fullCopy = fullCopy;
         }

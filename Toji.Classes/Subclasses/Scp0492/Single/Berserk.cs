@@ -14,7 +14,7 @@ namespace Toji.Classes.Subclasses.Scp0492.Single
 
         public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
         {
-            new ScalingAbility(),
+            new ScalingAbility(350, 20, 0.25f, 2),
         };
 
         public override List<BaseCharacteristic> Characteristics { get; } = new List<BaseCharacteristic>(3)

@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
 using MEC;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Commands.API.Enums;
@@ -14,9 +15,9 @@ namespace Marine.Commands.Commands
 
         public override string Description { get; set; } = "Команда для сбрасывания предметов.";
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(2) { CommandType.RemoteAdmin, CommandType.ServerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.RemoteAdmin, CommandType.ServerConsole ];
 
-        public override string[] Aliases { get; set; } = new string[1] { "dropi" };
+        public override string[] Aliases { get; set; } = [ "dropi" ];
 
         public override Dictionary<int, string> Syntax { get; set; } = new Dictionary<int, string>()
         {
@@ -24,12 +25,12 @@ namespace Marine.Commands.Commands
             { 3, "[ИГРОК] [ПРЕДМЕТ] [КОЛИЧЕСТВО]" },
         };
 
-        public override CommandPermission Permission { get; set; } = new(true, new HashSet<string>()
-        {
+        public override CommandPermission Permission { get; set; } = new(true, [
+
             "adm",
             "modt",
             "ceo"
-        }, new HashSet<string>(0));
+        ], new(0));
 
         public override int Cooldown { get; set; } = 3;
 
@@ -70,7 +71,7 @@ namespace Marine.Commands.Commands
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
-            output = new();
+            output = [];
 
             if (count == 2)
             {
@@ -86,7 +87,7 @@ namespace Marine.Commands.Commands
             }
             else if (count == 3)
             {
-                if (!TryParsePlayers(input[0], out List<Player> players) || !int.TryParse(input[1], out var item) || !int.TryParse(input[2], out var itemCount) || item > 51 || item < 0)
+                if (!TryParsePlayers(input[0], out List<Player> players) || !int.TryParse(input[1], out var item) || !int.TryParse(input[2], out var itemCount) || !Enum.IsDefined(typeof(ItemType), item))
                 {
                     return false;
                 }

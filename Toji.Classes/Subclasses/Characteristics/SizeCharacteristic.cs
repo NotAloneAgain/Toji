@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class SizeCharacteristic : Characteristic<Vector3>
+    public class SizeCharacteristic(Vector3 value) : Characteristic<Vector3>(value)
     {
-        public SizeCharacteristic(Vector3 value) : base(value) { }
-
         public override string Name => "Измененный рост";
 
         public override void OnEnabled(Player player)

@@ -1,12 +1,10 @@
 ﻿namespace Toji.Global
 {
-    public readonly struct Range
+    public readonly struct Range(int max)
     {
-        public Range(int max) => Max = max;
-
         public Range(int min, int max) : this(max) => Min = min;
 
-        public int Max { get; init; }
+        public int Max { get; init; } = max;
 
         public int Min { get; init; }
 

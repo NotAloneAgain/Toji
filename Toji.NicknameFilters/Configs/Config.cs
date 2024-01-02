@@ -5,8 +5,8 @@ namespace Toji.NicknameFilters.Configs
 {
     public sealed class Config : DefaultConfig
     {
-        public List<string> BadWordsKick { get; set; } = new List<string>()
-        {
+        public List<string> BadWordsKick { get; set; } = [
+
             "Пидор",
             "Пидорас",
             "Гей",
@@ -22,20 +22,20 @@ namespace Toji.NicknameFilters.Configs
             "midnight.im",
             "хуеглот",
             "мефедрон"
-        };
+        ];
 
-        public List<string> BadWordsReplacer { get; set; } = new List<string>()
-        {
+        public List<string> BadWordsReplacer { get; set; } = [
+
             "Человек яйца",
             "Рей",
             "Грей",
             "Ray Grey",
             "Владелец",
             "Админ"
-        };
+        ];
 
-        public List<string> Ads { get; set; } = new List<string>()
-        {
+        public List<string> Ads { get; set; } = [
+
             "#fydne",
             "#Runic Library",
             "#Runic",
@@ -84,6 +84,6 @@ namespace Toji.NicknameFilters.Configs
             "csdrop",
             "csfail",
             "csgowin.ru"
-        };
+        ];
     }
 }

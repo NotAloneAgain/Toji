@@ -8,10 +8,8 @@ using Toji.Global;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class DisableAbility : CooldownAbility
+    public class DisableAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        public DisableAbility(uint cooldown) : base(cooldown) { }
-
         public override string Name => "Отключение";
 
         public override string Desc => "Ты можешь временно отключить SCP-079 от систем управления комплексом, если он находится поблизости";

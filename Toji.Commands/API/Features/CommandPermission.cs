@@ -19,8 +19,8 @@ namespace Toji.Commands.API.Features
 
         public bool IsLimited { get; set; } = false;
 
-        public HashSet<string> Groups { get; set; } = new HashSet<string>();
+        public HashSet<string> Groups { get; set; } = new (0);
 
-        public HashSet<string> Users { get; set; } = new HashSet<string>();
+        public HashSet<string> Users { get; set; } = new (0);
     }
 }

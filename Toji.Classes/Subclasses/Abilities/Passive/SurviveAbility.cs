@@ -5,10 +5,8 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Passive
 {
-    public class SurviveAbility : ChanceAbility
+    public class SurviveAbility(int chance) : ChanceAbility(chance)
     {
-        public SurviveAbility(int chance) : base(chance) { }
-
         public override string Name => "Выживание";
 
         public override string Desc => $"Ты можешь пережить смертельную атаку с шансом {Chance}%";

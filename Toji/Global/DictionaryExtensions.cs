@@ -36,7 +36,7 @@ namespace Toji.Global
             }
             else
             {
-                dict.Add(key, new List<TValue>() { value });
+                dict.Add(key, [ value ]);
             }
 
             return true;

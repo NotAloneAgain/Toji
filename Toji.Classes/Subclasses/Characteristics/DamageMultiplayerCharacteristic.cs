@@ -8,14 +8,9 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class DamageMultiplayerCharacteristic : Characteristic<float>
+    public class DamageMultiplayerCharacteristic(float value) : Characteristic<float>(value)
     {
-        private HashSet<RoleTypeId> _roles;
-
-        public DamageMultiplayerCharacteristic(float value) : base(value)
-        {
-            _roles = new HashSet<RoleTypeId>(0);
-        }
+        private HashSet<RoleTypeId> _roles = new(0);
 
         public DamageMultiplayerCharacteristic(float value, IEnumerable<RoleTypeId> roles) : this(value)
         {

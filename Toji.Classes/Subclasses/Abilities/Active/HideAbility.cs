@@ -8,15 +8,8 @@ using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class HideAbility : CooldownAbility
+    public class HideAbility(uint cooldown, float duration) : CooldownAbility(cooldown)
     {
-        private float _duration;
-
-        public HideAbility(uint cooldown, float duration) : base(cooldown)
-        {
-            _duration = duration;
-        }
-
         public override string Name => "Скрыться";
 
         public override string Desc => "Вы станете невидимым для других игроков";
@@ -62,7 +55,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            player.EnableEffect(EffectType.Invisible, _duration);
+            player.EnableEffect(EffectType.Invisible, duration);
 
             AddUse(player, DateTime.Now, true, result);
 

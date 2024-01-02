@@ -10,14 +10,9 @@ using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class ReturnFaceAbility : CooldownAbility
+    public class ReturnFaceAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        private Dictionary<Player, RoleTypeId> _previousRoles;
-
-        public ReturnFaceAbility(uint cooldown) : base(cooldown)
-        {
-            _previousRoles = new Dictionary<Player, RoleTypeId>(50);
-        }
+        private Dictionary<Player, RoleTypeId> _previousRoles = new(50);
 
         public override string Name => "Возвращение облика";
 

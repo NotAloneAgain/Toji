@@ -32,6 +32,11 @@ namespace Toji.BetterRoles.Handlers
 
             if (ev.NewRole.IsFlamingo())
             {
+                if (Warhead.IsDetonated && ev.SpawnFlags == RoleSpawnFlags.All)
+                {
+                    ev.IsAllowed = false;
+                }
+
                 Timing.RunCoroutine(OnChangingToFlamingo(ev.Player, ev.NewRole == RoleTypeId.AlphaFlamingo));
 
                 return;
@@ -105,11 +110,15 @@ namespace Toji.BetterRoles.Handlers
         {
             yield return Timing.WaitForSeconds(0.0003f);
 
-            player.MaxHealth = isAlpha ? 550 : 400;
-            player.Health = isAlpha ? 550 : 400;
-            player.EnableEffect(EffectType.MovementBoost, 8, 0);
-            player.AddItem(ItemType.ArmorHeavy);
+            player.MaxHealth = isAlpha ? 360 : 240;
+            player.Health = isAlpha ? 360 : 240;
+            player.EnableEffect(EffectType.MovementBoost, 5, 0);
             player.IsUsingStamina = false;
+
+            if (player.CurrentRoom.Type != RoomType.Surface && Warhead.IsDetonated)
+            {
+                player.Role.Set(RoleTypeId.Spectator);
+            }
         }
 
         private IEnumerator<float> OnChangingToScp3114(Player player)

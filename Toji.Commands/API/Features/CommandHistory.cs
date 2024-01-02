@@ -7,13 +7,13 @@ namespace Toji.Commands.API.Features
 {
     public class CommandHistory
     {
-        public Dictionary<Player, List<CommandUse>> Uses { get; set; } = new();
+        public Dictionary<Player, List<CommandUse>> Uses { get; set; } = [];
 
         public void Add(Player player, CommandUse use)
         {
             if (!IsUsedBy(player))
             {
-                Uses.Add(player, new List<CommandUse>() { use });
+                Uses.Add(player, [ use ]);
 
                 return;
             }

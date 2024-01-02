@@ -20,12 +20,9 @@ namespace Toji.Commands.Roles
             { 1, "[Номер]" }
         };
 
-        public override List<CommandType> Types { get; set; } = new List<CommandType>(1) { CommandType.PlayerConsole };
+        public override List<CommandType> Types { get; set; } = [ CommandType.PlayerConsole ];
 
-        public override CommandPermission Permission { get; set; } = new()
-        {
-            IsLimited = true,
-        };
+        public override CommandPermission Permission { get; set; } = new(true);
 
         public override CommandResultType Handle(List<object> arguments, Player player, out string response)
         {
@@ -97,31 +94,24 @@ namespace Toji.Commands.Roles
 
             player.ShowHint($"<line-height=95%><size=95%><voffset=-20em><b><color=#FF9500>Желаем удачной игры за {scp}!</color></b></voffset></size>", 6);
 
-            /*foreach (Player informator in Player.List)
-            {
-                if (!Subclass.Has<Informator>(informator))
-                    continue;
-
-                var text = $"{oldRole.Translate()} стал {scp}";
-
-                informator.ShowHint($"<line-height=95%><size=95%><voffset=-20em><b><color=#FF9500>{text}</color></b></voffset></size>", 3);
-                informator.SendConsoleMessage(text, "yellow");
-            }*/
-
             return CommandResultType.Success;
         }
 
         public override bool ParseSyntax(List<string> input, int count, out List<object> output)
         {
-            output = new List<object>();
+            output = [];
 
             if (count != 1)
+            {
                 return false;
+            }
 
             var scp = input[0];
 
             if (!ushort.TryParse(scp, out var number))
+            {
                 return false;
+            }
 
             RoleTypeId role = number switch
             {
@@ -140,6 +130,6 @@ namespace Toji.Commands.Roles
             return role != RoleTypeId.None;
         }
 
-        public override bool CheckPermissions(Player player) => base.CheckPermissions(player) || player.IsScp && Swap.AllowedScps.Contains(player.Role);
+        public override bool CheckPermissions(Player player) => player.IsScp && Swap.AllowedScps.Contains(player.Role);
     }
 }

@@ -211,16 +211,10 @@
     <Compile Include="Subclasses\Scp575\FirstShadowRazeAbility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Toji\Toji.csproj">
       <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
       <Name>Toji</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Patches\Scp0492\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

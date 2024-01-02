@@ -4,18 +4,11 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Abilities.Active
 {
-    public class HealAbility : CooldownAbility
+    public class HealAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        private float _distance;
-        private float _stamina;
-        private int _health;
-
-        public HealAbility(uint cooldown) : base(cooldown)
-        {
-            _distance = 4;
-            _stamina = 0.15f;
-            _health = 40;
-        }
+        private float _distance = 4;
+        private float _stamina = 0.15f;
+        private int _health = 40;
 
         public HealAbility(uint cooldown, float distance, float stamina, int health) : this(cooldown)
         {

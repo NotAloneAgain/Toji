@@ -4,16 +4,10 @@ using Toji.Classes.API.Features.Characteristics;
 
 namespace Toji.Classes.Subclasses.Characteristics
 {
-    public class EffectsCharacteristic : Characteristic<EffectType[]>
+    public class EffectsCharacteristic(params EffectType[] value) : Characteristic<EffectType[]>(value)
     {
-        private byte _intensity;
-        private float _duration;
-
-        public EffectsCharacteristic(params EffectType[] value) : base(value)
-        {
-            _intensity = 1;
-            _duration = 0;
-        }
+        private byte _intensity = 1;
+        private float _duration = 0;
 
         public EffectsCharacteristic(byte intensity, float duration, params EffectType[] value) : this(value)
         {

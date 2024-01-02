@@ -5,13 +5,11 @@ using UnityEngine;
 
 namespace Toji.Classes.API.Features.Spawnpoints
 {
-    public class DoorSpawnpoint : BaseSpawnpoint
+    public class DoorSpawnpoint(DoorType door) : BaseSpawnpoint
     {
-        public DoorSpawnpoint(DoorType door) => Type = door;
-
         public DoorSpawnpoint(DoorType door, Vector3 offset) : this(door) => Offset = offset;
 
-        public DoorType Type { get; init; }
+        public DoorType Type { get; init; } = door;
 
         public Vector3 Offset { get; init; }
 

@@ -27,8 +27,8 @@ namespace Toji.ScpSwap.Configs
         public ushort SwapDuration { get; set; } = 90;
 
         [Description("SCP которым разрешено менять роль.")]
-        public List<RoleTypeId> AllowedScps { get; set; } = new()
-        {
+        public List<RoleTypeId> AllowedScps { get; set; } = [
+
             RoleTypeId.Scp096,
             RoleTypeId.Scp049,
             RoleTypeId.Scp173,
@@ -36,7 +36,7 @@ namespace Toji.ScpSwap.Configs
             RoleTypeId.Scp106,
             RoleTypeId.Scp079,
             RoleTypeId.Scp3114
-        };
+        ];
 
         [Description("Количество слотов за данного SCP.")]
         public Dictionary<RoleTypeId, int> Slots { get; set; } = new()
