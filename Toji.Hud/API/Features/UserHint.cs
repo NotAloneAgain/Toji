@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Toji.Hud.API.Enums;
 
 namespace Toji.Hud.API.Features

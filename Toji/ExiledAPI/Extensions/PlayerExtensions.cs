@@ -9,6 +9,26 @@ namespace Toji.ExiledAPI.Extensions
     {
         public static bool HasEffect<TEffect>(this Player player) where TEffect : StatusEffectBase => player != null && player.IsEffectActive<TEffect>();
 
+        public static Player GetSpectatingPlayer(this Player player)
+        {
+            if (player == null || player.IsHost || player.IsNPC || player.IsAlive)
+            {
+                return null;
+            }
+
+            foreach (var ply in Player.List)
+            {
+                if (ply.UserId == player.UserId || !ply.CurrentSpectatingPlayers.Contains(player))
+                {
+                    continue;
+                }
+
+                return ply;
+            }
+
+            return null;
+        }
+
         public static void DropAllWithoutKeycard(this Player player)
         {
             if (player.IsInventoryEmpty)

@@ -1,7 +1,10 @@
 ﻿using Exiled.API.Features;
+using Mirror;
 using PlayerRoles;
 using System;
 using System.Linq;
+using Toji.Classes.API.Extensions;
+using Toji.ExiledAPI.Extensions;
 using Toji.Global;
 using Toji.Hud.API.Enums;
 using Toji.Hud.API.Features;
@@ -22,6 +25,13 @@ namespace Toji.Hud.Timers
         {
             component.Add("RespawnTimer-Top", BuildTopHint());
             component.Add("RespawnTimer-Center", BuildCenterHint());
+
+            var spectating = player.GetSpectatingPlayer();
+
+            if (spectating != null)
+            {
+                component.Add("RespawnTimer-Center", BuildBottomHint(spectating));
+            }
         }
 
         private UserHint BuildTopHint()
@@ -44,7 +54,7 @@ namespace Toji.Hud.Timers
         {
             if (_afterCenterHint == null)
             {
-                var hint = new UserHint("<i><size=75%><align=left>Наблюдает: %died%</align><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><align=right>Генераторы: %generators%</align></size></i>", 1, HintPosition.Bottom);
+                var hint = new UserHint("<size=75%><align=left>Наблюдает: %died%</align><space=24em><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><space=24em><align=right>Генераторы: %generators%</align></size>", 1, HintPosition.Bottom);
 
                 hint.AddVariable("died", ParseSpectators);
 
@@ -58,6 +68,26 @@ namespace Toji.Hud.Timers
             }
 
             return _afterCenterHint;
+        }
+
+        private UserHint BuildBottomHint(Player player)
+        {
+            var subclass = player.GetSubclass();
+
+            string role;
+
+            if (subclass == null)
+            {
+                role = $"отсутствует";
+            }
+            else
+            {
+                role = subclass.Name.ToLower();
+            }
+
+            var hint = new UserHint($"<b><color=#068DA9>Подкласс наблюдаемого: {role}</color></b>", 1, HintPosition.Top);
+
+            return hint;
         }
 
         private string ParseTime()
@@ -142,34 +172,14 @@ namespace Toji.Hud.Timers
 
             if (Warhead.IsInProgress)
             {
-                var minutes = Mathf.RoundToInt(Warhead.DetonationTimer / 60);
-                var seconds = Mathf.RoundToInt(Warhead.DetonationTimer % 60);
+                var seconds = Mathf.RoundToInt(Warhead.DetonationTimer);
 
-                string result = "осталось ";
-
-                if (minutes > 0)
-                {
-                    result += minutes.GetMinutesString();
-
-                    result += " ";
-                }
-
-                if (seconds > 0)
-                {
-                    result += seconds.GetSecondsString();
-                }
-
-                if (string.IsNullOrEmpty(result))
-                {
-                    result = "чуть-чуть";
-                }
-
-                return result;
+                return $"осталось {seconds.GetSecondsString()}";
             }
 
             return Warhead.LeverStatus switch
             {
-                true => "включена",
+                true => Warhead.Controller.NetworkCooldownEndTime <= NetworkTime.time ? "включена" : "перезапуск",
                 false => "выключена"
             };
         }

@@ -13,7 +13,6 @@ namespace Toji.Hud.API.Features
     public class UserInterface : MonoBehaviour
     {
         private List<(string Tag, UserHint Hint)> _hints;
-        private HintEffect[] _effects;
         private Player _player;
 
         public Player Owner => _player;
@@ -70,8 +69,6 @@ namespace Toji.Hud.API.Features
         private void Awake()
         {
             _hints = [];
-
-            _effects = [HintEffectPresets.PulseAlpha(0.74f, 1, 1)];
 
             _player = Player.Dictionary[gameObject];
         }
@@ -170,7 +167,7 @@ namespace Toji.Hud.API.Features
                 _player.HintDisplay.Show(new TextHint(nextHintText,
                 [
                     new StringHintParameter(nextHintText)
-                ], _effects));
+                ], Constants.Effects));
 
                 hints.Clear();
 
