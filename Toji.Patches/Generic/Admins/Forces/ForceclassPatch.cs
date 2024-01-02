@@ -113,7 +113,7 @@ namespace Toji.Patches.Generic.Admins.Forces
                 Faction faction = team.GetFaction();
 
                 var ntfOrChaos = team is Team.FoundationForces or Team.ChaosInsurgency && role != RoleTypeId.FacilityGuard;
-                IEnumerable<Player> players = Player.GetPlayers().Where(x => x.IsAlive && x.Role.GetFaction() != faction && x.UserId != player.UserId && x.RoleBase is FpcStandardRoleBase fpcRole && !fpcRole.IsAFK);
+                IEnumerable<Player> players = Player.GetPlayers().Where(x => x.IsAlive && x.Role.GetFaction() != faction && x.UserId != player.UserId);
 
                 if (ntfOrChaos)
                 {
@@ -123,7 +123,7 @@ namespace Toji.Patches.Generic.Admins.Forces
                         return false;
                     }
 
-                    if (players.Any(x => x.Zone == FacilityZone.Surface && x.RoleBase is FpcStandardRoleBase fpcRole && !fpcRole.IsAFK))
+                    if (players.Any(x => x.Zone == FacilityZone.Surface && (x.RoleBase is not FpcStandardRoleBase fpcRole || !fpcRole.IsAFK)))
                     {
                         response = "Кто-то есть на улице и он не помечен АФК.";
                         return false;
@@ -131,7 +131,7 @@ namespace Toji.Patches.Generic.Admins.Forces
                 }
                 else
                 {
-                    if (RoundStart.RoundLength.TotalMinutes > 10)
+                    if (RoundStart.RoundLength.TotalMinutes >= 10)
                     {
                         response = "Прошло 10 минут с начала раунда.";
                         return false;
@@ -143,7 +143,7 @@ namespace Toji.Patches.Generic.Admins.Forces
                         return false;
                     }
 
-                    if (role == RoleTypeId.FacilityGuard && players.Any(x => x.Zone == FacilityZone.Entrance && x.RoleBase is FpcStandardRoleBase fpcRole && !fpcRole.IsAFK))
+                    if (role == RoleTypeId.FacilityGuard && players.Any(x => x.Zone == FacilityZone.Entrance && (x.RoleBase is not FpcStandardRoleBase fpcRole || !fpcRole.IsAFK)))
                     {
                         response = "Кто-то есть в офисной зоне и он не помечен АФК.";
                         return false;

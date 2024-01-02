@@ -21,6 +21,23 @@ namespace Toji.Global
             return $"{secondsInt} {secondsString}";
         }
 
+        public static string GetMinutesString(this double minutes) => Mathf.RoundToInt((float)minutes).GetMinutesString();
+
+        public static string GetMinutesString(this int minutes)
+        {
+            var minutesInt = minutes;
+
+            var minutesString = minutesInt switch
+            {
+                int n when n % 100 is >= 11 and <= 14 => "минут",
+                int n when n % 10 == 1 => "минута",
+                int n when n % 10 is >= 2 and <= 4 => "минуты",
+                _ => "минут"
+            };
+
+            return $"{minutesInt} {minutesString}";
+        }
+
         public static string ToPrefix(this string str)
         {
             if (str.StartsWith("Toji."))
