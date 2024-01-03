@@ -30,7 +30,7 @@ namespace Toji.Hud.Timers
 
             if (spectating != null)
             {
-                component.Add("RespawnTimer-Center", BuildBottomHint(spectating));
+                component.Add("RespawnTimer-Bottom", BuildBottomHint(spectating));
             }
         }
 
@@ -38,7 +38,7 @@ namespace Toji.Hud.Timers
         {
             if (_topHint == null)
             {
-                var hint = new UserHint("<b><color=#068DA9>До следующего спавна: %time%\nОжидается: %squad%</color></b>", 1, HintPosition.Top);
+                var hint = new UserHint("<b><color=#ECF8F9>До следующего спавна: %time%\nОжидается: %squad%</color></b>", 1, HintPosition.Top);
 
                 hint.AddVariable("time", ParseTime);
 
@@ -54,7 +54,7 @@ namespace Toji.Hud.Timers
         {
             if (_afterCenterHint == null)
             {
-                var hint = new UserHint("<size=75%><align=left>Наблюдает: %died%</align><space=24em><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><space=24em><align=right>Генераторы: %generators%</align></size>", 1, HintPosition.Bottom);
+                var hint = new UserHint("<color=#068DA9><size=75%><align=left>Наблюдает: %died%</align><space=18em><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><space=18em><align=right>Генераторы: %generators%</align></size></color>", 1, HintPosition.Bottom);
 
                 hint.AddVariable("died", ParseSpectators);
 
@@ -85,7 +85,7 @@ namespace Toji.Hud.Timers
                 role = subclass.Name.ToLower();
             }
 
-            var hint = new UserHint($"<b><color=#068DA9>Подкласс наблюдаемого: {role}</color></b>", 1, HintPosition.Top);
+            var hint = new UserHint($"<b><color=#7E1717>Подкласс наблюдаемого: {role}</color></b>", 1, HintPosition.Top);
 
             return hint;
         }
