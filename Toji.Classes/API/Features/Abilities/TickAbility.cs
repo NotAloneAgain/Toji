@@ -13,7 +13,7 @@ namespace Toji.Classes.API.Features.Abilities
 
         public virtual Func<bool> GlobalCondition { get; } = () => Round.InProgress;
 
-        public virtual Func<Player, bool> PlayerCondition { get; } = (_) => true;
+        public virtual Func<Player, bool> PlayerCondition { get; } = (Player ply) => ply != null;
 
         public virtual void GlobalIteration() { }
 

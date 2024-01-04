@@ -59,7 +59,7 @@ namespace Toji.Hud.Timers
         {
             if (_afterCenterHint == null)
             {
-                var hint = new UserHint("<color=#068DA9><size=75%><align=left>Наблюдает: %died%</align><space=18em><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><space=18em><align=right>Генераторы: %generators%</align></size></color>", 1, HintPosition.Bottom);
+                var hint = new UserHint("<color=#068DA9><size=75%><align=left>Наблюдает: %died%</align><space=18em><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><space=16em><align=right>Генераторы: %generators%</align></size></color>", 1, HintPosition.Bottom);
 
                 hint.AddVariable("died", ParseSpectators);
 

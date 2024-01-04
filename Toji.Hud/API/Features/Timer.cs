@@ -2,6 +2,7 @@
 using MEC;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Toji.Hud.API.Features
 {
@@ -31,13 +32,23 @@ namespace Toji.Hud.API.Features
 
         public void End(Player player)
         {
+            if (player == null)
+            {
+                return;
+            }
+
             if (_coroutine.TryGetValue(player, out var coroutine))
             {
                 Timing.KillCoroutines(coroutine);
 
                 _coroutine.Remove(player);
 
-                UnityEngine.Object.Destroy(player.GetUserInterface());
+                var component = player.GetUserInterface();
+
+                if (component != null)
+                {
+                    GameObject.Destroy(component);
+                }
             }
         }
 
