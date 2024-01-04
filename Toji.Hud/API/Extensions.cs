@@ -8,6 +8,11 @@ namespace Toji.Hud.API
     {
         public static UserInterface GetUserInterface(this Player player)
         {
+            if (player == null || player.GameObject == null)
+            {
+                return;
+            }
+
             if (player.GameObject.TryGetComponent<UserInterface>(out var ui))
             {
                 return ui;
