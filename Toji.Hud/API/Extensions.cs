@@ -10,7 +10,7 @@ namespace Toji.Hud.API
         {
             if (player == null || player.GameObject == null)
             {
-                return;
+                return null;
             }
 
             if (player.GameObject.TryGetComponent<UserInterface>(out var ui))
