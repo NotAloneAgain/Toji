@@ -1,9 +1,11 @@
 ﻿using Exiled.API.Features;
 using Mirror;
 using PlayerRoles;
+using PlayerRoles.Spectating;
 using System;
 using System.Linq;
 using Toji.Classes.API.Extensions;
+using Toji.Classes.API.Interfaces;
 using Toji.ExiledAPI.Extensions;
 using Toji.Global;
 using Toji.Hud.API.Enums;
@@ -23,12 +25,15 @@ namespace Toji.Hud.Timers
 
         protected override void Iteration(Player player, UserInterface component)
         {
+            if (component == null || player == null)
+            {
+                return;
+            }
+
             component.Add("RespawnTimer-Top", BuildTopHint());
             component.Add("RespawnTimer-Center", BuildCenterHint());
 
-            var spectating = player.GetSpectatingPlayer();
-
-            if (spectating != null)
+            if (player.TryGetSpectatingPlayer(out var spectating))
             {
                 component.Add("RespawnTimer-Bottom", BuildBottomHint(spectating));
             }
@@ -74,18 +79,13 @@ namespace Toji.Hud.Timers
         {
             var subclass = player.GetSubclass();
 
-            string role;
-
-            if (subclass == null)
+            (string role, string color) = (subclass == null) switch
             {
-                role = $"отсутствует";
-            }
-            else
-            {
-                role = subclass.Name.ToLower();
-            }
+                true => ("отсутствует", "#7E1717"),
+                false => (subclass.Name, subclass is ICustomHintSubclass custom && !string.IsNullOrEmpty(custom.HintColor) ? custom.HintColor : "#7E1717")
+            };
 
-            var hint = new UserHint($"<b><color=#7E1717>Подкласс наблюдаемого: {role}</color></b>", 1, HintPosition.Top);
+            var hint = new UserHint($"<b><color={color}>Подкласс наблюдаемого: {role}</color></b>", 1, HintPosition.Bottom);
 
             return hint;
         }
