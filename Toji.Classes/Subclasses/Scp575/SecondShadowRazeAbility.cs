@@ -7,12 +7,8 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Scp575
 {
-    public class SecondShadowRazeAbility : CooldownAbility
+    public class SecondShadowRazeAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        public SecondShadowRazeAbility(uint cooldown) : base(cooldown)
-        {
-        }
-
         public override string Name => "Shadowraze-средний";
 
         public override string Desc => "Моментально атакуете всех людей в зоне, выключаете в ней свет и блокируете двери";
@@ -26,9 +22,9 @@ namespace Toji.Classes.Subclasses.Scp575
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalMinutes < 3)
+            if (Round.ElapsedTime.TotalMinutes < 2)
             {
-                result = "Способность разблокируется через 3 минуты после начала раунда!";
+                result = "Способность разблокируется через 2 минуты после начала раунда!";
 
                 AddUse(player, DateTime.Now, false, result);
 
@@ -68,7 +64,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var ply in Player.List)
             {
-                if (ply.Zone != zone || ply.IsHost || ply.IsDead || ply.IsScp)
+                if (ply == null || ply.Zone != zone || ply.IsHost || ply.IsDead || ply.IsScp)
                 {
                     continue;
                 }

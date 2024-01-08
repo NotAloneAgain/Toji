@@ -1,4 +1,4 @@
-﻿using Exiled.API.Extensions;
+﻿/*using Exiled.API.Extensions;
 using Exiled.API.Features;
 using System.Linq;
 
@@ -34,4 +34,4 @@ namespace Toji.Malfunctions.API.Features.Malfunctions
             Scp956.SpawnBehindTarget(players.GetRandomValue());
         }
     }
-}
+}*/

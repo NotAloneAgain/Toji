@@ -7,12 +7,8 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Scp575
 {
-    public class FirstShadowRazeAbility : CooldownAbility
+    public class FirstShadowRazeAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        public FirstShadowRazeAbility(uint cooldown) : base(cooldown)
-        {
-        }
-
         public override string Name => "Shadowraze-ближний";
 
         public override string Desc => "Моментально атакуете всех людей в комнате, блокируете и закрываете дверь в комнату";
@@ -21,15 +17,6 @@ namespace Toji.Classes.Subclasses.Scp575
         {
             if (!base.Activate(player, out result))
             {
-                AddUse(player, DateTime.Now, false, result);
-
-                return false;
-            }
-
-            if (Round.ElapsedTime.TotalMinutes < 1)
-            {
-                result = "Способность разблокируется через 1 минуту после начала раунда!";
-
                 AddUse(player, DateTime.Now, false, result);
 
                 return false;
@@ -68,7 +55,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var ply in room.Players)
             {
-                if (ply.IsHost || ply.IsDead || ply.IsScp)
+                if (ply == null || ply.IsHost || ply.IsDead || ply.IsScp)
                 {
                     continue;
                 }

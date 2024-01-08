@@ -78,6 +78,8 @@ namespace Toji.Hud.API.Features
 
         private void OnDestroy()
         {
+            _hints.Clear();
+
             Owner.ShowHint(string.Empty, 0);
 
             if (_coroutine.IsRunning)
@@ -86,6 +88,8 @@ namespace Toji.Hud.API.Features
             }
 
             _coroutine = default;
+
+            Owner.ShowHint(string.Empty, 0);
         }
 
         private IEnumerator<float> _Update()

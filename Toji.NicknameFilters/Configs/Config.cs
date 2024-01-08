@@ -21,17 +21,23 @@ namespace Toji.NicknameFilters.Configs
             "MIDNIGHT",
             "midnight.im",
             "хуеглот",
-            "мефедрон"
+            "мефедрон",
+            "Мразь",
+            "твоя мама",
+            "нахуй"
         ];
 
         public List<string> BadWordsReplacer { get; set; } = [
 
             "Человек яйца",
+            "Человек-яйца",
             "Рей",
             "Грей",
             "Ray Grey",
             "Владелец",
-            "Админ"
+            "Админ",
+            "Гомодрил",
+            "pidor"
         ];
 
         public List<string> Ads { get; set; } = [

@@ -21,11 +21,19 @@ namespace Toji.Redux914
         {
             _handlers = new();
 
+            Exiled.Events.Handlers.Scp914.UpgradingInventoryItem += _handlers.OnUpgradingInventoryItem;
+            Exiled.Events.Handlers.Scp914.UpgradingPickup += _handlers.OnUpgradingPickup;
+            Exiled.Events.Handlers.Scp914.UpgradingPlayer += _handlers.OnUpgradingPlayer;
+
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
+            Exiled.Events.Handlers.Scp914.UpgradingPlayer -= _handlers.OnUpgradingPlayer;
+            Exiled.Events.Handlers.Scp914.UpgradingPickup -= _handlers.OnUpgradingPickup;
+            Exiled.Events.Handlers.Scp914.UpgradingInventoryItem -= _handlers.OnUpgradingInventoryItem;
+
             _handlers = null;
 
             base.OnDisabled();

@@ -79,7 +79,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                     continue;
                 }
 
-                if (ply.CurrentItem.Base is ILightEmittingItem light && light.IsEmittingLight || ply.CurrentItem is Flashlight flash && flash.IsEmittingLight)
+                if (ply.CurrentItem != null && (ply.CurrentItem.Base is ILightEmittingItem light && light.IsEmittingLight || ply.CurrentItem is Flashlight flash && flash.IsEmittingLight))
                 {
                     continue;
                 }

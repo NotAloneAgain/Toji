@@ -29,6 +29,16 @@ namespace Toji.Hud.Handlers
             Timing.RunCoroutine(_AdaptiveShower(ev.Player));
         }
 
+        public void OnChangingRole(ChangingRoleEventArgs ev)
+        {
+            if (!ev.IsValid(false) || ev.Player.IsAlive || !_respawnTimer.IsActive(ev.Player))
+            {
+                return;
+            }
+
+            _respawnTimer.End(ev.Player);
+        }
+
         private IEnumerator<float> _AdaptiveShower(Player player)
         {
             while (true)

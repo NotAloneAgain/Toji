@@ -16,6 +16,8 @@ namespace Toji.Hud.API.Features
 
         public virtual Func<Player, bool> Conditions { get; } = (Player player) => player != null && player.IsConnected && !player.IsHost && !player.IsNPC;
 
+        public bool IsActive(Player player) => _coroutine.ContainsKey(player);
+
         public CoroutineHandle Start(Player player)
         {
             if (_coroutine.ContainsKey(player))

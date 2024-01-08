@@ -6,12 +6,8 @@ using Toji.Classes.API.Features.Abilities;
 
 namespace Toji.Classes.Subclasses.Scp575
 {
-    public class ThirdShadowRazeAbility : CooldownAbility
+    public class ThirdShadowRazeAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        public ThirdShadowRazeAbility(uint cooldown) : base(cooldown)
-        {
-        }
-
         public override string Name => "Shadowraze-дальний";
 
         public override string Desc => "Моментально атакуете всех людей в комплексе и выключаете везде свет";
@@ -47,7 +43,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var ply in Player.List)
             {
-                if (ply.IsHost || ply.IsDead || ply.IsScp)
+                if (ply == null || ply.IsHost || ply.IsDead || ply.IsScp || player.CurrentRoom?.Zone == ZoneType.Surface)
                 {
                     continue;
                 }

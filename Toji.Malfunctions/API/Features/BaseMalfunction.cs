@@ -41,7 +41,7 @@ namespace Toji.Malfunctions.API.Features
                 return;
             }
 
-            _coroutine.IsRunning = false;
+            Timing.KillCoroutines(_coroutine);
 
             _coroutine = default;
         }

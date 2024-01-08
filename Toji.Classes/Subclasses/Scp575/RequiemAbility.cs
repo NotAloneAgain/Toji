@@ -4,19 +4,16 @@ using Exiled.API.Features.DamageHandlers;
 using Exiled.Events.EventArgs.Player;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Toji.Classes.API.Features.Abilities;
+using Toji.ExiledAPI.Extensions;
 using UnityEngine;
 
 namespace Toji.Classes.Subclasses.Scp575
 {
-    public class RequiemAbility : CooldownAbility
+    public class RequiemAbility(uint cooldown) : CooldownAbility(cooldown)
     {
-        private Dictionary<Player, int> _souls;
-
-        public RequiemAbility(uint cooldown) : base(cooldown)
-        {
-            _souls = new Dictionary<Player, int>(Server.MaxPlayerCount);
-        }
+        private Dictionary<Player, int> _souls = new(Server.MaxPlayerCount);
 
         public override string Name => "Requiem";
 
@@ -59,15 +56,6 @@ namespace Toji.Classes.Subclasses.Scp575
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalMinutes < 2)
-            {
-                result = "Способность разблокируется через 2 минуты после начала раунда!";
-
-                AddUse(player, DateTime.Now, false, result);
-
-                return false;
-            }
-
             if (player.CurrentRoom.Zone == ZoneType.Surface)
             {
                 result = "Ты не можешь активировать способности на Поверхности!";
@@ -94,6 +82,11 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var ply in Player.List)
             {
+                if (ply == null || ply.IsScp || ply.IsDead || ply.IsHost || ply.CurrentRoom?.Zone == ZoneType.Surface)
+                {
+                    continue;
+                }
+
                 ply.Hurt(amount);
             }
 
@@ -106,7 +99,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
         private void OnDied(DiedEventArgs ev)
         {
-            if (!Has(ev.Attacker) || !_souls.ContainsKey(ev.Attacker))
+            if (!ev.IsValid(false) || !Owners.Any() || Owners.All(owner => owner.Zone != ev.Player.Zone))
             {
                 return;
             }

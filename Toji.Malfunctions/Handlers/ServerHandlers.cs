@@ -76,6 +76,11 @@ namespace Toji.Malfunctions.Handlers
 
         private void DestroyMalfunctions()
         {
+            foreach (var malfunction in _handledMalfunctions)
+            {
+                malfunction.Stop();
+            }
+
             _allMalfunctions.AddRange(_handledMalfunctions);
             _handledMalfunctions.Clear();
         }

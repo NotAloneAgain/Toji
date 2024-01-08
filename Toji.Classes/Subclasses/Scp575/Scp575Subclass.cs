@@ -30,9 +30,9 @@ namespace Toji.Classes.Subclasses.Scp575
             new ShadowAbility(),
             new InvisibleAbility(),
             new FirstShadowRazeAbility(60),
-            new SecondShadowRazeAbility(200),
+            new SecondShadowRazeAbility(180),
             new ThirdShadowRazeAbility(360),
-            new RequiemAbility(440),
+            new RequiemAbility(420),
         };
 
         public string RoleInfo => Name;
