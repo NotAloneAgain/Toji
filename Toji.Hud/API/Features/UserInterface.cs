@@ -76,11 +76,11 @@ namespace Toji.Hud.API.Features
 
         private void Start() => _coroutine = Timing.RunCoroutine(_Update());
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            _hints.Clear();
-
             Owner.ShowHint(string.Empty, 0);
+
+            _hints.Clear();
 
             if (_coroutine.IsRunning)
             {

@@ -85,7 +85,7 @@ namespace Toji.Hud.Timers
                 false => (subclass.Name, subclass is ICustomHintSubclass custom && !string.IsNullOrEmpty(custom.HintColor) ? custom.HintColor : "#7E1717")
             };
 
-            var hint = new UserHint($"<b><color={color}>Подкласс наблюдаемого: {role}</color></b>", 5, HintPosition.Bottom);
+            var hint = new UserHint($"<b><color={color}>Подкласс наблюдаемого: {role}</color></b>", 3, HintPosition.Bottom);
 
             return hint;
         }

@@ -9,6 +9,6 @@ namespace Toji.Hud.API.Features
         public const int TopLinesPadding = 16;
         public const float UpdateTime = 0.5f;
 
-        public static HintEffect[] Effects { get; } = [HintEffectPresets.PulseAlpha(0.68f, 1, 1)];
+        public static HintEffect[] Effects { get; } = [HintEffectPresets.PulseAlpha(0.61f, 1, 1)];
     }
 }
