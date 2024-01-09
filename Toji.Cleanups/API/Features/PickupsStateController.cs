@@ -22,11 +22,6 @@ namespace Toji.Cleanups.API.Features
 
             foreach (var player in players)
             {
-                if (player == null || player.IsHost || player.IsNPC || player.IsDead)
-                {
-                    continue;
-                }
-
                 var maxDistance = player.Zone == ZoneType.Surface ? 60 : 30;
 
                 if (Vector3.Distance(player.Position, pos) > maxDistance || Physics.Linecast(player.CameraTransform.position, pos, _layerMasks, QueryTriggerInteraction.Ignore))

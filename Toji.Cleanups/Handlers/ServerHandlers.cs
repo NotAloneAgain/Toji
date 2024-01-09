@@ -10,7 +10,7 @@ namespace Toji.Cleanups.Handlers
 {
     internal sealed class ServerHandlers
     {
-        private List<CoroutineHandle> _coroutines = new (3);
+        private List<CoroutineHandle> _coroutines = new (4);
         private GameStage _stage;
 
         public void OnRoundStarted()
@@ -18,6 +18,7 @@ namespace Toji.Cleanups.Handlers
             _coroutines.Clear();
 
             _coroutines.Add(Timing.RunCoroutine(_UpdateStage()));
+            _coroutines.Add(Timing.RunCoroutine(_UpdatePickups()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupItems()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupRagdolls()));
         }
@@ -44,6 +45,27 @@ namespace Toji.Cleanups.Handlers
             _stage = GameStage.HyperLate;
         }
 
+        private IEnumerator<float> _UpdatePickups()
+        {
+            while (Round.InProgress)
+            {
+                yield return Timing.WaitForSeconds(10);
+
+                var pickups = Pickup.List.Where(pickup => pickup != null).ToList();
+                var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true, IsAlive: true }).ToList();
+
+                foreach (var pickup in pickups)
+                {
+                    var changed = PickupsStateController.TryChangeState(players, pickup);
+
+                    if (changed)
+                    {
+                        Log.Debug($"Pickup {pickup.Position} of {pickup.Type} state changed to {(pickup.IsSpawned ? "spawned" : "not spawned")}.");
+                    }
+                }
+            }
+        }
+
         private IEnumerator<float> _CleanupItems()
         {
             while (Round.InProgress)
@@ -60,16 +82,6 @@ namespace Toji.Cleanups.Handlers
                     Log.Info($"Invoked {cleanup.GetType().Name}");
 
                     cleanup.Cleanup(pickups, players, out cooldown);
-                }
-
-                foreach (var pickup in pickups)
-                {
-                    var changed = PickupsStateController.TryChangeState(players, pickup);
-
-                    if (changed)
-                    {
-                        Log.Debug($"Pickup {pickup.Position} of {pickup.Type} state changed to {(pickup.IsSpawned ? "spawned" : "not spawned")}.");
-                    }
                 }
 
                 yield return Timing.WaitForSeconds(cooldown);
