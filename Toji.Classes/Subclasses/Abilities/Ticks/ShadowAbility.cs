@@ -42,7 +42,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
             if (player.Position.y is >= 970 and <= 1050)
             {
-                player.Hurt(88, DamageType.Bleeding);
+                player.Hurt(84);
 
                 return;
             }
@@ -56,7 +56,7 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
 
             if (room.Type == RoomType.Surface)
             {
-                player.Hurt(88);
+                player.Hurt(84);
 
                 return;
             }
@@ -84,14 +84,14 @@ namespace Toji.Classes.Subclasses.Abilities.Ticks
                     continue;
                 }
 
-                float percent = 6 - Mathf.Clamp(Vector3.Distance(ply.Position, player.Position), 1, 5);
+                float percent = 6.5f - Mathf.Clamp(Vector3.Distance(ply.Position, player.Position), 1, 5);
 
                 if (ply.CurrentItem is Firearm firearm && firearm.FlashlightEnabled)
                 {
                     percent /= 4;
                 }
 
-                ply.Hurt(ply.MaxHealth * (percent / 100));
+                ply.Hurt(ply.MaxHealth * (percent / 100f));
             }
         }
     }

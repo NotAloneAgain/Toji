@@ -62,6 +62,16 @@ namespace Toji.Cleanups.Handlers
                     cleanup.Cleanup(pickups, players, out cooldown);
                 }
 
+                foreach (var pickup in pickups)
+                {
+                    var changed = PickupsStateController.TryChangeState(players, pickup);
+
+                    if (changed)
+                    {
+                        Log.Debug($"Pickup {pickup.Position} of {pickup.Type} state changed to {(pickup.IsSpawned ? "spawned" : "not spawned")}.");
+                    }
+                }
+
                 yield return Timing.WaitForSeconds(cooldown);
             }
 

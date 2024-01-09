@@ -181,8 +181,18 @@ namespace Toji.AutoFF.Handlers
                     continue;
                 }
 
+                if (door is ElevatorDoor elevator)
+                {
+                    if (elevator.ElevatorType is not ElevatorType.Nuke and not ElevatorType.Scp049)
+                    {
+                        door.ChangeLock(DoorLockType.AdminCommand);
+                    }
+
+                    continue;
+                }
+
                 door.ChangeLock(DoorLockType.AdminCommand);
-                door.IsOpen = !door.IsGate && !door.IsCheckpoint && !door.IsElevator;
+                door.IsOpen = !door.IsCheckpoint;
             }
         }
 

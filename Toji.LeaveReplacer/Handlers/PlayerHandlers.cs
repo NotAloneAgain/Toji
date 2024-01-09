@@ -21,6 +21,7 @@ namespace Toji.LeaveReplacer.Handlers
 
         internal PlayerHandlers() => _roles = new List<RoleTypeId>(5)
         {
+            RoleTypeId.Spectator,
             RoleTypeId.ClassD,
             RoleTypeId.Scientist,
             RoleTypeId.FacilityGuard,
@@ -45,22 +46,12 @@ namespace Toji.LeaveReplacer.Handlers
 
             player.DropItems();
 
-            Timing.RunCoroutine(_Replace(player, ev.Player));
-
-            if (subclass != null)
-            {
-                if (subclass.Has(ev.Player))
-                {
-                    subclass.Revoke(ev.Player);
-                }
-
-                subclass.DelayedAssign(player);
-            }
+            Timing.RunCoroutine(_Replace(player, ev.Player, subclass));
         }
 
         private Queue<RoleTypeId> GetRolesQueue() => QueuePool<RoleTypeId>.Pool.Get(_roles);
 
-        private IEnumerator<float> _Replace(Player player, Player target)
+        private IEnumerator<float> _Replace(Player player, Player target, BaseSubclass subclass)
         {
             if (target.Role.Type == RoleTypeId.Scp079)
             {
@@ -92,6 +83,16 @@ namespace Toji.LeaveReplacer.Handlers
 
             player.Role.Set(target.Role.Type, SpawnReason.LateJoin, RoleSpawnFlags.AssignInventory);
             target.Role.Set(RoleTypeId.Spectator, SpawnReason.ForceClass, RoleSpawnFlags.All);
+
+            if (subclass != null)
+            {
+                if (subclass.Has(player))
+                {
+                    subclass.Revoke(player);
+                }
+
+                subclass.DelayedAssign(target);
+            }
 
             yield return Timing.WaitForSeconds(0.0005f);
 

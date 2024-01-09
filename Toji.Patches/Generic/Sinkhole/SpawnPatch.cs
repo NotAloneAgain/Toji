@@ -89,6 +89,10 @@ namespace Toji.Patches.Generic.Sinkhole
 
                 NetworkServer.Spawn(sinkhole.gameObject);
             }
+            else
+            {
+                sinkhole.MaxDistance *= 0.88f;
+            }
 
             _spawned++;
             _positions.Add(position);

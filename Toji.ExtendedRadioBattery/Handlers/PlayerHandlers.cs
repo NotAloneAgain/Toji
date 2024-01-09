@@ -4,6 +4,6 @@ namespace Toji.ExtendedRadioBattery.Handlers
 {
     internal sealed class PlayerHandlers
     {
-        public void OnUsingRadioBattery(UsingRadioBatteryEventArgs ev) => ev.Drain *= 0.09f;
+        public void OnUsingRadioBattery(UsingRadioBatteryEventArgs ev) => ev.Drain *= 0.075f;
     }
 }

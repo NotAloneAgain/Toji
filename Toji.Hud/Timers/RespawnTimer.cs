@@ -3,6 +3,7 @@ using Mirror;
 using PlayerRoles;
 using PlayerRoles.Spectating;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Extensions;
 using Toji.Classes.API.Interfaces;
@@ -11,6 +12,7 @@ using Toji.Global;
 using Toji.Hud.API.Enums;
 using Toji.Hud.API.Features;
 using UnityEngine;
+using Respawning;
 
 namespace Toji.Hud.Timers
 {
@@ -43,7 +45,7 @@ namespace Toji.Hud.Timers
         {
             if (_topHint == null)
             {
-                var hint = new UserHint("<b><color=#ECF8F9>До следующего спавна: %time%\nОжидается: %squad%</color></b>", 1, HintPosition.Top);
+                var hint = new UserHint("<b><color=#ECF8F9>До следующего спавна: %time%\n%squad%</color></b>", 1, HintPosition.Top);
 
                 hint.AddVariable("time", ParseTime);
 
@@ -92,7 +94,14 @@ namespace Toji.Hud.Timers
 
         private string ParseTime()
         {
-            var time = Respawn.TimeUntilSpawnWave;
+            var time = TimeSpan.FromSeconds(Respawn.TimeUntilNextPhase + GetAdditionalTime());
+
+            if (!Respawn.IsSpawning)
+            {
+                var team = Respawn.ChaosTickets > Respawn.NtfTickets ? SpawnableTeamType.ChaosInsurgency : SpawnableTeamType.NineTailedFox;
+
+                time.Add(new TimeSpan(0, 0, team == SpawnableTeamType.NineTailedFox ? 18 : 13));
+            }
 
             string result = string.Empty;
 
@@ -118,18 +127,14 @@ namespace Toji.Hud.Timers
 
         private string ParseTeam()
         {
-            var team = Respawn.IsSpawning switch
+            var team = GetSpawnTeam() switch
             {
-                true => Respawn.NextKnownTeam,
-                false => Respawn.ChaosTickets > Respawn.NtfTickets ? Respawning.SpawnableTeamType.ChaosInsurgency : Respawning.SpawnableTeamType.NineTailedFox,
-            };
-
-            return team switch
-            {
-                Respawning.SpawnableTeamType.ChaosInsurgency => "группировка повстанцев хаоса",
-                Respawning.SpawnableTeamType.NineTailedFox => "отряд мобильно-оперативной группы",
+                SpawnableTeamType.ChaosInsurgency => "группировка повстанцев хаоса",
+                SpawnableTeamType.NineTailedFox => "отряд мобильно-оперативной группы",
                 _ => "неизвестность",
             };
+
+            return $"{(Respawn.IsSpawning ? "Прибывает:" : "Ожидается:")} {team}";
         }
 
         private string ParseSpectators()
@@ -188,5 +193,30 @@ namespace Toji.Hud.Timers
         {
             return $"{Generator.List.Count(gen => gen.IsEngaged)}/3"; ;
         }
+
+        private int GetAdditionalTime()
+        {
+            var team = GetSpawnTeam();
+
+            if (team == SpawnableTeamType.None || Respawn.IsSpawning)
+            {
+                return 0;
+            }
+
+            var value = 13;
+
+            if (team == SpawnableTeamType.NineTailedFox)
+            {
+                value += 5;
+            }
+
+            return value;
+        }
+
+        private SpawnableTeamType GetSpawnTeam() => Respawn.IsSpawning switch
+        {
+            true => Respawn.NextKnownTeam,
+            false => Respawn.ChaosTickets > Respawn.NtfTickets ? SpawnableTeamType.ChaosInsurgency : SpawnableTeamType.NineTailedFox,
+        };
     }
 }
