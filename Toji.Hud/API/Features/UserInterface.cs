@@ -96,7 +96,7 @@ namespace Toji.Hud.API.Features
         {
             while (true)
             {
-                yield return Timing.WaitForSeconds(Constants.UpdateTime);
+                yield return Timing.WaitForSeconds(1);
 
                 if (gameObject == null || Owner == null || Owner.IsHost || !Owner.IsConnected || Owner.IsNPC)
                 {
@@ -122,6 +122,8 @@ namespace Toji.Hud.API.Features
                 {
                     hint.Time += Constants.UpdateTime;
 
+                    var text = hint.GetTextFor(Owner);
+
                     switch (hint.Position)
                     {
                         case HintPosition.Top:
@@ -130,12 +132,12 @@ namespace Toji.Hud.API.Features
 
                                 if (nextHintText.Contains("[Top]"))
                                 {
-                                    nextHintText = nextHintText.Replace("[Top]", hint.Text);
+                                    nextHintText = nextHintText.Replace("[Top]", text);
 
                                     continue;
                                 }
 
-                                nextHintText = nextHintText.Replace("[AfterTop]", '\n' + hint.Text + "[AfterTop]");
+                                nextHintText = nextHintText.Replace("[AfterTop]", '\n' + text + "[AfterTop]");
 
                                 continue;
                             }
@@ -143,7 +145,7 @@ namespace Toji.Hud.API.Features
                             {
                                 bottom += hint.Text.Count(c => c == '\n') + 1;
 
-                                nextHintText += Environment.NewLine + hint.Text;
+                                nextHintText += Environment.NewLine + text;
 
                                 continue;
                             }
@@ -153,11 +155,11 @@ namespace Toji.Hud.API.Features
 
                                 if (nextHintText.Contains("[Center]"))
                                 {
-                                    nextHintText = nextHintText.Replace("[Center]", hint.Text);
+                                    nextHintText = nextHintText.Replace("[Center]", text);
                                     continue;
                                 }
 
-                                nextHintText = nextHintText.Replace("[AfterCenter]", '\n' + hint.Text + "[AfterCenter]");
+                                nextHintText = nextHintText.Replace("[AfterCenter]", '\n' + text + "[AfterCenter]");
 
                                 continue;
                             }
@@ -201,6 +203,11 @@ namespace Toji.Hud.API.Features
                 (string Tag, UserHint Hint) data = _hints[i];
 
                 var hint = data.Hint;
+
+                if (string.IsNullOrEmpty(hint.Text))
+                {
+                    continue;
+                }
 
                 hints.Add(hint);
             }

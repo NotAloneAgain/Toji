@@ -1,4 +1,5 @@
-﻿using Exiled.Events.Handlers;
+﻿using Exiled.API.Enums;
+using Exiled.Events.Handlers;
 using System;
 using Toji.ExiledAPI.Configs;
 using Toji.Global;
@@ -16,6 +17,8 @@ namespace Toji.Hud
         public override string Prefix => Name.ToPrefix();
 
         public override string Author => "NotAloneAgain";
+
+        public override PluginPriority Priority => PluginPriority.Higher;
 
         public override Version Version { get; } = new(1, 0, 0);
 

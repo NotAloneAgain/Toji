@@ -18,7 +18,7 @@ namespace Toji.Cleanups.Handlers
             _coroutines.Clear();
 
             _coroutines.Add(Timing.RunCoroutine(_UpdateStage()));
-            _coroutines.Add(Timing.RunCoroutine(_UpdatePickups()));
+            //_coroutines.Add(Timing.RunCoroutine(_UpdatePickups()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupItems()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupRagdolls()));
         }
@@ -45,11 +45,11 @@ namespace Toji.Cleanups.Handlers
             _stage = GameStage.HyperLate;
         }
 
-        private IEnumerator<float> _UpdatePickups()
+        /*private IEnumerator<float> _UpdatePickups()
         {
             while (Round.InProgress)
             {
-                yield return Timing.WaitForSeconds(10);
+                yield return Timing.WaitForSeconds(8);
 
                 var pickups = Pickup.List.Where(pickup => pickup != null).ToList();
                 var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true, IsAlive: true }).ToList();
@@ -64,7 +64,7 @@ namespace Toji.Cleanups.Handlers
                     }
                 }
             }
-        }
+        }*/
 
         private IEnumerator<float> _CleanupItems()
         {

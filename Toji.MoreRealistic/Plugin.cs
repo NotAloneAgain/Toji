@@ -1,4 +1,5 @@
-﻿using Exiled.Events.Handlers;
+﻿using Exiled.API.Enums;
+using Exiled.Events.Handlers;
 using System;
 using Toji.ExiledAPI.Configs;
 using Toji.Global;
@@ -17,6 +18,8 @@ namespace Toji.MoreRealistic
         public override string Author => "NotAloneAgain";
 
         public override Version Version { get; } = new(1, 0, 0);
+
+        public override PluginPriority Priority => PluginPriority.Last;
 
         public override void OnEnabled()
         {

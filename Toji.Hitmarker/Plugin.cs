@@ -19,7 +19,7 @@ namespace Toji.Hitmarker
 
         public override Version Version { get; } = new(1, 0, 0);
 
-        public override PluginPriority Priority => PluginPriority.Low;
+        public override PluginPriority Priority => PluginPriority.Last;
 
         public override void OnEnabled()
         {

@@ -1,4 +1,4 @@
-﻿using Exiled.API.Enums;
+﻿/*using Exiled.API.Enums;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace Toji.Cleanups.API.Features
 
         static PickupsStateController()
         {
-            _layerMasks = ~LayerMask.GetMask("Player", "Pickup", "Hitbox", "DestroyedDoor", "BreakableGlass", "SCP018", "Light", "Grenade", "Ragdoll");
+            _layerMasks = ~LayerMask.GetMask("Player", "Pickup", "Hitbox", "DestroyedDoor", "BreakableGlass", "SCP018", "Light", "Grenade", "Ragdoll", "TransparentFX", "IgnoreRaycast", "Water", "UI", "InvisibleCollider", "CCTV", "Icon", "Locker", "Light", "Glass", "Door");
         }
 
         public static bool TryChangeState(List<Player> players, Pickup pickup)
@@ -24,27 +24,14 @@ namespace Toji.Cleanups.API.Features
             {
                 var maxDistance = player.Zone == ZoneType.Surface ? 60 : 30;
 
-                if (Vector3.Distance(player.Position, pos) > maxDistance || Physics.Linecast(player.CameraTransform.position, pos, _layerMasks, QueryTriggerInteraction.Ignore))
-                {
-                    continue;
-                }
-
-                Vector3 objectDirection = pos - player.CameraTransform.position;
-                float angle = Vector3.Angle(player.CameraTransform.forward, objectDirection);
-
-                float fieldOfView = 60;
-
-                if (player.CameraTransform.TryGetComponent<UnityEngine.Camera>(out var camera))
-                {
-                    fieldOfView = camera.fieldOfView;
-                }
-
-                if (angle > fieldOfView)
+                if (Vector3.Distance(player.Position, pos) > maxDistance || !AdvancedCheck(player, pickup))
                 {
                     continue;
                 }
 
                 isCanVisible = true;
+
+                break;
             }
 
             bool isSpawned = pickup.IsSpawned;
@@ -55,10 +42,39 @@ namespace Toji.Cleanups.API.Features
             }
             else
             {
+                // NetworkServer.DestroyObject(NetworkIdentity identity, DestroyMode mode)
+
                 pickup.UnSpawn();
             }
 
             return isSpawned != pickup.IsSpawned;
         }
+
+        private static bool AdvancedCheck(Player player, Pickup pickup)
+        {
+            var position = pickup.Position;
+
+            if (Physics.Linecast(player.Position + Vector3.up, position, out var hit, _layerMasks, QueryTriggerInteraction.Ignore) && hit.transform != pickup.Transform)
+            {
+                return false;
+            }
+
+            Vector3 objectDirection = position - player.CameraTransform.position;
+            float angle = Vector3.Angle(player.CameraTransform.forward, objectDirection);
+
+            float fieldOfView = 70;
+
+            if (player.CameraTransform.TryGetComponent<UnityEngine.Camera>(out var camera))
+            {
+                fieldOfView = camera.fieldOfView;
+            }
+
+            if (angle > fieldOfView)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
-}
+}*/

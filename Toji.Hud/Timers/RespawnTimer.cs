@@ -18,8 +18,10 @@ namespace Toji.Hud.Timers
 {
     public class RespawnTimer : Timer
     {
-        private UserHint _afterCenterHint;
-        private UserHint _topHint;
+        private UserHint _secondHint;
+        private UserHint _thirdHint;
+        private UserHint _firstHint;
+        private UserHint _lastHint;
 
         public override string Tag => "RespawnTimer";
 
@@ -32,62 +34,55 @@ namespace Toji.Hud.Timers
                 return;
             }
 
-            component.Add("RespawnTimer-Top", BuildTopHint());
-            component.Add("RespawnTimer-Center", BuildCenterHint());
-
-            if (player.TryGetSpectatingPlayer(out var spectating))
-            {
-                component.Add("RespawnTimer-Bottom", BuildBottomHint(spectating));
-            }
+            component.Add("RespawnTimer-First", _firstHint ??= BuildFirstHint());
+            component.Add("RespawnTimer-Second", _secondHint ??= BuildSecondHint());
+            component.Add("RespawnTimer-Third", _thirdHint ??= BuildThirdHint());
+            component.Add("RespawnTimer-Last", _lastHint ??= BuildLastHint());
         }
 
-        private UserHint BuildTopHint()
+        private UserHint BuildFirstHint()
         {
-            if (_topHint == null)
-            {
-                var hint = new UserHint("<b><color=#ECF8F9>До следующего спавна: %time%\n%squad%</color></b>", 1, HintPosition.Top);
+            var hint = new UserHint("<b><color=#ECF8F9>До следующего спавна: %time%\n%squad%</color></b>", 1, HintPosition.Top);
 
-                hint.AddVariable("time", ParseTime);
+            hint.AddVariable("time", ParseTime);
 
-                hint.AddVariable("squad", ParseTeam);
+            hint.AddVariable("squad", ParseTeam);
 
-                _topHint = hint;
-            }
-
-            return _topHint;
+            return hint;
         }
 
-        private UserHint BuildCenterHint()
+        private UserHint BuildSecondHint()
         {
-            if (_afterCenterHint == null)
-            {
-                var hint = new UserHint("<color=#068DA9><size=75%><align=left>Наблюдает: %died%</align><space=18em><align=right>Альфа-Боеголовка: %warhead%</align>\n<align=left>С начала раунда прошло: %round%</align><space=16em><align=right>Генераторы: %generators%</align></size></color>", 1, HintPosition.Bottom);
+            var hint = new UserHint("<color=#068DA9><size=75%><align=left>Наблюдает: %died%</align>%adaptive_space%<align=right>Альфа-Боеголовка: %warhead%</align></size></color>", 1, HintPosition.Center);
 
-                hint.AddVariable("died", ParseSpectators);
+            hint.AddAdaptiveSpace();
 
-                hint.AddVariable("round", ParseRoundTime);
+            hint.AddVariable("died", ParseSpectators);
 
-                hint.AddVariable("warhead", ParseWarhead);
+            hint.AddVariable("warhead", ParseWarhead);
 
-                hint.AddVariable("generators", ParseGenerators);
-
-                _afterCenterHint = hint;
-            }
-
-            return _afterCenterHint;
+            return hint;
         }
 
-        private UserHint BuildBottomHint(Player player)
+        private UserHint BuildThirdHint()
         {
-            var subclass = player.GetSubclass();
+            var hint = new UserHint("<color=#068DA9><size=75%><align=left>С начала раунда прошло: %round%</align>%adaptive_space%<align=right>Генераторы: %generators%</align></size></color>", 1, HintPosition.Center);
 
-            (string role, string color) = (subclass == null) switch
-            {
-                true => ("отсутствует", "#7E1717"),
-                false => (subclass.Name, subclass is ICustomHintSubclass custom && !string.IsNullOrEmpty(custom.HintColor) ? custom.HintColor : "#7E1717")
-            };
+            hint.AddAdaptiveSpace();
 
-            var hint = new UserHint($"<b><color={color}>Подкласс наблюдаемого: {role}</color></b>", 3, HintPosition.Bottom);
+            hint.AddVariable("round", ParseRoundTime);
+
+            hint.AddVariable("generators", ParseGenerators);
+
+            return hint;
+        }
+
+        private UserHint BuildLastHint()
+        {
+            var hint = new UserHint("<b><color=%color%>Подкласс наблюдаемого: %class%</color></b>", 1, HintPosition.Bottom);
+
+            hint.AddVariable("color", ParseColor);
+            hint.AddVariable("class", ParseName);
 
             return hint;
         }
@@ -192,6 +187,38 @@ namespace Toji.Hud.Timers
         private string ParseGenerators()
         {
             return $"{Generator.List.Count(gen => gen.IsEngaged)}/3"; ;
+        }
+
+        private string ParseName(Player player)
+        {
+            if (!player.TryGetSpectatingPlayer(out var spectating))
+            {
+                return "отсутствует";
+            }
+
+            var subclass = spectating.GetSubclass();
+
+            return (subclass == null) switch
+            {
+                true => "отсутствует",
+                false => subclass.Name
+            };
+        }
+
+        private string ParseColor(Player player)
+        {
+            if (!player.TryGetSpectatingPlayer(out var spectating))
+            {
+                return "#7E1717";
+            }
+
+            var subclass = spectating.GetSubclass();
+
+            return (subclass == null) switch
+            {
+                true => "#7E1717",
+                false => subclass is ICustomHintSubclass custom && !string.IsNullOrEmpty(custom.HintColor) ? custom.HintColor : "#7E1717"
+            };
         }
 
         private int GetAdditionalTime()

@@ -2,11 +2,16 @@
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
 using Exiled.Events.EventArgs.Map;
+using Interactables.Interobjects.DoorUtils;
+using InventorySystem.Items.Pickups;
 using Mirror;
 using PlayerRoles;
 using PlayerRoles.PlayableScps.Scp079;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using Toji.BetterMap.API;
 using UnityEngine;
 
 namespace Toji.BetterMap.Handlers
@@ -19,12 +24,12 @@ namespace Toji.BetterMap.Handlers
 
             BreakableDoor door = Door.Get(DoorType.NukeSurface).As<BreakableDoor>();
 
-            door.IgnoredDamage |= Interactables.Interobjects.DoorUtils.DoorDamageType.Scp096;
-            door.IgnoredDamage |= Interactables.Interobjects.DoorUtils.DoorDamageType.Grenade;
+            door.IgnoredDamage |= DoorDamageType.Scp096;
+            door.IgnoredDamage |= DoorDamageType.Grenade;
 
             door = Door.Get(DoorType.HID).As<BreakableDoor>();
 
-            door.IgnoredDamage |= Interactables.Interobjects.DoorUtils.DoorDamageType.Grenade;
+            door.IgnoredDamage |= DoorDamageType.Grenade;
 
             foreach (var generator in Generator.List)
             {
@@ -33,6 +38,16 @@ namespace Toji.BetterMap.Handlers
                 generator.Transform.localScale *= 0.8f;
 
                 NetworkServer.Spawn(generator.GameObject);
+            }
+
+            foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
+            {
+                if (obj == null)
+                {
+                    continue;
+                }
+
+                obj.TryOptimize();
             }
         }
 

@@ -147,7 +147,7 @@ namespace Toji.Classes.API.Features
 
         public virtual bool Remove(Player player) => _players.Remove(player.UserId);
 
-        public bool DelayedAssign(in Player player, float delay = 0.0005f)
+        public bool DelayedAssign(in Player player, float delay = 0.008f)
         {
             Add(player);
 

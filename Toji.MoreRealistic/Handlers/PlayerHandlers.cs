@@ -11,7 +11,7 @@ namespace Toji.MoreRealistic.Handlers
     internal sealed class PlayerHandlers
     {
         private const string HintText
-            = "<line-height=95%><size=95%><voffset=-20em><color=#E32636>Вы слышите циньк, но звука не происходит...</color></size></voffset>";
+            = "<line-height=95%><size=95%><voffset=-20em><color=#E32636>Вы слышите циньк, но выстрела не происходит...</color></size></voffset>";
 
         public void OnShot(ShotEventArgs ev)
         {
