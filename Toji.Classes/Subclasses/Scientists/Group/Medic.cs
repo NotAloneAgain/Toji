@@ -54,11 +54,6 @@ namespace Toji.Classes.Subclasses.Scientists.Group
                 return;
             }
 
-            for (int i = 0; i < 7; i++)
-            {
-                player.RemoveItem(player.Items.ElementAt(i));
-            }
-
             Revoke(player);
 
             subclass.Assign(player);
