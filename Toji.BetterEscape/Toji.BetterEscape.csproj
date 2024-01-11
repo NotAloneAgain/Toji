@@ -38,6 +38,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Toji.Classes\Toji.Classes.csproj">
+      <Project>{1276b6c8-db3d-4f19-b40a-4e4dfa63bcd0}</Project>
+      <Name>Toji.Classes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toji\Toji.csproj">
       <Project>{ee5a9879-db40-4ec2-b4be-fb1cd502ccc2}</Project>
       <Name>Toji</Name>

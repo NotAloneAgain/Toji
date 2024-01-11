@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
 using PlayerRoles;
+using Toji.Classes.API.Extensions;
 
 namespace Toji.BetterEscape.API
 {
@@ -16,6 +17,11 @@ namespace Toji.BetterEscape.API
             }
 
             var role = player.Role.Team == Team.ChaosInsurgency ? RoleTypeId.NtfPrivate : RoleTypeId.ChaosConscript;
+
+            if (player.TryGetSubclass(out var subclass))
+            {
+                subclass.Revoke(player);
+            }
 
             player.Role.Set(role, SpawnReason.Escaped, RoleSpawnFlags.All);
         }
