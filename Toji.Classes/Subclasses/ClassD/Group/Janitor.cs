@@ -4,6 +4,7 @@ using Toji.Classes.API.Features;
 using Toji.Classes.API.Features.Inventory;
 using Toji.Classes.API.Features.Spawnpoints;
 using Toji.Classes.API.Interfaces;
+using Toji.Classes.Subclasses.Abilities.Passive;
 using Toji.Classes.Subclasses.Characteristics;
 
 namespace Toji.Classes.Subclasses.ClassD.Group
@@ -21,6 +22,11 @@ namespace Toji.Classes.Subclasses.ClassD.Group
             {
                 new StaticSlot(ItemType.KeycardJanitor),
             }),
+        };
+
+        public override List<BaseAbility> Abilities { get; } = new List<BaseAbility>(1)
+        {
+            new CleanAbility(),
         };
 
         public int Chance => 25;

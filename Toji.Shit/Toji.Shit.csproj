@@ -37,6 +37,10 @@
       <Project>{ae3f19f0-d4fa-4530-aef5-146f862de33c}</Project>
       <Name>Toji.BetterCuff</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Toji.BetterEscape\Toji.BetterEscape.csproj">
+      <Project>{17ab81eb-0f33-4547-b5b7-b92d5927263f}</Project>
+      <Name>Toji.BetterEscape</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Toji.BetterRoles\Toji.BetterRoles.csproj">
       <Project>{66d6662e-a30f-41fa-8a4b-f26c633e8331}</Project>
       <Name>Toji.BetterRoles</Name>
@@ -108,6 +112,10 @@
     <ProjectReference Include="..\Toji.Redux914\Toji.Redux914.csproj">
       <Project>{2902440d-61af-404d-9ea0-4a1e414859ab}</Project>
       <Name>Toji.Redux914</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Toji.ReduxRespawning\Toji.ReduxRespawning.csproj">
+      <Project>{b62c5fd2-e92d-4012-bff0-d1ecff958bf7}</Project>
+      <Name>Toji.ReduxRespawning</Name>
     </ProjectReference>
     <ProjectReference Include="..\Toji.RemoteKeycard\Toji.RemoteKeycard.csproj">
       <Project>{446f46d0-8247-41a7-9f5e-8566efec4f03}</Project>

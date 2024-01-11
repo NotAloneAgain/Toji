@@ -59,6 +59,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Pocket", "Toji.Pocket\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.Hud", "Toji.Hud\Toji.Hud.csproj", "{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.ReduxRespawning", "Toji.ReduxRespawning\Toji.ReduxRespawning.csproj", "{B62C5FD2-E92D-4012-BFF0-D1ECFF958BF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Toji.BetterEscape", "Toji.BetterEscape\Toji.BetterEscape.csproj", "{17AB81EB-0F33-4547-B5B7-B92D5927263F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -174,6 +178,14 @@ Global
 		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Debug|x64.Build.0 = Debug|x64
 		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Release|x64.ActiveCfg = Release|x64
 		{B55A5F0D-79F8-4FE9-83AA-23429BC84AA0}.Release|x64.Build.0 = Release|x64
+		{B62C5FD2-E92D-4012-BFF0-D1ECFF958BF7}.Debug|x64.ActiveCfg = Debug|x64
+		{B62C5FD2-E92D-4012-BFF0-D1ECFF958BF7}.Debug|x64.Build.0 = Debug|x64
+		{B62C5FD2-E92D-4012-BFF0-D1ECFF958BF7}.Release|x64.ActiveCfg = Release|x64
+		{B62C5FD2-E92D-4012-BFF0-D1ECFF958BF7}.Release|x64.Build.0 = Release|x64
+		{17AB81EB-0F33-4547-B5B7-B92D5927263F}.Debug|x64.ActiveCfg = Debug|x64
+		{17AB81EB-0F33-4547-B5B7-B92D5927263F}.Debug|x64.Build.0 = Debug|x64
+		{17AB81EB-0F33-4547-B5B7-B92D5927263F}.Release|x64.ActiveCfg = Release|x64
+		{17AB81EB-0F33-4547-B5B7-B92D5927263F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

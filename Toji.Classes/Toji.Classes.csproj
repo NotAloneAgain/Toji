@@ -106,6 +106,7 @@
     <Compile Include="Subclasses\Abilities\Active\HealAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\HackAbility.cs" />
     <Compile Include="Subclasses\Abilities\Active\TradeAbility.cs" />
+    <Compile Include="Subclasses\Abilities\Passive\CleanAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\ImmunityEffectsAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\InvisibleAbility.cs" />
     <Compile Include="Subclasses\Abilities\Passive\MoreCandyAbility.cs" />
