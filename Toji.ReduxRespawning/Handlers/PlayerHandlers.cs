@@ -24,6 +24,7 @@ namespace Toji.ReduxRespawning.Handlers
                 return;
             }
 
+            ev.NewRole = RoleTypeId.Spectator;
             ev.SpawnFlags = RoleSpawnFlags.AssignInventory;
 
             if (ev.Reason == SpawnReason.LateJoin)
@@ -33,10 +34,11 @@ namespace Toji.ReduxRespawning.Handlers
                 Action<Vector3> action = ev.Player.Teleport;
 
                 action.CallDelayed(default, Extensions.ChaosSpawns.GetRandomValue());
+
+                return;
             }
 
             ev.Player.AddToWaiting();
-            ev.NewRole = RoleTypeId.Spectator;
         }
     }
 }

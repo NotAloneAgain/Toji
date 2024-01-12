@@ -17,12 +17,17 @@ namespace Toji.BetterEscape.Handlers
                 return;
             }
 
-            Timing.RunCoroutine(_CheckEscape(ev.Player, ev.Player.Role.Type));
+            Timing.RunCoroutine(_CheckEscape(ev.Player, ev.Player.Role.Type).CancelWith(ev.Player.GameObject));
         }
 
         private IEnumerator<float> _CheckEscape(Player player, RoleTypeId target)
         {
-            while (player?.Role?.Type == target)
+            if (player.IsHost)
+            {
+                yield break;
+            }
+
+            while ((player?.Role?.Type ?? RoleTypeId.None) == target)
             {
                 yield return Timing.WaitForSeconds(0.5f);
 

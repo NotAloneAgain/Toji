@@ -40,8 +40,10 @@ namespace Toji.ReduxRespawning.Handlers
 
         public void OnRoundStarted()
         {
-            if (Random.Range(0, 100) <= 74)
+            if (Random.Range(0, 100) <= 71)
             {
+                Extensions.ReplaceToChaos = false;
+
                 return;
             }
 
@@ -54,9 +56,14 @@ namespace Toji.ReduxRespawning.Handlers
         {
             yield return Timing.WaitForSeconds(8);
 
-            var players = Extensions.WaitingRespawn;
+            var players = Extensions.WaitingRespawn.ToList();
 
-            SpawnableTeamType.ChaosInsurgency.SpawnSquad([.. players]);
+            if (!players.Any())
+            {
+                yield break;
+            }
+
+            SpawnableTeamType.ChaosInsurgency.SpawnSquad(players);
 
             foreach (var ply in players)
             {

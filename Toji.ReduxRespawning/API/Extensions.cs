@@ -71,6 +71,11 @@ namespace Toji.ReduxRespawning.API
         {
             foreach (var ply in Player.List)
             {
+                if (ply == null || ply.IsHost || ply.UserId == ply.UserId)
+                {
+                    continue;
+                }
+
                 ply.ChangeAppearance(RoleTypeId.None, [player], true);
             }
 
@@ -83,6 +88,11 @@ namespace Toji.ReduxRespawning.API
 
             foreach (var ply in Player.List)
             {
+                if (ply == null || ply.IsHost || ply.UserId == ply.UserId)
+                {
+                    continue;
+                }
+
                 ply.ChangeAppearance(ply.Role.Type, [player], true);
             }
         }
@@ -106,8 +116,8 @@ namespace Toji.ReduxRespawning.API
         private static List<RoleTypeId> GetChaosRoles(int playerCount)
         {
             int chaosRiflemanCount = Math.Max(1, playerCount / 2);
-            int chaosMarauderCount = Math.Max(1, playerCount - chaosRiflemanCount);
-            int chaosRepressorCount = 0;
+            int chaosMarauderCount = Math.Max(1, playerCount / 4);
+            int chaosRepressorCount = chaosMarauderCount;
 
             if (playerCount >= 3)
             {
