@@ -21,26 +21,25 @@ namespace Toji.Patches.Generic.Admins.Items
 
         static GiveItemPatch()
         {
-            _banned = new()
-            {
+            _banned = [
+
                 ItemType.ParticleDisruptor,
                 ItemType.SCP268,
                 ItemType.MicroHID,
                 ItemType.Jailbird,
                 ItemType.GunCom45,
                 ItemType.SCP018,
-                ItemType.Tape,
-            };
-            _usings = new();
+            ];
+
+            _usings = [];
         }
 
         private static bool Prefix(GiveCommand __instance, ArraySegment<string> arguments, ICommandSender sender, out string response, ref bool __result)
         {
             __result = false;
 
-            var commandSender = sender as PlayerCommandSender;
 
-            if (commandSender == null)
+            if (sender is not PlayerCommandSender commandSender)
             {
                 response = "brr";
 
@@ -71,7 +70,7 @@ namespace Toji.Patches.Generic.Admins.Items
                 return false;
             }
 
-            ItemType[] items = GiveCommand.ParseItems(array[0]).ToArray();
+            ItemType[] items = __instance.ParseItems(array[0]).ToArray();
 
             if (items.Length == 0)
             {
@@ -131,7 +130,7 @@ namespace Toji.Patches.Generic.Admins.Items
                             if (_banned.Contains(item))
                                 continue;
 
-                            GiveCommand.AddItem(hub, sender, item);
+                            __instance.AddItem(hub, sender, item);
 
                             handled++;
 
@@ -166,7 +165,7 @@ namespace Toji.Patches.Generic.Admins.Items
                         {
                             foreach (ItemType item in items)
                             {
-                                GiveCommand.AddItem(referenceHub, sender, item);
+                                __instance.AddItem(referenceHub, sender, item);
                             }
                         }
                         catch (Exception ex)

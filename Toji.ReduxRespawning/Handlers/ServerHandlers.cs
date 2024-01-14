@@ -3,6 +3,7 @@ using Exiled.API.Features.Pools;
 using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Server;
 using MEC;
+using PlayerRoles;
 using Respawning;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Toji.ReduxRespawning.Handlers
         {
             var players = ListPool<Player>.Pool.Get(4);
 
-            var spectators = Player.List.Where(ply => ply != null && !ply.IsHost && ply.Role is SpectatorRole spectator).ToList();
+            var spectators = Player.List.Where(ply => ply != null && !ply.IsHost && ply.Role.Type == RoleTypeId.Spectator).ToList();
 
             if (spectators.Count < 14)
             {
@@ -54,7 +55,7 @@ namespace Toji.ReduxRespawning.Handlers
 
         private IEnumerator<float> _Respawn()
         {
-            yield return Timing.WaitForSeconds(8);
+            yield return Timing.WaitForSeconds(12);
 
             var players = Extensions.WaitingRespawn.ToList();
 
@@ -63,12 +64,12 @@ namespace Toji.ReduxRespawning.Handlers
                 yield break;
             }
 
-            SpawnableTeamType.ChaosInsurgency.SpawnSquad(players);
-
             foreach (var ply in players)
             {
                 ply.RemoveFromWaiting();
             }
+
+            SpawnableTeamType.ChaosInsurgency.SpawnSquad(players);
         }
     }
 }

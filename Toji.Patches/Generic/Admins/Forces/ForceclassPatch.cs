@@ -25,19 +25,16 @@ namespace Toji.Patches.Generic.Admins.Forces
 
         static ForceclassPatch()
         {
-            _banned = new()
-            {
+            _banned = [
+
                 RoleTypeId.Overwatch,
                 RoleTypeId.Filmmaker,
                 RoleTypeId.Tutorial,
                 RoleTypeId.Scp0492,
                 RoleTypeId.Scp3114,
-                RoleTypeId.Flamingo,
-                RoleTypeId.AlphaFlamingo,
-                RoleTypeId.ZombieFlamingo
-            };
-            _usings = new();
-            _usingsScp = new();
+            ];
+            _usings = [];
+            _usingsScp = [];
         }
 
         private static bool Prefix(ForceRoleCommand __instance, ArraySegment<string> arguments, ICommandSender sender, out string response, ref bool __result)

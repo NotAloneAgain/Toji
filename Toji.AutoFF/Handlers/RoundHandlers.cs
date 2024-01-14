@@ -100,32 +100,6 @@ namespace Toji.AutoFF.Handlers
 
                         break;
                     }
-                case EndRoundAction.ForceAllToFlamingos:
-                    {
-                        foreach (var player in Player.List)
-                        {
-                            player.Role.Set(Random.Range(0, 2) switch
-                            {
-                                1 => RoleTypeId.AlphaFlamingo,
-                                _ => RoleTypeId.Flamingo
-                            }, RoleSpawnFlags.UseSpawnpoint);
-
-                            player.DisableAllEffects();
-
-                            player.EnableEffect(EffectType.MovementBoost, 255);
-
-                            player.IsGodModeEnabled = true;
-                        }
-
-                        TeleportPlayers(Random.Range(0, 3) switch
-                        {
-                            2 => ZoneType.HeavyContainment,
-                            1 => ZoneType.HeavyContainment,
-                            _ => ZoneType.Entrance
-                        });
-
-                        break;
-                    }
                 case EndRoundAction.TeleportAndHorse:
                     {
                         TeleportPlayers(Random.Range(0, 3) switch

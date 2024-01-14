@@ -30,18 +30,6 @@ namespace Toji.BetterRoles.Handlers
                 return;
             }
 
-            if (ev.NewRole.IsFlamingo())
-            {
-                if (Warhead.IsDetonated && ev.SpawnFlags == RoleSpawnFlags.All)
-                {
-                    ev.IsAllowed = false;
-                }
-
-                Timing.RunCoroutine(OnChangingToFlamingo(ev.Player, ev.NewRole == RoleTypeId.AlphaFlamingo));
-
-                return;
-            }
-
             if (ev.NewRole == RoleTypeId.Scp3114 && ev.SpawnFlags == RoleSpawnFlags.All)
             {
                 Timing.RunCoroutine(OnChangingToScp3114(ev.Player));
@@ -104,21 +92,6 @@ namespace Toji.BetterRoles.Handlers
             }
 
             lost._ghostlightLockoutDuration = 15;
-        }
-
-        private IEnumerator<float> OnChangingToFlamingo(Player player, bool isAlpha)
-        {
-            yield return Timing.WaitForSeconds(0.0003f);
-
-            player.MaxHealth = isAlpha ? 360 : 240;
-            player.Health = isAlpha ? 360 : 240;
-            player.EnableEffect(EffectType.MovementBoost, 5, 0);
-            player.IsUsingStamina = false;
-
-            if (player.CurrentRoom.Type != RoomType.Surface && Warhead.IsDetonated)
-            {
-                player.Role.Set(RoleTypeId.Spectator);
-            }
         }
 
         private IEnumerator<float> OnChangingToScp3114(Player player)

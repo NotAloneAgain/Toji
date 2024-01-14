@@ -67,9 +67,6 @@ namespace Toji.Global
                 { RoleTypeId.Filmmaker, "Контентмейкер" },
                 { RoleTypeId.Scp3114, "SCP-3114" },
                 { RoleTypeId.Spectator, "Наблюдатель" },
-                { RoleTypeId.Flamingo, "Фламинго" },
-                { RoleTypeId.AlphaFlamingo, "Альфа-Фламинго" },
-                { RoleTypeId.ZombieFlamingo, "Зомби-Фламинго" },
             };
         }
 
@@ -95,7 +92,6 @@ namespace Toji.Global
             Team.Scientists => "Научный персонал",
             Team.ClassD => "Персонал класса D",
             Team.Dead => "Мертвец",
-            Team.Flamingos => "Фламинго",
             _ => "Неизвестно",
         };
     }

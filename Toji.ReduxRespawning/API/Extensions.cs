@@ -71,7 +71,7 @@ namespace Toji.ReduxRespawning.API
         {
             foreach (var ply in Player.List)
             {
-                if (ply == null || ply.IsHost || ply.UserId == ply.UserId)
+                if (ply == null || ply.IsHost || player.UserId == ply.UserId)
                 {
                     continue;
                 }
@@ -88,7 +88,7 @@ namespace Toji.ReduxRespawning.API
 
             foreach (var ply in Player.List)
             {
-                if (ply == null || ply.IsHost || ply.UserId == ply.UserId)
+                if (ply == null || ply.IsHost || player.UserId == ply.UserId)
                 {
                     continue;
                 }
