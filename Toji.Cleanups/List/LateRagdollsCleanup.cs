@@ -25,25 +25,51 @@ namespace Toji.Cleanups.List
         {
             cooldown = 70;
 
-            var subclasses = players.Select(x => x.GetSubclass());
+            var subclasses = players.Select(ply => ply.GetSubclass());
             var hasMimicry = subclasses.Any(sub => sub != null && sub.Abilities.Any(ability => ability.GetType() == typeof(ClothesAbility)));
 
             foreach (var ragdoll in ragdolls)
             {
-                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime < 16)
+                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime <= 15)
                 {
                     continue;
                 }
 
-                var room = ragdoll.Room;
-                var position = ragdoll.Position;
-
-                if ((players.Any(ply => ply.CurrentRoom == room && (room.Type != RoomType.Surface || ply.Position.GetDistance(position) <= 11)) || hasMimicry && BaseSubclass.TryGet(ragdoll, out _)) && ragdoll.GameObject.IsValid())
+                if (ragdoll.GameObject.IsValid())
                 {
-                    continue;
+                    var room = ragdoll.Room;
+                    var position = ragdoll.Position;
+                    var isSurface = room?.Type == RoomType.Surface;
+
+                    if (isSurface)
+                    {
+                        if (players.Any(ply => ply.Position.GetDistance(position) <= 11))
+                        {
+                            continue;
+                        }
+                    }
+                    else if (players.Any(ply => ply.CurrentRoom == room))
+                    {
+                        continue;
+                    }
+
+                    if (hasMimicry && (BaseSubclass.TryGet(ragdoll, out _) || ragdoll.ExistenceTime <= 144))
+                    {
+                        continue;
+                    }
                 }
 
-                NetworkServer.Destroy(ragdoll.GameObject);
+                try
+                {
+                    NetworkServer.Destroy(ragdoll.GameObject);
+                }
+                catch { }
+
+                try
+                {
+                    ragdoll.Destroy();
+                }
+                catch { }
             }
         }
     }

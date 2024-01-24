@@ -27,9 +27,7 @@ namespace Marine.Commands.Commands
 
         public override CommandPermission Permission { get; set; } = new(true, [
 
-            "adm",
-            "modt",
-            "ceo"
+            "owner"
         ], new(0));
 
         public override int Cooldown { get; set; } = 3;
@@ -43,7 +41,7 @@ namespace Marine.Commands.Commands
 
             if (arguments.Count == 2)
             {
-                _ = Timing.RunCoroutine(_SpawnRagdolls(player, (RoleTypeId)arguments[1], (int)arguments[2]));
+                Timing.RunCoroutine(_SpawnRagdolls(player, (RoleTypeId)arguments[0], (int)arguments[1]));
 
                 return CommandResultType.Success;
             }
@@ -58,7 +56,7 @@ namespace Marine.Commands.Commands
 
                 foreach (Player ply in list)
                 {
-                    _ = Timing.RunCoroutine(_SpawnRagdolls(ply, (RoleTypeId)arguments[1], (int)arguments[2]));
+                    Timing.RunCoroutine(_SpawnRagdolls(ply, (RoleTypeId)arguments[1], (int)arguments[2]));
                 }
 
                 return CommandResultType.Success;
@@ -75,7 +73,7 @@ namespace Marine.Commands.Commands
 
             if (count == 2)
             {
-                if (!sbyte.TryParse(input[0], out var role) || !int.TryParse(input[1], out var itemCount) || role > 20 || role < 0)
+                if (!sbyte.TryParse(input[0], out var role) || !int.TryParse(input[1], out var itemCount) || !Enum.IsDefined(typeof(RoleTypeId), role))
                 {
                     return false;
                 }
@@ -87,7 +85,7 @@ namespace Marine.Commands.Commands
             }
             else if (count == 3)
             {
-                if (!TryParsePlayers(input[0], out List<Player> players) || !int.TryParse(input[1], out var role) || !int.TryParse(input[2], out var itemCount) || !Enum.IsDefined(typeof(RoleTypeId), role))
+                if (!TryParsePlayers(input[0], out List<Player> players) || !sbyte.TryParse(input[1], out var role) || !int.TryParse(input[2], out var itemCount) || !Enum.IsDefined(typeof(RoleTypeId), role))
                 {
                     return false;
                 }

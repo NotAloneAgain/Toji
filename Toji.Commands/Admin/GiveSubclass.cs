@@ -25,8 +25,7 @@ namespace Marine.Commands.Commands
 
         public override CommandPermission Permission { get; set; } = new(true, [
 
-            "adm",
-            "modt"
+            "owner"
         ], new(0));
 
         public override CommandResultType Handle(List<object> arguments, Player player, out string response)

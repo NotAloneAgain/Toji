@@ -18,12 +18,22 @@ namespace Toji.Cleanups.List
 
             foreach (var ragdoll in ragdolls)
             {
-                if (ragdoll == null || ragdoll.ExistenceTime < 11)
+                if (ragdoll == null || ragdoll.ExistenceTime <= 9)
                 {
                     continue;
                 }
 
-                NetworkServer.Destroy(ragdoll.GameObject);
+                try
+                {
+                    NetworkServer.Destroy(ragdoll.GameObject);
+                }
+                catch { }
+
+                try
+                {
+                    ragdoll.Destroy();
+                }
+                catch { }
             }
         }
     }

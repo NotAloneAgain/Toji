@@ -55,7 +55,37 @@ namespace Toji.Classes.Subclasses.Abilities.Active
         {
             base.OnDisabled(player);
 
-            _copiedSubclasses.Remove(player);
+            if (_copiedSubclasses.TryGetValue(player, out var previous))
+            {
+                previous?.Update(player, false);
+
+                _copiedSubclasses.Remove(player);
+            }
+
+            if (player.TryGetSubclass(out var subclass))
+            {
+                foreach (var ability in subclass.Abilities)
+                {
+                    if (ability == null || ability is ReturnFaceAbility or ClothesAbility or AmogusAbility || subclass.Abilities.Any(a => a.GetType() == ability.GetType()))
+                    {
+                        continue;
+                    }
+
+                    subclass.Abilities.Remove(ability);
+
+                    ability.OnDisabled(player);
+                }
+
+                foreach (var characteristic in subclass.Characteristics)
+                {
+                    if (characteristic == null || characteristic is InventoryCharacteristic or SpawnpointCharacteristic or RespawnCharacteristic)
+                    {
+                        continue;
+                    }
+
+                    characteristic.OnDisabled(player);
+                }
+            }
         }
 
         public override bool Activate(Player player, out object result)
@@ -123,7 +153,7 @@ namespace Toji.Classes.Subclasses.Abilities.Active
 
                     foreach (var characteristic in subclass.Characteristics)
                     {
-                        if (characteristic == null || characteristic is InventoryCharacteristic or SpawnpointCharacteristic)
+                        if (characteristic == null || characteristic is InventoryCharacteristic or SpawnpointCharacteristic or RespawnCharacteristic)
                         {
                             continue;
                         }

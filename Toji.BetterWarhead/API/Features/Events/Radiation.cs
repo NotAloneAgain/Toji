@@ -27,7 +27,7 @@ namespace Toji.BetterWarhead.API.Features.Events
         {
             DateTime startTime = DateTime.Now;
 
-            while ((DateTime.Now - startTime).TotalSeconds < 60 && Round.InProgress)
+            while ((DateTime.Now - startTime).TotalSeconds < 60 && Round.InProgress && Warhead.IsDetonated)
             {
                 foreach (var player in Player.List)
                 {

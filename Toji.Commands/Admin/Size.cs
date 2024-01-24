@@ -25,12 +25,7 @@ namespace Marine.Commands.Commands
 
         public override string[] Aliases { get; set; } = [ "scale" ];
 
-        public override CommandPermission Permission { get; set; } = new(true, [
-
-            "adm",
-            "modt",
-            "ceo"
-        ], new(0));
+        public override CommandPermission Permission { get; set; } = new(true, ["owner"], new(0));
 
         public override int Cooldown { get; set; } = 3;
 

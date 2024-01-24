@@ -28,8 +28,7 @@ namespace Marine.Commands.Commands
             IsLimited = true,
             Groups = [
 
-                "adm",
-                "modt",
+                "owner"
             ]
         };
 

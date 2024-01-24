@@ -63,39 +63,11 @@ namespace Toji.ReduxRespawning.API
 
         public static IReadOnlyList<Vector3> ChaosSpawns => _chaosSpawns;
 
-        public static IReadOnlyList<Player> WaitingRespawn => _awaitingRespawn;
+        public static IReadOnlyList<Vector3> NtfSpawns => _ntfSpawns;
 
         public static bool ReplaceToChaos { get; internal set; }
 
-        public static void AddToWaiting(this Player player)
-        {
-            foreach (var ply in Player.List)
-            {
-                if (ply == null || ply.IsHost || player.UserId == ply.UserId)
-                {
-                    continue;
-                }
-
-                ply.ChangeAppearance(RoleTypeId.None, [player], true);
-            }
-
-            _awaitingRespawn.Add(player);
-        }
-
-        public static void RemoveFromWaiting(this Player player)
-        {
-            _awaitingRespawn.Remove(player);
-
-            foreach (var ply in Player.List)
-            {
-                if (ply == null || ply.IsHost || player.UserId == ply.UserId)
-                {
-                    continue;
-                }
-
-                ply.ChangeAppearance(ply.Role.Type, [player], true);
-            }
-        }
+        public static Queue<RoleTypeId> ReplaceQueue { get; internal set; }
 
         public static Queue<RoleTypeId> GetRolesQueue(this SpawnableTeamType team, int playerCount)
         {

@@ -23,16 +23,16 @@ namespace Toji.Global
             return true;
         }
 
-        public static bool SetOrAdd<TKey, TValue>(this Dictionary<TKey, IList<TValue>> dict, TKey key, TValue value)
+        public static bool SetOrAddArr<TKey, TValue, TArray>(this Dictionary<TKey, TArray> dict, TKey key, TValue value) where TArray : IList<TValue>, new()
         {
             if (dict == null || key == null || value == null)
             {
                 return false;
             }
 
-            if (dict.ContainsKey(key))
+            if (dict.TryGetValue(key, out var array))
             {
-                dict[key].Add(value);
+                array.Add(value);
             }
             else
             {

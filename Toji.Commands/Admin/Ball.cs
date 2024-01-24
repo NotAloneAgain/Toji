@@ -24,9 +24,7 @@ namespace Marine.Commands.Commands
 
         public override CommandPermission Permission { get; set; } = new(true, [
 
-            "adm",
-            "modt",
-            "ceo"
+            "owner"
         ], new (0));
 
         public override int Cooldown { get; set; } = 3;

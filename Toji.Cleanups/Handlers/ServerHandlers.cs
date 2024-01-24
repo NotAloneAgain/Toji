@@ -18,7 +18,7 @@ namespace Toji.Cleanups.Handlers
             _coroutines.Clear();
 
             _coroutines.Add(Timing.RunCoroutine(_UpdateStage()));
-            //_coroutines.Add(Timing.RunCoroutine(_UpdatePickups()));
+            _coroutines.Add(Timing.RunCoroutine(_UpdatePickups()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupItems()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupRagdolls()));
         }
@@ -26,6 +26,8 @@ namespace Toji.Cleanups.Handlers
         public void OnRestartingRound()
         {
             Timing.KillCoroutines(_coroutines.ToArray());
+
+            PickupsStateController.Reset();
         }
 
         private IEnumerator<float> _UpdateStage()
@@ -45,26 +47,21 @@ namespace Toji.Cleanups.Handlers
             _stage = GameStage.HyperLate;
         }
 
-        /*private IEnumerator<float> _UpdatePickups()
+        private IEnumerator<float> _UpdatePickups()
         {
             while (Round.InProgress)
             {
-                yield return Timing.WaitForSeconds(8);
+                yield return Timing.WaitForSeconds(10);
 
                 var pickups = Pickup.List.Where(pickup => pickup != null).ToList();
                 var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true, IsAlive: true }).ToList();
 
                 foreach (var pickup in pickups)
                 {
-                    var changed = PickupsStateController.TryChangeState(players, pickup);
-
-                    if (changed)
-                    {
-                        Log.Debug($"Pickup {pickup.Position} of {pickup.Type} state changed to {(pickup.IsSpawned ? "spawned" : "not spawned")}.");
-                    }
+                    PickupsStateController.TryChangeState(players, pickup);
                 }
             }
-        }*/
+        }
 
         private IEnumerator<float> _CleanupItems()
         {
@@ -97,7 +94,7 @@ namespace Toji.Cleanups.Handlers
         {
             while (Round.InProgress)
             {
-                var ragdolls = Ragdoll.List.Where(pickup => pickup is not null and { CanBeCleanedUp: true }).ToList();
+                var ragdolls = Ragdoll.List.Where(pickup => pickup != null).ToList();
                 var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true }).ToList();
 
                 var cleanup = BaseCleanup.Get<RagdollCleanup>(CleanupType.Ragdolls, _stage);
