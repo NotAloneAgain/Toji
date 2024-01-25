@@ -10,6 +10,6 @@ namespace Toji.ExiledAPI.Extensions
 
         public static bool IsFullyValid(this IAttackerEvent ev, bool checkAlive = true) => ev.IsValid(checkAlive) && ev.IsAttackerValid(checkAlive);
 
-        public static bool IsNotSelfDamage(this IAttackerEvent ev) => ev.IsFullyValid() && ev.Attacker.UserId != ev.Player.UserId;
+        public static bool IsNotSelfDamage(this IAttackerEvent ev, bool checkAlive = true) => ev.IsFullyValid(checkAlive) && ev.Attacker.UserId != ev.Player.UserId;
     }
 }

@@ -42,7 +42,7 @@
     <Compile Include="API\Features\BaseCleanup.cs" />
     <Compile Include="API\Features\ItemCleanup.cs" />
     <Compile Include="API\Features\LegacyPickupStateProcessor.cs" />
-    <Compile Include="API\Features\PickupsStateController.cs" />
+    <Compile Include="API\Features\ObjectsStateController.cs" />
     <Compile Include="API\Features\RagdollCleanup.cs" />
     <Compile Include="API\Interfaces\IItemCleanup.cs" />
     <Compile Include="API\Interfaces\IRagdollCleanup.cs" />

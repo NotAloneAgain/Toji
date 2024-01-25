@@ -99,12 +99,20 @@ namespace Toji.Classes.Subclasses.Scp575
 
         private void OnDied(DiedEventArgs ev)
         {
-            if (!ev.IsValid(false) || !Owners.Any() || Owners.All(owner => owner.Zone != ev.Player.Zone))
+            if (!ev.IsNotSelfDamage(false) || !Owners.Any())
             {
                 return;
             }
 
-            _souls[ev.Attacker] = Mathf.Min(_souls[ev.Attacker] + 1, 18);
+            foreach (var owner in Owners)
+            {
+                if (owner.Zone != ev.Attacker.Zone)
+                {
+                    return;
+                }
+
+                _souls[owner] = Mathf.Min(_souls[ev.Attacker] + 1, 18);
+            }
         }
     }
 }

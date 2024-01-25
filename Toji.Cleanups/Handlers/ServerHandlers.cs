@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
 using MEC;
+using Mirror;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Cleanups.API.Enums;
@@ -17,8 +18,8 @@ namespace Toji.Cleanups.Handlers
         {
             _coroutines.Clear();
 
-            _coroutines.Add(Timing.RunCoroutine(_UpdateStage()));
-            _coroutines.Add(Timing.RunCoroutine(_UpdatePickups()));
+            _coroutines.Add(Timing.RunCoroutine(_UpdateStage().CancelWith(() => Round.IsEnded)));
+            _coroutines.Add(Timing.RunCoroutine(_UpdateStates()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupItems()));
             _coroutines.Add(Timing.RunCoroutine(_CleanupRagdolls()));
         }
@@ -27,7 +28,7 @@ namespace Toji.Cleanups.Handlers
         {
             Timing.KillCoroutines(_coroutines.ToArray());
 
-            PickupsStateController.Reset();
+            ObjectsStateController.Reset();
         }
 
         private IEnumerator<float> _UpdateStage()
@@ -47,18 +48,24 @@ namespace Toji.Cleanups.Handlers
             _stage = GameStage.HyperLate;
         }
 
-        private IEnumerator<float> _UpdatePickups()
+        private IEnumerator<float> _UpdateStates()
         {
             while (Round.InProgress)
             {
                 yield return Timing.WaitForSeconds(10);
 
-                var pickups = Pickup.List.Where(pickup => pickup != null).ToList();
+                var pickups = Pickup.List.Where(pickup => pickup is not null and { IsSpawned: true }).ToList();
+                var ragdolls = Ragdoll.List.Where(ragdoll => ragdoll is not null and { IsExpired: true }).ToList();
                 var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true, IsAlive: true }).ToList();
 
                 foreach (var pickup in pickups)
                 {
-                    PickupsStateController.TryChangeState(players, pickup);
+                    ObjectsStateController.TryChangeState(players, pickup);
+                }
+
+                foreach (var ragdoll in ragdolls)
+                {
+                    ObjectsStateController.TryChangeState(players, ragdoll);
                 }
             }
         }
@@ -86,7 +93,11 @@ namespace Toji.Cleanups.Handlers
 
             foreach (var pickup in Pickup.List)
             {
-                pickup.Destroy();
+                try
+                {
+                    pickup.Destroy();
+                }
+                catch { }
             }
         }
 
@@ -94,7 +105,7 @@ namespace Toji.Cleanups.Handlers
         {
             while (Round.InProgress)
             {
-                var ragdolls = Ragdoll.List.Where(pickup => pickup != null).ToList();
+                var ragdolls = Ragdoll.List.Where(ragdoll => ragdoll != null).ToList();
                 var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true }).ToList();
 
                 var cleanup = BaseCleanup.Get<RagdollCleanup>(CleanupType.Ragdolls, _stage);
@@ -113,7 +124,17 @@ namespace Toji.Cleanups.Handlers
 
             foreach (var ragdoll in Ragdoll.List)
             {
-                ragdoll.Destroy();
+                try
+                {
+                    NetworkServer.Destroy(ragdoll.GameObject);
+                }
+                catch { }
+
+                try
+                {
+                    ragdoll.Destroy();
+                }
+                catch { }
             }
         }
     }

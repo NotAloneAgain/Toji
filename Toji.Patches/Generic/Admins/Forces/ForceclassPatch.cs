@@ -5,6 +5,7 @@ using HarmonyLib;
 using MapGeneration;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
+using PlayerRoles.Spectating;
 using PluginAPI.Core;
 using RemoteAdmin;
 using System;
@@ -31,7 +32,6 @@ namespace Toji.Patches.Generic.Admins.Forces
                 RoleTypeId.Filmmaker,
                 RoleTypeId.Tutorial,
                 RoleTypeId.Scp0492,
-                RoleTypeId.Scp3114,
             ];
             _usings = [];
             _usingsScp = [];
@@ -106,6 +106,12 @@ namespace Toji.Patches.Generic.Admins.Forces
                     return false;
                 }
 
+                if (player.RoleBase.ActiveTime < 10)
+                {
+                    response = "Ваша роль действует менее 10 секунд!";
+                    return false;
+                }
+
                 Team team = role.GetTeam();
                 Faction faction = team.GetFaction();
 
@@ -154,21 +160,30 @@ namespace Toji.Patches.Generic.Admins.Forces
                             return false;
                         }
 
-                        if (players.Count(x => x.Team == Team.SCPs) >= 5)
-                        {
-                            response = "SCP-Объектов и так 5 или более.";
-                            return false;
-                        }
-
                         if (Swap.StartScps[role] >= Swap.Slots[role])
                         {
                             response = "Такой объект уже был в раунде!!";
                             return false;
                         }
 
-                        if (Player.GetPlayers().Count(ply => ply.Role == role) >= Swap.Slots[role])
+                        var slots = CalcaluteRoleSlots(role);
+
+                        if (slots == 0)
+                        {
+                            response = "Вы не можете стать этим SCP-Объектом!";
+
+                            return false;
+                        }
+
+                        if (Player.GetPlayers().Count(ply => ply.Role == role) >= slots)
                         {
                             response = "Все слоты за данный объект заняты!";
+                            return false;
+                        }
+
+                        if (_usingsScp.TryGetValue(player.UserId, out var scp) && scp == 1)
+                        {
+                            response = "Ты уже становился SCP в этом раунде!";
                             return false;
                         }
                     }
@@ -186,12 +201,6 @@ namespace Toji.Patches.Generic.Admins.Forces
                 if (_usings[player.UserId] >= max || remaining <= 0)
                 {
                     response = "Ты уже максимальное кол-во раз использовал донат!";
-                    return false;
-                }
-
-                if (_usingsScp.TryGetValue(player.UserId, out var scp) && scp == 1)
-                {
-                    response = "Ты уже становился SCP в этом раунде!";
                     return false;
                 }
 
@@ -222,6 +231,36 @@ namespace Toji.Patches.Generic.Admins.Forces
             }
 
             return true;
+        }
+
+        private static int CalculateSlots()
+        {
+            int count = 0;
+            var playersCount = Player.GetPlayers().Count;
+
+            if (playersCount > 10)
+            {
+                count++;
+            }
+
+            if (playersCount > 31)
+            {
+                count++;
+            }
+
+            return count;
+        }
+
+        private static int CalcaluteRoleSlots(RoleTypeId role)
+        {
+            int baseCount = Swap.Slots[role];
+
+            return role switch
+            {
+                RoleTypeId.Scp3114 => 0,
+                RoleTypeId.Scp049 => baseCount + 1,
+                _ => baseCount
+            };
         }
 
         public static void Reset()

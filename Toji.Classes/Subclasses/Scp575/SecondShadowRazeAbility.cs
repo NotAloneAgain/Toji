@@ -46,7 +46,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             foreach (var door in Door.List)
             {
-                if (door.DoorLockType == DoorLockType.AdminCommand || door.Is<BreakableDoor>(out var breakable) && (breakable.IsLocked || !breakable.AllowsScp106) || door.Zone != zone)
+                if (door.Is<BreakableDoor>(out var breakable) && (breakable.IsLocked || !breakable.AllowsScp106))
                 {
                     continue;
                 }
@@ -58,7 +58,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
                 if (!door.IsLocked)
                 {
-                    door.Lock(20, DoorLockType.Lockdown079);
+                    door.Lock(15, DoorLockType.Lockdown079);
                 }
             }
 

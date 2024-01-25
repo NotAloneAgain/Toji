@@ -33,7 +33,7 @@ namespace Toji.Classes.Subclasses.Scp575
                 return false;
             }
 
-            room.TurnOffLights(14);
+            room.TurnOffLights(15);
 
             foreach (var door in room.Doors)
             {
@@ -49,7 +49,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
                 if (!door.IsLocked)
                 {
-                    door.Lock(14, DoorLockType.Lockdown079);
+                    door.Lock(15, DoorLockType.Lockdown079);
                 }
             }
 

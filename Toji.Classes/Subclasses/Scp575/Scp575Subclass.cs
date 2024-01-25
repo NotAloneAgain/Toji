@@ -81,7 +81,7 @@ namespace Toji.Classes.Subclasses.Scp575
 
             ev.IsAllowed = false;
             ev.Player.ShowHitMarker();
-            ev.Target.Hurt(2.2f);
+            ev.Target.Hurt(2.4f);
             ev.Scp106.Attack?.SendCooldown(0.5f);
         }
     }

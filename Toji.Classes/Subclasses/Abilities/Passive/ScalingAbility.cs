@@ -36,7 +36,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
             player.Health = Health;
             player.MaxHealth = Health;
 
-            Timing.RunCoroutine(_UpdateValues(player));
+            Timing.RunCoroutine(_UpdateValues(player).CancelWith(player.GameObject));
         }
 
         public override void Subscribe() => Exiled.Events.Handlers.Player.Died += OnDied;
@@ -58,7 +58,7 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         public void OnDamage(HurtingEventArgs ev)
         {
-            if (!Has(ev.Player) || !ev.IsAllowed || !IsEnabled)
+            if (!Has(ev.Attacker) || !ev.IsAllowed || !IsEnabled)
             {
                 return;
             }
@@ -69,11 +69,11 @@ namespace Toji.Classes.Subclasses.Abilities.Passive
 
         private IEnumerator<float> _UpdateValues(Player player)
         {
-            while ((player?.IsAlive ?? false) && Has(player))
+            while (Has(player))
             {
                 if (player.MaxHealth < Health)
                 {
-                    var value = player.MaxHealth - Health;
+                    var value = Health - player.MaxHealth;
 
                     player.MaxHealth = Health;
                     player.Heal(value);
