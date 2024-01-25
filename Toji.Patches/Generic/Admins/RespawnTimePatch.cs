@@ -20,7 +20,9 @@ namespace Toji.Patches.Generic.Admins
             if (!Player.TryGet((sender as PlayerCommandSender).ReferenceHub, out var player))
                 return true;
 
-            if (player.IsDonator(out _))
+            var group = player.ReferenceHub.serverRoles.Group;
+
+            if (group.KickPower <= 0 || group.GetNameByGroup() == "admin-junior")
             {
                 __instance._stringBuilder.Clear();
                 __instance._stringBuilder.Append("$").Append(__instance.DataId).Append(" ");

@@ -20,9 +20,10 @@ namespace Toji.Patches.Generic.Admins.Forces
     [HarmonyPatch(typeof(ForceRoleCommand), nameof(ForceRoleCommand.Execute))]
     public static class ForceclassPatch
     {
-        private static readonly HashSet<RoleTypeId> _banned;
-        private static readonly Dictionary<string, int> _usings;
         private static readonly Dictionary<string, int> _usingsScp;
+        private static readonly Dictionary<string, int> _usings;
+        private static readonly HashSet<RoleTypeId> _banned;
+        private static int _usedSlots;
 
         static ForceclassPatch()
         {
@@ -222,6 +223,7 @@ namespace Toji.Patches.Generic.Admins.Forces
 
                 if (Swap.AllowedScps.Contains(role))
                 {
+                    _usedSlots++;
                     _usingsScp.Add(player.UserId, 1);
 
                     Swap.StartScps[role]++;
@@ -248,7 +250,7 @@ namespace Toji.Patches.Generic.Admins.Forces
                 count++;
             }
 
-            return count;
+            return count - _usedSlots;
         }
 
         private static int CalcaluteRoleSlots(RoleTypeId role)
@@ -265,6 +267,8 @@ namespace Toji.Patches.Generic.Admins.Forces
 
         public static void Reset()
         {
+            _usedSlots = 0;
+
             _usings.Clear();
             _usingsScp.Clear();
         }

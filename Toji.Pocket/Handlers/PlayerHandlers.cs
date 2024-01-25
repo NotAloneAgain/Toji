@@ -15,7 +15,7 @@ namespace Toji.Pocket.Handlers
     {
         public void OnEnteringEnvironmentalHazard(EnteringEnvironmentalHazardEventArgs ev)
         {
-            if (!ev.IsAllowed || !ev.IsValid() || ev.Player.IsNoclipPermitted || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment)
+            if (!ev.IsAllowed || !ev.IsValid() || ev.Player.IsScp || ev.Player.IsNoclipPermitted || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment)
             {
                 return;
             }
@@ -38,7 +38,7 @@ namespace Toji.Pocket.Handlers
 
         public void OnStayingEnvironmentalHazard(StayingOnEnvironmentalHazardEventArgs ev)
         {
-            if (!ev.IsValid() || ev.Player.IsNoclipPermitted || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment || ev.Player.GetStayingTime() < 6 || ev.Player.IsInPortal())
+            if (!ev.IsValid() || ev.Player.IsNoclipPermitted || ev.Player.IsScp || ev.Hazard is not SinkholeHazard sinkhole || GetClosest(sinkhole.Position).Zone != ZoneType.LightContainment || ev.Player.GetStayingTime() < 6 || ev.Player.IsInPortal())
             {
                 return;
             }

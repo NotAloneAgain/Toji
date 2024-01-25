@@ -14,7 +14,7 @@ namespace Toji.Patches.Generic.Admins
                 return true;
             }
 
-            if (player.IsDonator(out _) || __instance.Group.KickPower <= 0 || __instance.Group.GetNameByGroup() == "mod1")
+            if (__instance.Group.KickPower <= 0 || __instance.Group.GetNameByGroup() == "admin-junior")
             {
                 __result = false;
 
