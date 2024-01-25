@@ -19,7 +19,9 @@ namespace Toji.Patches.Generic.Admins
     [HarmonyPatch(typeof(RaPlayerList), nameof(RaPlayerList.ReceiveData), [typeof(CommandSender), typeof(string)])]
     internal static class PlayerListPatch
     {
-        private static bool IsFullyHidden(bool isDonator, string userId, string targetUserId) => userId != targetUserId && (isDonator || targetUserId == "76561199011540209@steam");
+        private static bool IsSelf(string userId, string targetUserId) => userId == targetUserId;
+
+        private static bool IsFullyHidden(bool isDonator, string userId, string targetUserId) => !IsSelf(userId, targetUserId) && (isDonator || IsSelf(targetUserId, "76561199011540209@steam"));
 
         private static bool Prefix(RaPlayerList __instance, CommandSender sender, string data)
         {
@@ -40,7 +42,7 @@ namespace Toji.Patches.Generic.Admins
             var playerSender = sender as PlayerCommandSender;
             var senderHub = playerSender?.ReferenceHub;
 
-            if (!Player.TryGet(senderHub, out var player))
+            if (!Player.TryGet(senderHub, out var player) || player.IsNorthwoodStaff)
             {
                 return true;
             }
@@ -66,7 +68,7 @@ namespace Toji.Patches.Generic.Admins
         {
             var donator = sender.IsDonator(out _);
 
-            StringBuilder result = StringBuilderPool.Shared.Rent("\n");
+            StringBuilder result = StringBuilderPool.Shared.Rent("\n<size=20>(Отменить выделение)</size>\n");
 
             if (donator)
             {
@@ -89,11 +91,11 @@ namespace Toji.Patches.Generic.Admins
 
                 var nickname = hub.nicknameSync.CombinedName.Replace("\n", string.Empty).Replace("RA_", string.Empty);
 
-                builder.Append("<color=#63b9c7> ");
+                builder.Append("<size=24><color=#fbfb9d>(").Append(hub.PlayerId).Append(") ");
 
                 builder.Append(nickname);
 
-                builder.Append("</color>");
+                builder.Append("</color></size>");
 
                 builder.AppendLine();
             }
@@ -101,8 +103,6 @@ namespace Toji.Patches.Generic.Admins
 
         private static void HandleAdmin(Player sender, CommandSender commandSender, bool isDescending, int sortType, ref StringBuilder builder)
         {
-            builder.Append("<size=20>(Отменить выделение)</size>\n");
-
             Func<string, bool> isFullyHidden = (string targetId) => IsFullyHidden(false, sender.UserId, targetId);
 
             (bool canViewHidden, bool canViewGlobal) = (CommandProcessor.CheckPermissions(commandSender, PlayerPermissions.ViewHiddenBadges), CommandProcessor.CheckPermissions(commandSender, PlayerPermissions.ViewHiddenGlobalBadges));
@@ -115,6 +115,15 @@ namespace Toji.Patches.Generic.Admins
                 var nickname = hub.nicknameSync.CombinedName.Replace("\n", string.Empty).Replace("RA_", string.Empty);
 
                 string color = "white";
+
+                int size = 18;
+
+                if (IsSelf(sender.UserId, hub.authManager.UserId))
+                {
+                    size = 24;
+                }
+
+                builder.Append($"<size={size}>");
 
                 if (!isFullyHidden(hub.authManager.UserId))
                 {
@@ -137,7 +146,7 @@ namespace Toji.Patches.Generic.Admins
 
                 builder.Append(nickname);
 
-                builder.Append("</color>");
+                builder.Append("</color></size>");
 
                 builder.AppendLine();
             }
