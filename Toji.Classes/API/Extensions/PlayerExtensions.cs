@@ -2,13 +2,18 @@
 using Exiled.API.Features;
 using PlayerRoles;
 using System.Collections.Generic;
+using System.Linq;
 using Toji.Classes.API.Features;
 
 namespace Toji.Classes.API.Extensions
 {
     public static class PlayerExtensions
     {
-        public static HashSet<string> Blacklist { get; internal set; }
+        public static HashSet<string> BlackList { get; internal set; }
+
+        public static void Init(this IEnumerable<string> strings) => BlackList = strings.ToHashSet();
+
+        public static bool IsBlacklisted(this BaseSubclass subclass) => BlackList.Contains(subclass.Name);
 
         public static BaseSubclass GetSubclass(this Player player) => BaseSubclass.Get(player);
 
@@ -27,7 +32,7 @@ namespace Toji.Classes.API.Extensions
 
             foreach (var sub in subclasses)
             {
-                if (sub == null || !sub.Can(player) || Blacklist.Contains(sub.Name))
+                if (sub == null || !sub.Can(player) || sub.IsBlacklisted())
                 {
                     continue;
                 }
@@ -51,7 +56,7 @@ namespace Toji.Classes.API.Extensions
 
             foreach (var sub in subclasses)
             {
-                if (sub == null || !sub.Can(player) || Blacklist.Contains(sub.Name))
+                if (sub == null || !sub.Can(player) || sub.IsBlacklisted())
                 {
                     continue;
                 }

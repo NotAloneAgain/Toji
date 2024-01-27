@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Extensions;
-using Toji.Classes.API.Features;
 using Toji.Classes.API.Interfaces;
 using Toji.Classes.Subclasses.Characteristics;
 using Toji.ExiledAPI.Extensions;
@@ -15,9 +14,7 @@ namespace Toji.Classes.Handlers
 {
     internal sealed class PlayerHandlers
     {
-        private readonly List<string> _blacklist;
-
-        internal PlayerHandlers(List<string> blacklist) => _blacklist = blacklist;
+        internal PlayerHandlers(List<string> blacklist) => blacklist.Init();
 
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
