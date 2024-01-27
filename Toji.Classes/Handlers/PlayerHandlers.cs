@@ -53,24 +53,16 @@ namespace Toji.Classes.Handlers
                 subclass.Revoke(ev.Player);
             }
 
-            if (!isPlayable || !isSpawn || !BaseSubclass.TryGet(ev.NewRole, out var subclasses))
+            if (!isPlayable || !isSpawn)
             {
                 return;
             }
 
-            foreach (var sub in subclasses)
-            {
-                if (sub == null || !sub.Can(ev.Player) || _blacklist.Contains(sub.Name))
-                {
-                    continue;
-                }
+            var role = ev.NewRole;
 
-                ev.NewRole = sub.SpawnRules.Model;
+            ev.Player.GrantSubclass(ref role);
 
-                sub.DelayedAssign(ev.Player);
-
-                break;
-            }
+            ev.NewRole = role;
         }
 
         public void OnDestroying(DestroyingEventArgs ev)

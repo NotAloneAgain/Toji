@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Toji.Classes.API.Extensions;
 using UnityEngine;
 
 namespace Toji.ReduxRespawning.API
@@ -167,6 +168,8 @@ namespace Toji.ReduxRespawning.API
                 player.Teleport(spawns.GetRandomValue());
 
                 player.Rotation = Quaternion.LookRotation(point);
+
+                player.GrantSubclass(role);
             }
 
             QueuePool<RoleTypeId>.Pool.Return(roles);

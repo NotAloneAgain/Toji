@@ -97,7 +97,9 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            if (!Ragdoll.List.Any())
+            var ragdolls = Ragdoll.List.Where(ragdoll => ragdoll != null && ragdoll.Base != null && ragdoll.GameObject != null && ragdoll.Transform != null);
+
+            if (!ragdolls.Any())
             {
                 result = "Не удалось найти труп! (Возможно десинхронизация клиент-сервер)";
 
@@ -106,9 +108,11 @@ namespace Toji.Classes.Subclasses.Abilities.Active
                 return false;
             }
 
-            var ragdoll = Ragdoll.List.Where(r => r != null && r.Transform != null && !_ignoredRoles.Contains(r.Role)).OrderBy(r => Vector3.Distance(r.Position, player.Position)).FirstOrDefault();
+            var ragdoll = ragdolls.Where(r => !_ignoredRoles.Contains(r.Role)).OrderBy(r => Vector3.Distance(r.Position, player.Position)).FirstOrDefault();
 
-            if (ragdoll == null || ragdoll.Room != player.CurrentRoom || Vector3.Distance(ragdoll.Position, player.Position) > (player.Zone == ZoneType.Surface ? 3.8f : 5))
+            var maxDistance = player.Zone == ZoneType.Surface ? 3.8f : 5;
+
+            if (ragdoll == null || ragdoll.Room != player.CurrentRoom || ragdoll.Position.GetDistance(player.Position) > maxDistance)
             {
                 result = "Не удалось найти труп! (Возможно десинхронизация клиент-сервер)";
 

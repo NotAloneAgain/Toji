@@ -28,6 +28,11 @@ namespace Toji.Cleanups.API.Features
 
         public static bool TryChangeState(List<Player> players, Pickup pickup)
         {
+            if (pickup.InUse || !pickup.IsSpawned || pickup.IsLocked || pickup.IsInLocker())
+            {
+                return false;
+            }
+
             var zone = (pickup.Room?.Zone ?? ZoneType.Unspecified);
 
             var maxDistance = zone == ZoneType.Surface ? 60 : 30;
@@ -56,7 +61,7 @@ namespace Toji.Cleanups.API.Features
 
         public static bool TryChangeState(List<Player> players, Ragdoll ragdoll)
         {
-            var zone = (ragdoll.Room?.Zone ?? ZoneType.Unspecified);
+            var zone = ragdoll.Room?.Zone ?? ZoneType.Unspecified;
 
             var maxDistance = zone == ZoneType.Surface ? 60 : 30;
 
@@ -89,27 +94,17 @@ namespace Toji.Cleanups.API.Features
                 return pickup.Type is ItemType.SCP244a or ItemType.SCP244b || !_whitelist.Contains(pickup.Type) && (role.Camera.Zone != zone || Vector3.Distance(role.Camera.Position, pickup.Position) > maxDistance);
             }
 
-            if (Vector3.Distance(player.Position, pickup.Position) > maxDistance)
-            {
-                return true;
-            }
-
-            return false;
+            return Vector3.Distance(player.Position, pickup.Position) > maxDistance;
         }
 
         private static bool Check(Player player, Ragdoll ragdoll, ZoneType zone, int maxDistance)
         {
             if (player.Role.Is(out Scp079Role role))
             {
-                return ragdoll.Role.GetTeam() != Team.SCPs && (role.Camera.Zone != zone || Vector3.Distance(role.Camera.Position, ragdoll.Position) > maxDistance);
+                return role.Camera.Zone != zone || Vector3.Distance(role.Camera.Position, ragdoll.Position) > maxDistance;
             }
 
-            if (Vector3.Distance(player.Position, ragdoll.Position) > maxDistance)
-            {
-                return true;
-            }
-
-            return false;
+            return Vector3.Distance(player.Position, ragdoll.Position) > maxDistance;
         }
 
         private static void SpawnPersonally(this Player player, GameObject obj)
