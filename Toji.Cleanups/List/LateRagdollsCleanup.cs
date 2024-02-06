@@ -30,7 +30,9 @@ namespace Toji.Cleanups.List
 
             foreach (var ragdoll in ragdolls)
             {
-                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || ragdoll.ExistenceTime <= 15)
+                var seconds = (Round.StartedTime - ragdoll.CreationTime).TotalSeconds;
+
+                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || seconds <= 15)
                 {
                     continue;
                 }
@@ -53,7 +55,7 @@ namespace Toji.Cleanups.List
                         continue;
                     }
 
-                    if (hasMimicry && (BaseSubclass.TryGet(ragdoll, out _) || ragdoll.ExistenceTime <= 144))
+                    if (hasMimicry && (BaseSubclass.TryGet(ragdoll, out _) || seconds <= 141))
                     {
                         continue;
                     }

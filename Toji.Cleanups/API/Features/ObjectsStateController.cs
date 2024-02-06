@@ -21,7 +21,7 @@ namespace Toji.Cleanups.API.Features
         {
             _unspawnedRagdolls = new Dictionary<Player, List<Ragdoll>>(Server.MaxPlayerCount);
             _unspawnedPickups = new Dictionary<Player, List<Pickup>>(Server.MaxPlayerCount);
-            _whitelist = [ItemType.MicroHID, ItemType.SCP2176, ItemType.SCP018, ItemType.ParticleDisruptor, ItemType.Jailbird];
+            _whitelist = [ItemType.MicroHID, ItemType.SCP2176, ItemType.SCP018, ItemType.ParticleDisruptor, ItemType.Jailbird, ItemType.KeycardO5];
         }
 
         public static void Reset() => _unspawnedPickups.Clear();
@@ -94,6 +94,11 @@ namespace Toji.Cleanups.API.Features
                 return pickup.Type is ItemType.SCP244a or ItemType.SCP244b || !_whitelist.Contains(pickup.Type) && (role.Camera.Zone != zone || Vector3.Distance(role.Camera.Position, pickup.Position) > maxDistance);
             }
 
+            if (player.IsDead)
+            {
+                return _whitelist.Contains(pickup.Type);
+            }
+
             return Vector3.Distance(player.Position, pickup.Position) > maxDistance;
         }
 
@@ -102,6 +107,11 @@ namespace Toji.Cleanups.API.Features
             if (player.Role.Is(out Scp079Role role))
             {
                 return role.Camera.Zone != zone || Vector3.Distance(role.Camera.Position, ragdoll.Position) > maxDistance;
+            }
+
+            if (player.IsDead)
+            {
+                return true;
             }
 
             return Vector3.Distance(player.Position, ragdoll.Position) > maxDistance;

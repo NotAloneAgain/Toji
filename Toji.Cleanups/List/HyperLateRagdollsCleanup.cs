@@ -18,7 +18,7 @@ namespace Toji.Cleanups.List
 
             foreach (var ragdoll in ragdolls)
             {
-                if (ragdoll == null || ragdoll.ExistenceTime <= 9)
+                if (ragdoll == null || (Round.StartedTime - ragdoll.CreationTime).TotalSeconds <= 9)
                 {
                     continue;
                 }
