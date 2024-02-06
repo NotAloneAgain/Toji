@@ -9,13 +9,13 @@ namespace Toji.ScpSwap.Handlers
 {
     internal sealed class SwapHandlers
     {
-        private readonly string _text;
         private readonly float _duration;
+        private readonly string _text;
 
-        internal SwapHandlers(string text, float duration)
+        internal SwapHandlers(float duration, string text)
         {
-            _text = text;
             _duration = duration;
+            _text = text;
         }
 
         public void OnChangingRole(ChangingRoleEventArgs ev)
@@ -33,6 +33,11 @@ namespace Toji.ScpSwap.Handlers
             if (Player.List.Count(ply => ply.Role.Team == Team.SCPs) == 6 && ev.NewRole is not RoleTypeId.Scp939 and not RoleTypeId.Scp3114)
             {
                 ev.NewRole = RoleTypeId.Scp939;
+            }
+
+            if (Round.ElapsedTime.TotalSeconds > Swap.SwapDuration)
+            {
+                return;
             }
 
             ev.Player.ShowHint(string.Format(_text, Swap.SwapDuration), _duration);

@@ -17,7 +17,7 @@ namespace Toji.RemoteKeycard.API.Features
 
         static BasePermissionProcessor()
         {
-            _processors = new List<BasePermissionProcessor>(10);
+            _processors = new List<BasePermissionProcessor>(5);
         }
 
         public BasePermissionProcessor()

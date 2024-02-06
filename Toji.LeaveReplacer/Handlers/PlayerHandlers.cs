@@ -133,6 +133,8 @@ namespace Toji.LeaveReplacer.Handlers
                 }
             }
 
+            QueuePool<RoleTypeId>.Pool.Return(queue);
+
             return null;
         }
 
@@ -142,7 +144,7 @@ namespace Toji.LeaveReplacer.Handlers
 
             if (players.Any() && Player.List.Count(ply => ply.Role.Side == role.GetSide()) > 1)
             {
-                if (role == RoleTypeId.Spectator || !checkSubclass)
+                if (role == RoleTypeId.Spectator && !checkSubclass)
                 {
                     return players.GetRandomValue();
                 }

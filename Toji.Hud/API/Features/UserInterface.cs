@@ -194,7 +194,7 @@ namespace Toji.Hud.API.Features
 
         private List<UserHint> GetAllHints()
         {
-            var hints = ListPool<UserHint>.Pool.Get(100);
+            var hints = ListPool<UserHint>.Pool.Get(50);
 
             _hints.RemoveAll(x => x.Hint.Time > x.Hint.Duration);
 

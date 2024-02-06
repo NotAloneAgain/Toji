@@ -23,7 +23,7 @@ namespace Toji.ScpSwap
 
         public override void OnEnabled()
         {
-            _handlers = new(Config.InfoText, Config.InfoDuration);
+            _handlers = new(Config.InfoDuration, Config.InfoText);
 
             Swap.Slots = Config.Slots;
             Swap.Prevent = Config.PreventMultipleSwaps;
