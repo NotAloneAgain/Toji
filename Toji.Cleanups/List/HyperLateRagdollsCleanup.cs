@@ -1,5 +1,4 @@
 ﻿using Exiled.API.Features;
-using Mirror;
 using System.Collections.Generic;
 using Toji.Cleanups.API.Enums;
 using Toji.Cleanups.API.Features;
@@ -14,26 +13,16 @@ namespace Toji.Cleanups.List
 
         public override void Cleanup(List<Ragdoll> ragdolls, List<Player> players, out float cooldown)
         {
-            cooldown = 42;
+            cooldown = 26;
 
-            foreach (var ragdoll in ragdolls)
+            foreach (Ragdoll ragdoll in ragdolls)
             {
-                if (ragdoll == null || (Round.StartedTime - ragdoll.CreationTime).TotalSeconds <= 9)
+                if (ragdoll == null)
                 {
                     continue;
                 }
 
-                try
-                {
-                    NetworkServer.Destroy(ragdoll.GameObject);
-                }
-                catch { }
-
-                try
-                {
-                    ragdoll.Destroy();
-                }
-                catch { }
+                ragdoll.Destroy();
             }
         }
     }

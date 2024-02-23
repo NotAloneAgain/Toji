@@ -27,11 +27,18 @@ namespace Toji.Cleanups.List
             var subclasses = players.Select(ply => ply.GetSubclass());
             var hasMimicry = subclasses.Any(sub => sub != null && sub.Abilities.Any(ability => ability.GetType() == typeof(ClothesAbility)));
 
+            var minTime = hasMimicry ? 180 : 30;
+
             foreach (var ragdoll in ragdolls)
             {
+                if (RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs)
+                {
+                    continue;
+                }
+
                 var seconds = (Round.StartedTime - ragdoll.CreationTime).TotalSeconds;
 
-                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || seconds <= 30)
+                if (seconds <= minTime)
                 {
                     continue;
                 }
@@ -54,17 +61,7 @@ namespace Toji.Cleanups.List
                     {
                         continue;
                     }
-
-                    if (hasMimicry && (BaseSubclass.TryGet(ragdoll, out _) || seconds <= 180))
-                    {
-                        continue;
-                    }
                 }
-
-                try
-                {
-                    NetworkServer.Destroy(ragdoll.GameObject);
-                } catch { }
 
                 try
                 {

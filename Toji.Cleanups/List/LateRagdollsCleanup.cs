@@ -1,12 +1,10 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Mirror;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Classes.API.Extensions;
-using Toji.Classes.API.Features;
 using Toji.Classes.Subclasses.Abilities.Active;
 using Toji.Cleanups.API;
 using Toji.Cleanups.API.Enums;
@@ -28,18 +26,26 @@ namespace Toji.Cleanups.List
             var subclasses = players.Select(ply => ply.GetSubclass());
             var hasMimicry = subclasses.Any(sub => sub != null && sub.Abilities.Any(ability => ability.GetType() == typeof(ClothesAbility)));
 
-            foreach (var ragdoll in ragdolls)
-            {
-                var seconds = (Round.StartedTime - ragdoll.CreationTime).TotalSeconds;
+            var minTime = hasMimicry ? 140 : 15;
 
-                if (ragdoll == null || RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs || seconds <= 15)
+            foreach (Ragdoll ragdoll in ragdolls)
+            {
+                if (RoleExtensions.GetTeam(ragdoll.Role) == Team.SCPs)
                 {
                     continue;
                 }
 
-                if (ragdoll.GameObject.IsValid())
+                var seconds = (Round.StartedTime - ragdoll.CreationTime).TotalSeconds;
+
+                if (seconds <= minTime)
                 {
-                    var room = ragdoll.Room;
+                    continue;
+                }
+
+                var room = ragdoll.Room;
+
+                if (room != null)
+                {
                     var position = ragdoll.Position;
                     var isSurface = room?.Type == RoomType.Surface;
 
@@ -54,18 +60,7 @@ namespace Toji.Cleanups.List
                     {
                         continue;
                     }
-
-                    if (hasMimicry && (BaseSubclass.TryGet(ragdoll, out _) || seconds <= 141))
-                    {
-                        continue;
-                    }
                 }
-
-                try
-                {
-                    NetworkServer.Destroy(ragdoll.GameObject);
-                }
-                catch { }
 
                 try
                 {

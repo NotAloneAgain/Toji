@@ -41,7 +41,6 @@
     <Compile Include="API\Extensions.cs" />
     <Compile Include="API\Features\BaseCleanup.cs" />
     <Compile Include="API\Features\ItemCleanup.cs" />
-    <Compile Include="API\Features\LegacyPickupStateProcessor.cs" />
     <Compile Include="API\Features\ObjectsStateController.cs" />
     <Compile Include="API\Features\RagdollCleanup.cs" />
     <Compile Include="API\Interfaces\IItemCleanup.cs" />
@@ -49,6 +48,7 @@
     <Compile Include="Handlers\MapHandlers.cs" />
     <Compile Include="Handlers\PlayerHandlers.cs" />
     <Compile Include="Handlers\ServerHandlers.cs" />
+    <Compile Include="Handlers\WarheadHandlers.cs" />
     <Compile Include="List\HyperLateItemsCleanup.cs" />
     <Compile Include="List\LateItemsCleanup.cs" />
     <Compile Include="List\MidItemsCleanup.cs" />

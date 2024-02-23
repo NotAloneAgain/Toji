@@ -26,6 +26,8 @@ namespace Toji.Cleanups.Handlers
 
         public void OnRestartingRound()
         {
+            _stage = GameStage.Early;
+
             Timing.KillCoroutines(_coroutines.ToArray());
 
             ObjectsStateController.Reset();
@@ -55,7 +57,7 @@ namespace Toji.Cleanups.Handlers
                 yield return Timing.WaitForSeconds(10);
 
                 var pickups = Pickup.List.Where(pickup => pickup is not null and { IsSpawned: true }).ToList();
-                var ragdolls = Ragdoll.List.Where(ragdoll => ragdoll is not null and { IsExpired: true }).ToList();
+                var ragdolls = Ragdoll.List.Where(ragdoll => ragdoll is not null and { GameObject: not null, IsExpired: true }).ToList();
                 var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true, IsAlive: true }).ToList();
 
                 foreach (var pickup in pickups)
@@ -75,7 +77,7 @@ namespace Toji.Cleanups.Handlers
             while (Round.InProgress)
             {
                 var pickups = Pickup.List.Where(pickup => pickup is not null and { IsSpawned: true, IsLocked: false }).ToList();
-                var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true }).ToList();
+                var players = Player.List.Where(ply => ply is not null and { IsNPC: false, IsHost: false, IsConnected: true, IsAlive: true }).ToList();
 
                 var cleanup = BaseCleanup.Get<ItemCleanup>(CleanupType.Items, _stage);
 

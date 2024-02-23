@@ -2,6 +2,7 @@
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Pickups;
+using Exiled.API.Features.Pools;
 using System.Collections.Generic;
 using System.Linq;
 using Toji.Cleanups.API;
@@ -31,24 +32,16 @@ namespace Toji.Cleanups.List
         {
             cooldown = 70;
 
-            Dictionary<ZoneType, int> medical = new Dictionary<ZoneType, int>(4)
-            {
-                { ZoneType.LightContainment, 0 },
-                { ZoneType.HeavyContainment, 0 },
-                { ZoneType.Entrance, 0 },
-                { ZoneType.Surface, 0 },
-            };
+            Dictionary<ZoneType, int> medical = DictionaryPool<ZoneType, int>.Pool.Get();
+
+            medical.Add(ZoneType.LightContainment, 0);
+            medical.Add(ZoneType.HeavyContainment, 0);
+            medical.Add(ZoneType.Entrance, 0);
+            medical.Add(ZoneType.Surface, 0);
 
             foreach (var item in pickups)
             {
                 var category = item.Type.GetCategory();
-
-                if (!item.GameObject.IsValid() || category == ItemCategory.Ammo)
-                {
-                    item.Destroy();
-
-                    continue;
-                }
 
                 var room = item.Room;
 
@@ -73,6 +66,8 @@ namespace Toji.Cleanups.List
 
                 item.Destroy();
             }
+
+            DictionaryPool<ZoneType, int>.Pool.Return(medical);
         }
     }
 }

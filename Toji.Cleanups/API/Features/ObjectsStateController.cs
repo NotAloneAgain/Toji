@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Toji.Global;
 using Exiled.API.Features.Roles;
+using Toji.ExiledAPI.Extensions;
 
 namespace Toji.Cleanups.API.Features
 {
@@ -33,7 +34,7 @@ namespace Toji.Cleanups.API.Features
                 return false;
             }
 
-            var zone = (pickup.Room?.Zone ?? ZoneType.Unspecified);
+            var zone = pickup.Room?.Zone ?? ZoneType.Unspecified;
 
             var maxDistance = zone == ZoneType.Surface ? 60 : 30;
 
@@ -96,7 +97,12 @@ namespace Toji.Cleanups.API.Features
 
             if (player.IsDead)
             {
-                return _whitelist.Contains(pickup.Type);
+                if (player.TryGetSpectatingPlayer(out var target))
+                {
+                    return Check(target, pickup, zone, maxDistance);
+                }
+
+                return true;
             }
 
             return Vector3.Distance(player.Position, pickup.Position) > maxDistance;
@@ -104,17 +110,22 @@ namespace Toji.Cleanups.API.Features
 
         private static bool Check(Player player, Ragdoll ragdoll, ZoneType zone, int maxDistance)
         {
-            if (player.Role.Is(out Scp079Role role))
-            {
-                return role.Camera.Zone != zone || Vector3.Distance(role.Camera.Position, ragdoll.Position) > maxDistance;
-            }
-
-            if (player.IsDead)
+            if (player.Role.Type == RoleTypeId.Scp079)
             {
                 return true;
             }
 
-            return Vector3.Distance(player.Position, ragdoll.Position) > maxDistance;
+            if (player.IsDead)
+            {
+                if (player.TryGetSpectatingPlayer(out var target))
+                {
+                    return Check(target, ragdoll, zone, maxDistance);
+                }
+
+                return true;
+            }
+
+            return Vector3.Distance(player.Position, ragdoll.Position) > maxDistance && ragdoll.Role.GetTeam() != Team.SCPs;
         }
 
         private static void SpawnPersonally(this Player player, GameObject obj)
